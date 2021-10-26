@@ -132,9 +132,13 @@ body {
     cursor: pointer;
 }
 
-/* .input__text:focus~.login__visibility {
+.input__text:focus~.login__visibility {
     display: block;
-} */
+}
+
+.login-app ::-ms-reveal {
+    display: none;
+}
 
 
 /* responsive */
