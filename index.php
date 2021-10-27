@@ -1,11 +1,11 @@
 <?php
-    if (isset($_POST['username'])) {
+session_start();
 
-    }
-    else {
-        $host = 'http://'.$_SERVER['HTTP_HOST'];
-        header("Location: $host/login.php");
-        die();      
-    }
+if (!isset($_SESSION['username'])) {
+    $host = 'http://'.$_SERVER['HTTP_HOST'];
+        header("Location: /login.php");
 
+}
+
+echo $_SESSION['username'];
 ?>

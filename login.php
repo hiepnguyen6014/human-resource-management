@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="shortcut icon" href="favi.ico" type="image/x-icon">
 
     <!-- font-link -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +22,7 @@
         <div class="login">
 
             <div class="login__container">
-                <form action="/" class="login__form">
+                <form class="login__form" method="POST">
                     <img class="login__image" src="images/logo.png" alt="logo">
 
                     <div class="login__inputs">
@@ -30,14 +31,13 @@
                                 placeholder="Username">
                         </div>
                         <div class="login__input">
-
                             <input class="input__text input__password" type="password" required name="password"
-                                id="password" placeholder="Password">
-                            <img src="svgs/visibility.svg" alt="visibility" class="login__visibility">
-                        </div>
+                                id="password" placeholder="Password"> 
+                        </div> 
+                        
                     </div>
-
-                    <button class="login__button" type="submit">CONTINUE</button>
+                    <p class="login__failed">Wrong password</p>
+                    <button class="login__button">CONTINUE</button>
                 </form>
             </div>
 
