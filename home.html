@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="present.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <nav class="navigation">
+            <div class="navigation__logo">
+                <a href="#">
+                    <img class="navigation__logo-image" src="images/logo.png" alt="logo">
+                </a>
+            </div>
+
+            <ul class="navigation__task-items">
+                <li class="navigation__task-item">
+                    <a href="#">
+                        <i class="employee-icon icon"></i>
+                        <span class="navigation__task-item__text">Nhân viên</span>
+                    </a>
+                </li>
+                <li class="navigation__task-item">
+                    <a href="#" class="active">
+                        <i class="office-icon icon"></i>
+                        <span class="navigation__task-item__text">Phòng ban</span>
+                    </a>
+                </li>
+                <li class="navigation__task-item">
+                    <a href="#">
+                        <i class="task-icon icon"></i>
+                        <span class="navigation__task-item__text">Nhiệm vụ</span>
+                    </a>
+                </li>
+                <li class="navigation__task-item">
+                    <a href="#">
+                        <i class="personoff-icon icon"></i>
+                        <span class="navigation__task-item__text">Yêu cầu nghỉ</span>
+                    </a>
+                </li>
+                <li class="navigation__task-item">
+                    <a href="#">
+                        <i class="support-icon icon"></i>
+                        <span class="navigation__task-item__text">Hỗ trợ</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="navigation__version">Ver 1.1</div>
+        </nav>
+        <div class="main">
+            <header class="header">
+                <div class="header__search">
+                    <i class="search-icon"></i>
+                    <input type="text" class="header__search-input" placeholder="Tìm kiếm">
+                </div>
+                <div class="header__profile">
+                    <div class="header__profile-image">
+                        <img id="profile-view" src="images/background_login.jpg" alt="profile">
+                    </div>
+                    <div class="header__profile-name">
+                        <span>Roberto Carlos</span>
+                    </div>
+                    <div class="header__profile-notify">
+                        <span class="notify-number active">1</span>
+                        <i class="notify-icon icon"></i>
+
+                        <ul class="notify__items">
+                            <li class="notify__item">
+                                <a href="#">
+                                    <div class="notify__item-image">
+                                        <img src="images/background_login.jpg" alt="profile">
+                                    </div>
+                                    <div class="notify__item-name">
+                                        <span class="notify__item-content"><b class="notify__item-sender">Nguyễn Văn
+                                                A</b> orem ipsum dolor sit amet consectetur adipisicing elit. Sunt
+                                            cumque odit quis itaque, provident consectetur illum modi obcaecati
+                                            recusandae, alias doloribus sed minima sint, eum explicabo. Magni pariatur
+                                            sit nam?</span>
+                                        <p class="notify__item-time">10:00 31/10</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="notify__item">
+                                <a href="#">
+                                    <div class="notify__item-image">
+                                        <img src="images/background_login.jpg" alt="profile">
+                                    </div>
+                                    <div class="notify__item-name">
+                                        <span class="notify__item-content"><b class="notify__item-sender">Nguyễn Văn
+                                                A</b> orem ipsum dolor sit amet consectetur adipisicing elit. Sunt
+                                            cumque odit quis itaque, provident consectetur illum modi obcaecati
+                                            recusandae, alias doloribus sed minima sint, eum explicabo. Magni pariatur
+                                            sit nam?</span>
+                                        <p class="notify__item-time">10:00 31/10</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="notify__item">
+                                <a href="#">
+                                    <div class="notify__item-image">
+                                        <img src="images/background_login.jpg" alt="profile">
+                                    </div>
+                                    <div class="notify__item-name">
+                                        <span class="notify__item-content"><b class="notify__item-sender">Nguyễn Văn
+                                                A</b> orem ipsum dolor sit amet consectetur adipisicing elit. Sunt
+                                            cumque odit quis itaque, provident consectetur illum modi obcaecati
+                                            recusandae, alias doloribus sed minima sint, eum explicabo. Magni pariatur
+                                            sit nam?</span>
+                                        <p class="notify__item-time">10:00 31/10</p>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </header>
+
+            <div class="app">
+                <div class="app__content">
+                    <div class="app__content-header">
+                        <div class="app__content-header-title">
+                            <span style="font-size: 20px;">Phòng ban</span>
+                        </div>
+                        <div class="app__content-header-action">
+                            <i id="add-office" class="add-icon"></i>
+                        </div>
+                    </div>
+                    <div class="app__content-body">
+                        <table class="app__content-body__table">
+                            <thead class="app__content-body__thead">
+                                <tr>
+                                    <td>ID</td>
+                                    <td>Tên phòng</td>
+                                    <td>Trưởng phòng</td>
+                                    <td>Số lượng</td>
+                                    <td>Thao tác</td>
+                                </tr>
+                            </thead>
+                            <tbody class="app__content-body__tbody" id="office-tbody">
+                                <!-- <tr data-id="1">
+                                    <td>Số Phòng</td>
+                                    <td>Tên phòng</td>
+                                    <td>Trưởng phòng</td>
+                                    <td>Số lượng</td>
+                                    <td>
+                                        <button class="btn btn-primary">Sửa</button>
+                                        <button class="btn btn-danger">Xóa</button>
+                                    </td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-view">
+        <div class="profile">
+            <div class="profile-view__header">
+                <img src="images/background_login.jpg" alt="profile">
+                <button>Change</button>
+                <div class="profile-user">
+                    <p class="profile-name">Ho va ten</p>
+                    <span class="profile-username">username</span>
+                </div>
+            </div>
+            <div class="profile-view__body">
+                <div class="profile-view__body-id">
+                    <span>ID:</span>
+                    <span>51900743</span>
+                </div>
+                <div class="profile-view__body-office">
+                    <span>Phòng ban:</span>
+                    <span>Kế toán</span>
+                </div>
+                <div class="profile-view__body-position">
+                    <span>Vị trí:</span>
+                    <span>Nhân viên</span>
+                </div>
+            </div>
+            <div class="profile-view__action">
+                <button id="save-profile">Lưu</button>
+                <button id="finish-view-profile" class="btn btn-primary">Thoát</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="office-view">
+        <div class="office">
+            <div class="office-view__body">
+                <div class="office-view__body-name">
+                    <span>Tên:</span>
+                    <span>adiasgdgaskdgaskdajsghdhjasdajksgd</span>
+                </div>
+                <div class="office-view__body-office">
+                    <span>Phòng ban:</span>
+                    <span>Kế toán</span>
+                </div>
+                <div class="office-view__body-desciption">
+                    <span>Miêu tả:</span>
+                    <span>Nhân viên</span>
+                </div>
+                <div class="office-view__body-room">
+                    <span>Số phòng:</span>
+                    <span>123123</span>
+                </div>
+            </div>
+            <div class="office-view__action">
+                <button id="finish-view-office" class="btn btn-primary">Xong</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="office-new">
+        <div class="office-new__child">
+            <div class="office-new__body">
+                <div class="office-new__body-name">
+                    <span>Tên:</span>
+                    <span>adiasgdgaskdgaskdajsghdhjasdajksgd</span>
+                </div>
+                <div class="office-new__body-office">
+                    <span>Phòng ban:</span>
+                    <span>Kế toán</span>
+                </div>
+                <div class="office-new__body-desciption">
+                    <span>Miêu tả:</span>
+                    <span>Nhân viên</span>
+                </div>
+                <div class="office-new__body-room">
+                    <span>Số phòng:</span>
+                    <span>123123</span>
+                </div>
+            </div>
+            <div class="office-new__action">
+                <button id="save-new-office" class="btn btn-primary">Luu</button>
+                <button id="cancel-new-office" class="btn btn-primary">Thoat</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="employee-view">
+        <div class="employee">
+            <div class="employee-view__header">
+                <img src="images/background_login.jpg" alt="employee">
+                <button>Change</button>
+                <div class="employee-user">
+                    <p class="employee-name">Ho va ten</p>
+                    <span class="employee-username">username</span>
+                </div>
+            </div>
+            <div class="employee-view__body">
+                <div class="employee-view__body-id">
+                    <span>ID:</span>
+                    <span>51900743</span>
+                </div>
+                <div class="employee-view__body-office">
+                    <span>Phòng ban:</span>
+                    <span>Kế toán</span>
+                </div>
+                <div class="employee-view__body-position">
+                    <span>Vị trí:</span>
+                    <span>Nhân viên</span>
+                </div>
+            </div>
+            <div class="employee-view__action">
+                <button id="logout">Đăng xuất</button>
+                <button id="finish-view" class="btn btn-primary">Xong</button>
+            </div>
+        </div>
+    </div> -->
+    <script>
+        let officeBody = document.querySelector('#office-tbody');
+        // crete office 100
+        for (let i = 0; i < 30; i++) {
+            let tr = document.createElement('tr');
+            tr.setAttribute('data-id', i);
+            // replace i == id to view
+            tr.setAttribute('onclick', `viewOffice(${i})`);
+            tr.innerHTML = `
+                <td>${i}</td>
+                <td>Tên phòng</td>
+                <td>TRAN HOANG MINH LOC</td>
+                <td>${i * 2}</td>
+                <td>
+                    <button class="btn btn-danger">Xóa</button>
+                </td>
+            `;
+            officeBody.appendChild(tr);
+        }
+
+        function viewOffice(e) {
+            const officeView = document.querySelector('.office-view')
+            const office = document.querySelector('.office');
+
+            officeView.style.display = 'block';
+
+            officeView.addEventListener('click', function() {
+                officeView.style.display = 'none';
+            })
+
+            office.addEventListener('click', function(e) {
+                e.stopPropagation();
+            })
+
+            const buttonFinish = document.querySelector('#finish-view-office')
+            buttonFinish.addEventListener('click', () => {
+                officeView.style.display = 'none';
+            })
+        }
+
+        // show profile when click avt
+        (function profile(id) {
+            const buttonProfileView = document.querySelector('#profile-view')
+            const profileView = document.querySelector('.profile-view');
+            const profile = document.querySelector('.profile');
+            const buttonFinish = document.querySelector('#finish-view-profile');
+
+            buttonProfileView.addEventListener('click', function() {
+                profileView.style.display = 'block';
+            })
+
+            profileView.addEventListener('click', function() {
+                profileView.style.display = 'none';
+
+            })
+
+            buttonFinish.addEventListener('click', function() {
+                profileView.style.display = 'none';
+            })
+
+            profile.addEventListener('click', function(e) {
+                e.stopPropagation();
+            })
+            console.log(id)
+        })();
+
+        (function addOffice() {
+            const buttonAddOffice = document.querySelector('#add-office')
+            const officeNew = document.querySelector('.office-new')
+            const office = document.querySelector('.office-new__child')
+            const cancel = document.querySelector('#cancel-new-office')
+
+            buttonAddOffice.addEventListener('click', function() {
+                officeNew.style.display = 'block'
+            })
+
+            officeNew.addEventListener('click', function() {
+                officeNew.style.display = 'none'
+            })
+
+            office.addEventListener('click', function(e) {
+                e.stopPropagation()
+            })
+
+            cancel.addEventListener('click', function() {
+                officeNew.style.display = 'none'
+            })
+        })();
+
+        //show office detail when click row
+    </script>
+</body>
+
+</html>
