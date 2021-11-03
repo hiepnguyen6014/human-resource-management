@@ -128,7 +128,7 @@
             </header>
 
             <div class="app">
-                <div class="section employee-space">
+                <div class="section employee-space show">
                     <div class="section-header space__header">
                         <span class="space__header-title">Nhân viên</span>
                         <i class="add-employee-icon" id="add-employee"></i>
@@ -241,8 +241,57 @@
                 <div class="section task-space">
                     task-space
                 </div>
-                <div class="section request-space show">
-                    request-space
+                <div class="section request-space">
+                    <div class="section-header space__header">
+                        <span class="space__header-title">Xin vắng</span>
+                    </div>
+                    <div class="space__body">
+                        <div class="space__body-table">
+                            <div class="table__thead">
+                                <div class="request-table__thead request-table__thead0">
+                                    <span>STT</span>
+                                </div>
+                                <div class="request-table__thead request-table__thead1">
+                                    <span>MSNV</span>
+                                </div>
+                                <div class="request-table__thead request-table__thead2">
+                                    <span>Họ và tên</span>
+                                </div>
+                                <div class="request-table__thead request-table__thead3">
+                                    <span>Phòng ban</span>
+                                </div>
+                                <div class="request-table__thead request-table__thead4">
+                                    <span>Lý do</span>
+                                </div>
+                                <div class="request-table__thead request-table__thead5">
+                                    <span>Thao tác</span>
+                                </div>
+                            </div>
+                            <div class="table__tbody" id="request-tbody">
+                                <!-- <div class="row-tbody request">
+                                    <div class="request-table__tbody0">
+                                        <span>1</span>
+                                    </div>
+                                    <div class="request-table__tbody1">
+                                        <span>MSNV</span>
+                                    </div>
+                                    <div class="request-table__tbody2">
+                                        <span>Họ và tên</span>
+                                    </div>
+                                    <div class="request-table__tbody3">
+                                        <span>Phòng ban</span>
+                                    </div>
+                                    <div class="request-table__tbody4">
+                                        <span>DI choi gai</span>
+                                    </div>
+                                    <div class="request-table__tbody5">
+                                        <button onclick="acceptRequest(MSNV)">Đống Ý</button>
+                                        <button onclick="rejectRequest(MSNV)">Từ chối</button>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -378,6 +427,7 @@
                 <div class="office-view__office">
                     <span>truong phong:</span>
                     <span>Kế toán</span>
+                    <button class="change-captain" onclick="changeCaptainOffice(777)">Doi</button>
                 </div>
                 <div class="office-view__position">
                     <span>so nhan vien:</span>

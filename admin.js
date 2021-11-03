@@ -31,6 +31,7 @@
 
     let employeeBody = document.querySelector('#employee-tbody');
     let officeBody = document.querySelector('#office-tbody');
+    let requestBody = document.querySelector('#request-tbody');
     //call API
     for (let i = 0; i < 100; i++) {
         let divEmployee = document.createElement('div')
@@ -58,7 +59,7 @@
             <span>Tài khoản</span>
         </div>
         <div class="employee-table__tbody6">
-            <button onclick="deleteEmployee(asdgakshdgasjdg)">Xoá</button>
+            <button class="delete-employee" onclick="deleteEmployee(444)">Xoá</button>
         </div>
         `
         employeeBody.appendChild(divEmployee)
@@ -85,11 +86,66 @@
             <span>${i}</span>
         </div>
         <div class="office-table__tbody5">
-            <button onclick="deleteOffice(MSNV)">Xoá</button>
+            <button class="delete-office" onclick="deleteOffice(777)">Xoá</button>
         </div>
         `
         officeBody.appendChild(divOffice)
+
+        let divRequest = document.createElement('div')
+        divRequest.setAttribute('data-id', 'asdgakshdgasjdg')
+        divRequest.classList.add('row-tbody')
+        divRequest.classList.add('request')
+        divRequest.innerHTML = `
+            <div class="request-table__tbody0">
+                <span>1</span>
+            </div>
+            <div class="request-table__tbody1">
+                <span>MSNV</span>
+            </div>
+            <div class="request-table__tbody2">
+                <span>Họ và tên</span>
+            </div>
+            <div class="request-table__tbody3">
+                <span>Phòng ban</span>
+            </div>
+            <div class="request-table__tbody4">
+                <span>DI choi gai</span>
+            </div>
+            <div class="request-table__tbody5">
+                <button class="accept-request" onclick="acceptRequest(888)">Đống Ý</button>
+                <button class="reject-request" onclick="rejectRequest(999)">Từ chối</button>
+            </div>
+        `
+        requestBody.appendChild(divRequest)
     }
+})();
+
+(function stopPro() {
+    const deleteEmployee = document.querySelectorAll('.delete-employee')
+    const deleteOffice = document.querySelectorAll('.delete-office')
+    const changeCaptainOffice = document.querySelectorAll('.change-captain')
+    const acceptRequest = document.querySelectorAll('.accept-request')
+    const rejectRequest = document.querySelectorAll('.reject-request')
+
+    Array.from(deleteEmployee).forEach(e => {
+        clearViewClick(e)
+    })
+
+    Array.from(deleteOffice).forEach(e => {
+        clearViewClick(e)
+    })
+
+    Array.from(changeCaptainOffice).forEach(e => {
+        clearViewClick(e)
+    })
+
+    Array.from(acceptRequest).forEach(e => {
+        clearViewClick(e)
+    })
+
+    Array.from(rejectRequest).forEach(e => {
+        clearViewClick(e)
+    })
 })();
 
 function clearViewClick(viewSpace) {
@@ -180,6 +236,26 @@ function viewOffice(e) {
     showView(view)
     closeView(view)
     closeViewByButton(btnEsc, view)
-        //set attribute of office view
+        //data-id = id of office
     console.log(e.getAttribute('data-id'))
+}
+
+function deleteEmployee(e) {
+    alert('tao api ma request di thang bui ' + e)
+}
+
+function deleteOffice(e) {
+    alert('tao api ma request di thang bui ' + e)
+}
+
+function acceptRequest(e) {
+    alert('tao api ma request di thang bui ' + e)
+}
+
+function rejectRequest(e) {
+    alert('tao api ma request di thang bui ' + e)
+}
+
+function changeCaptainOffice(e) {
+    alert('tao api ma request di thang bui ' + e)
 }

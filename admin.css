@@ -442,6 +442,7 @@ a.active {
     justify-content: center;
 }
 
+.request-table__thead,
 .office-table__thead,
 .employee-table__thead {
     text-align: center;
@@ -450,6 +451,7 @@ a.active {
     color: white;
 }
 
+.request-table__thead+.request-table__thead,
 .office-table__thead+.office-table__thead,
 .employee-table__thead+.employee-table__thead {
     border-left: 1px solid rgb(255, 255, 255);
@@ -503,6 +505,15 @@ a.active {
 .row-tbody {
     display: flex;
     border-bottom: 1px solid black;
+}
+
+.row-tbody:hover {
+    background-color: #32eb21;
+}
+
+.employee,
+.office {
+    cursor: pointer;
 }
 
 .row-tbody div {
@@ -582,4 +593,34 @@ a.active {
 .office-table__tbody5,
 .office-table__thead5 {
     width: 10%;
+}
+
+.request-table__tbody0,
+.request-table__thead0 {
+    width: 5%;
+}
+
+.request-table__tbody1,
+.request-table__thead1 {
+    width: 10%;
+}
+
+.request-table__tbody2,
+.request-table__thead2 {
+    width: 15%;
+}
+
+.request-table__tbody3,
+.request-table__thead3 {
+    width: 15%;
+}
+
+.request-table__tbody4,
+.request-table__thead4 {
+    width: 40%;
+}
+
+.request-table__tbody5,
+.request-table__thead5 {
+    width: 15%;
 }
