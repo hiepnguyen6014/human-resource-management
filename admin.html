@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="present.css">
+    <link rel="stylesheet" href="admin.css">
 
     <link rel="shortcut icon" href="favi.ico" type="image/x-icon">
 </head>
@@ -26,13 +26,13 @@
 
             <ul class="navigation__task-items">
                 <li class="navigation__task-item">
-                    <a href="#">
+                    <a href="#" class="active">
                         <i class="employee-icon icon"></i>
                         <span class="navigation__task-item__text">Nhân viên</span>
                     </a>
                 </li>
                 <li class="navigation__task-item">
-                    <a href="#" class="active">
+                    <a href="#">
                         <i class="office-icon icon"></i>
                         <span class="navigation__task-item__text">Phòng ban</span>
                     </a>
@@ -46,7 +46,7 @@
                 <li class="navigation__task-item">
                     <a href="#">
                         <i class="personoff-icon icon"></i>
-                        <span class="navigation__task-item__text">Yêu cầu nghỉ</span>
+                        <span class="navigation__task-item__text">Xin vắng</span>
                     </a>
                 </li>
                 <li class="navigation__task-item">
@@ -128,250 +128,319 @@
             </header>
 
             <div class="app">
-                <div class="app__content">
-                    <div class="app__content-header">
-                        <div class="app__content-header-title">
-                            <span style="font-size: 20px;">Phòng ban</span>
-                        </div>
-                        <div class="app__content-header-action">
-                            <i id="add-office" class="add-icon"></i>
+                <div class="section employee-space">
+                    <div class="section-header space__header">
+                        <span class="space__header-title">Nhân viên</span>
+                        <i class="add-employee-icon" id="add-employee"></i>
+                    </div>
+                    <div class="space__body">
+                        <div class="space__body-table">
+                            <div class="table__thead">
+                                <div class="employee-table__thead employee-table__thead0">
+                                    <span>STT</span>
+                                </div>
+                                <div class="employee-table__thead employee-table__thead1">
+                                    <span>MSNV</span>
+                                </div>
+                                <div class="employee-table__thead employee-table__thead2">
+                                    <span>Họ và tên</span>
+                                </div>
+                                <div class="employee-table__thead employee-table__thead3">
+                                    <span>Phòng ban</span>
+                                </div>
+                                <div class="employee-table__thead employee-table__thead4">
+                                    <span>Chức vụ</span>
+                                </div>
+                                <div class="employee-table__thead employee-table__thead5">
+                                    <span>Tài khoản</span>
+                                </div>
+                                <div class="employee-table__thead employee-table__thead6">
+                                    <span>Thao tác</span>
+                                </div>
+                            </div>
+                            <div class="table__tbody" id="employee-tbody">
+                                <!-- <div class="row-tbody employee">
+                                    <div class="employee-table__tbody0">
+                                        <span>1</span>
+                                    </div>
+                                    <div class="employee-table__tbody1">
+                                        <span>MSNV</span>
+                                    </div>
+                                    <div class="employee-table__tbody2">
+                                        <span>Họ và tên</span>
+                                    </div>
+                                    <div class="employee-table__tbody3">
+                                        <span>Phòng ban</span>
+                                    </div>
+                                    <div class="employee-table__tbody4">
+                                        <span>Chức vụ</span>
+                                    </div>
+                                    <div class="employee-table__tbody5">
+                                        <span>Tài khoản</span>
+                                    </div>
+                                    <div class="employee-table__tbody6">
+                                        <button onclick="deleteEmployee(MSNV)">Xoá</button>
+                                    </div>
+                                </div> -->
+                            </div>
                         </div>
                     </div>
-                    <div class="app__content-body">
-                        <table class="app__content-body__table">
-                            <thead class="app__content-body__thead">
-                                <tr>
-                                    <td>ID</td>
-                                    <td>Tên phòng</td>
-                                    <td>Trưởng phòng</td>
-                                    <td>Số lượng</td>
-                                    <td>Thao tác</td>
-                                </tr>
-                            </thead>
-                            <tbody class="app__content-body__tbody" id="office-tbody">
-                                <!-- <tr data-id="1">
-                                    <td>Số Phòng</td>
-                                    <td>Tên phòng</td>
-                                    <td>Trưởng phòng</td>
-                                    <td>Số lượng</td>
-                                    <td>
-                                        <button class="btn btn-primary">Sửa</button>
-                                        <button class="btn btn-danger">Xóa</button>
-                                    </td>
-                                </tr> -->
-                            </tbody>
-                        </table>
+                </div>
+                <div class="section office-space">
+                    <div class="section-header space__header">
+                        <span class="space__header-title">Phòng ban</span>
+                        <i class="add-office-icon" id="add-office"></i>
                     </div>
+                    <div class="space__body">
+                        <div class="space__body-table">
+                            <div class="table__thead">
+                                <div class="office-table__thead office-table__thead0">
+                                    <span>STT</span>
+                                </div>
+                                <div class="office-table__thead office-table__thead1">
+                                    <span>MSPB</span>
+                                </div>
+                                <div class="office-table__thead office-table__thead2">
+                                    <span>Phòng ban</span>
+                                </div>
+                                <div class="office-table__thead office-table__thead3">
+                                    <span>Trường phòng</span>
+                                </div>
+                                <div class="office-table__thead office-table__thead4">
+                                    <span>Số nhân viên</span>
+                                </div>
+                                <div class="office-table__thead office-table__thead5">
+                                    <span>Thao tác</span>
+                                </div>
+                            </div>
+                            <div class="table__tbody" id="office-tbody">
+                                <!-- <div class="row-tbody office">
+                                    <div class="office-table__tbody0">
+                                        <span>SST</span>
+                                    </div>
+                                    <div class="office-table__tbody1">
+                                        <span>MSPB</span>
+                                    </div>
+                                    <div class="office-table__tbody2">
+                                        <span>Phòng ban</span>
+                                    </div>
+                                    <div class="office-table__tbody3">
+                                        <span>Trường phòng</span>
+                                    </div>
+                                    <div class="office-table__tbody4">
+                                        <span>Số nhân viên</span>
+                                    </div>
+                                    <div class="office-table__tbody5">
+                                        <button onclick="deleteOffice(MSNV)">Xoá</button>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section task-space">
+                    task-space
+                </div>
+                <div class="section request-space show">
+                    request-space
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="profile-view">
-        <div class="profile">
-            <div class="profile-view__header">
-                <img src="images/background_login.jpg" alt="profile">
-                <button>Change</button>
-                <div class="profile-user">
-                    <p class="profile-name">Ho va ten</p>
-                    <span class="profile-username">username</span>
-                </div>
-            </div>
-            <div class="profile-view__body">
-                <div class="profile-view__body-id">
+    <div class="profile-view view">
+        <div class="profile-view__space view-space">
+            <div class="view__body">
+                <div class="profile-view__img">
                     <span>ID:</span>
                     <span>51900743</span>
                 </div>
-                <div class="profile-view__body-office">
+                <div class="profile-view__id">
+                    <span>ID:</span>
+                    <span>51900743</span>
+                </div>
+                <div class="profile-view__office">
                     <span>Phòng ban:</span>
                     <span>Kế toán</span>
                 </div>
-                <div class="profile-view__body-position">
+                <div class="profile-view__position">
                     <span>Vị trí:</span>
                     <span>Nhân viên</span>
                 </div>
             </div>
-            <div class="profile-view__action">
-                <button id="save-profile">Lưu</button>
-                <button id="finish-view-profile" class="btn btn-primary">Thoát</button>
+            <div class="view__action">
+                <button id="save-profile">Luu</button>
+                <button id="cancel-profile" class="btn btn-primary">Thoat</button>
             </div>
         </div>
     </div>
 
-    <div class="office-view">
-        <div class="office">
-            <div class="office-view__body">
-                <div class="office-view__body-name">
-                    <span>Tên:</span>
-                    <span>adiasgdgaskdgaskdajsghdhjasdajksgd</span>
+    <!-- employee view detail -->
+    <div class="employee-view view">
+        <div class="employee-view__space view-space">
+            <div class="view__body">
+                <div class="employee-view__image">
+                    <img src="/"></img>
                 </div>
-                <div class="office-view__body-office">
+                <div class="employee-view__id">
+                    <span>MSNV:</span>
+                    <span>1321231</span>
+                </div>
+                <div class="employee-view__name">
+                    <span>Tên:</span>
+                    <span>Nguyen Thi Lan</span>
+                </div>
+                <div class="employee-view__office">
                     <span>Phòng ban:</span>
                     <span>Kế toán</span>
                 </div>
-                <div class="office-view__body-desciption">
-                    <span>Miêu tả:</span>
+                <div class="employee-view__position">
+                    <span>Chức vụ:</span>
                     <span>Nhân viên</span>
                 </div>
-                <div class="office-view__body-room">
+                <div class="employee-view__account">
+                    <span>Tài khoản:</span>
+                    <span>nguyenthilan</span>
+                </div>
+                <div class="employee-view__room">
                     <span>Số phòng:</span>
                     <span>123123</span>
                 </div>
+                <div class="employee-view__reset">
+                    <span>Password:</span>
+                    <button>Reset</button>
+                </div>
             </div>
-            <div class="office-view__action">
-                <button id="finish-view-office" class="btn btn-primary">Xong</button>
+            <div class="view__action">
+                <button id="save-employee" class="btn btn-primary">Luu</button>
+                <button id="cancel-employee" class="btn btn-primary">Thoat</button>
             </div>
         </div>
     </div>
 
-    <div class="office-new">
-        <div class="office-new__child">
-            <div class="office-new__body">
-                <div class="office-new__body-name">
-                    <span>Tên:</span>
-                    <span>adiasgdgaskdgaskdajsghdhjasdajksgd</span>
+    <div class="employee-new view">
+        <div class="employee-new__space view-space">
+            <div class="view__body">
+                <div class="employee-new__image">
+                    <img src="/"></img>
                 </div>
-                <div class="office-new__body-office">
+                <div class="employee-new__id">
+                    <span>MSNV:</span>
+                    <span>1321231</span>
+                </div>
+                <div class="employee-new__name">
+                    <span>Tên:</span>
+                    <span>Nguyen Thi Lan</span>
+                </div>
+                <div class="employee-new__office">
                     <span>Phòng ban:</span>
                     <span>Kế toán</span>
                 </div>
-                <div class="office-new__body-desciption">
-                    <span>Miêu tả:</span>
+                <div class="employee-new__position">
+                    <span>Chức vụ:</span>
                     <span>Nhân viên</span>
                 </div>
-                <div class="office-new__body-room">
+                <div class="employee-new__account">
+                    <span>Tài khoản:</span>
+                    <span>nguyenthilan</span>
+                </div>
+                <div class="employee-new__room">
+                    <span>Số phòng:</span>
+                    <span>123123</span>
+                </div>
+                <div class="employee-new__reset">
+                    <span>Password:</span>
+                    <button>Reset</button>
+                </div>
+            </div>
+            <div class="view__action">
+                <button id="save-new-employee" class="btn btn-primary">Luu</button>
+                <button id="cancel-new-employee" class="btn btn-primary">Thoat</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- office view details -->
+    <div class="office-view view">
+        <div class="office-view__space view-space">
+            <div class="view__body">
+                <div class="office-view__image">
+                    <img src="/"></img>
+                </div>
+                <div class="office-view__id">
+                    <span>MSPB:</span>
+                    <span>1321231</span>
+                </div>
+                <div class="office-view__name">
+                    <span>Phong ban:</span>
+                    <span>ke toan</span>
+                </div>
+                <div class="office-view__office">
+                    <span>truong phong:</span>
+                    <span>Kế toán</span>
+                </div>
+                <div class="office-view__position">
+                    <span>so nhan vien:</span>
+                    <span>Nhân viên</span>
+                </div>
+                <div class="office-view__account">
+                    <span>mieu:</span>
+                    <span>nguyenthilan</span>
+                </div>
+                <div class="office-view__room">
                     <span>Số phòng:</span>
                     <span>123123</span>
                 </div>
             </div>
-            <div class="office-new__action">
+            <div class="view__action">
+                <button id="save-office" class="btn btn-primary">Luu</button>
+                <button id="cancel-office" class="btn btn-primary">Thoat</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="office-new view">
+        <div class="office-new__space view-space">
+            <div class="view__body">
+                <div class="office-new__image">
+                    <img src="/"></img>
+                </div>
+                <div class="office-new__id">
+                    <span>MSNV:</span>
+                    <span>1321231</span>
+                </div>
+                <div class="office-new__name">
+                    <span>Tên:</span>
+                    <span> Thi Lan</span>
+                </div>
+                <div class="office-new__office">
+                    <span>Phòng ban:</span>
+                    <span>Kế toán</span>
+                </div>
+                <div class="office-new__position">
+                    <span>Chức vụ:</span>
+                    <span>Nhân viên</span>
+                </div>
+                <div class="office-new__account">
+                    <span>Tài khoản:</span>
+                    <span>nguyenthilan</span>
+                </div>
+                <div class="office-new__room">
+                    <span>Số phòng:</span>
+                    <span>123123</span>
+                </div>
+                <div class="office-new__reset">
+                    <span>Password:</span>
+                    <button>Reset</button>
+                </div>
+            </div>
+            <div class="view__action">
                 <button id="save-new-office" class="btn btn-primary">Luu</button>
                 <button id="cancel-new-office" class="btn btn-primary">Thoat</button>
             </div>
         </div>
     </div>
-
-    <!-- <div class="employee-view">
-        <div class="employee">
-            <div class="employee-view__header">
-                <img src="images/background_login.jpg" alt="employee">
-                <button>Change</button>
-                <div class="employee-user">
-                    <p class="employee-name">Ho va ten</p>
-                    <span class="employee-username">username</span>
-                </div>
-            </div>
-            <div class="employee-view__body">
-                <div class="employee-view__body-id">
-                    <span>ID:</span>
-                    <span>51900743</span>
-                </div>
-                <div class="employee-view__body-office">
-                    <span>Phòng ban:</span>
-                    <span>Kế toán</span>
-                </div>
-                <div class="employee-view__body-position">
-                    <span>Vị trí:</span>
-                    <span>Nhân viên</span>
-                </div>
-            </div>
-            <div class="employee-view__action">
-                <button id="logout">Đăng xuất</button>
-                <button id="finish-view" class="btn btn-primary">Xong</button>
-            </div>
-        </div>
-    </div> -->
-    <script>
-        let officeBody = document.querySelector('#office-tbody');
-        // crete office 100
-        for (let i = 0; i < 30; i++) {
-            let tr = document.createElement('tr');
-            tr.setAttribute('data-id', i);
-            // replace i == id to view
-            tr.setAttribute('onclick', `viewOffice(${i})`);
-            tr.innerHTML = `
-                <td>${i}</td>
-                <td>Tên phòng</td>
-                <td>TRAN HOANG MINH LOC</td>
-                <td>${i * 2}</td>
-                <td>
-                    <button class="btn btn-danger">Xóa</button>
-                </td>
-            `;
-            officeBody.appendChild(tr);
-        }
-
-        function viewOffice(e) {
-            const officeView = document.querySelector('.office-view')
-            const office = document.querySelector('.office');
-
-            officeView.style.display = 'block';
-
-            officeView.addEventListener('click', function() {
-                officeView.style.display = 'none';
-            })
-
-            office.addEventListener('click', function(e) {
-                e.stopPropagation();
-            })
-
-            const buttonFinish = document.querySelector('#finish-view-office')
-            buttonFinish.addEventListener('click', () => {
-                officeView.style.display = 'none';
-            })
-        }
-
-        // show profile when click avt
-        (function profile(id) {
-            const buttonProfileView = document.querySelector('#profile-view')
-            const profileView = document.querySelector('.profile-view');
-            const profile = document.querySelector('.profile');
-            const buttonFinish = document.querySelector('#finish-view-profile');
-
-            buttonProfileView.addEventListener('click', function() {
-                profileView.style.display = 'block';
-            })
-
-            profileView.addEventListener('click', function() {
-                profileView.style.display = 'none';
-
-            })
-
-            buttonFinish.addEventListener('click', function() {
-                profileView.style.display = 'none';
-            })
-
-            profile.addEventListener('click', function(e) {
-                e.stopPropagation();
-            })
-            console.log(id)
-        })();
-
-        (function addOffice() {
-            const buttonAddOffice = document.querySelector('#add-office')
-            const officeNew = document.querySelector('.office-new')
-            const office = document.querySelector('.office-new__child')
-            const cancel = document.querySelector('#cancel-new-office')
-
-            buttonAddOffice.addEventListener('click', function() {
-                officeNew.style.display = 'block'
-            })
-
-            officeNew.addEventListener('click', function() {
-                officeNew.style.display = 'none'
-            })
-
-            office.addEventListener('click', function(e) {
-                e.stopPropagation()
-            })
-
-            cancel.addEventListener('click', function() {
-                officeNew.style.display = 'none'
-            })
-        })();
-
-        //show office detail when click row
-    </script>
+    <script src="admin.js "></script>
 </body>
 
 </html>
