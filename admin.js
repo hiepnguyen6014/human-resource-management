@@ -241,21 +241,21 @@ function viewOffice(e) {
 }
 
 function deleteEmployee(e) {
-    alert('tao api ma request di thang bui ' + e)
+    alert('tao api ma request di ' + e)
 }
 
 function deleteOffice(e) {
-    alert('tao api ma request di thang bui ' + e)
+    alert('tao api ma request di ' + e)
 }
 
 function acceptRequest(e) {
-    alert('tao api ma request di thang bui ' + e)
+    alert('tao api ma request di ' + e)
 }
 
 function rejectRequest(e) {
-    alert('tao api ma request di thang bui ' + e)
+    alert('tao api ma request di ' + e)
 }
 
 function changeCaptainOffice(e) {
-    alert('tao api ma request di thang bui ' + e)
+    alert('tao api ma request di ' + e)
 }
