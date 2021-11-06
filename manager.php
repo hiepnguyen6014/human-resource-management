@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -147,7 +146,7 @@
                                 </div>
                             </div>
                             <div class="table__tbody" id="employee-tbody">
-                                <div data-id="id" onclick="viewEmployee(this)" class="row-tbody employee">
+                                <div data-id="id" class="row-tbody employee">
                                     <div class="employee-table__tbody0">
                                         <span>1</span>
                                     </div>
@@ -168,7 +167,7 @@
                 <div class="section task-space">
                     <div class="section-header space__header">
                         <span class="space__header-title">Nhiệm vụ</span>
-                        <i class="add-employee-icon" id="add-task"></i>
+                        <i class="add-task-icon" id="add-task"></i>
                     </div>
                     <div class="space__body">
                         <div class="space__body-table">
@@ -190,7 +189,7 @@
                                 </div>
                             </div>
                             <div class="table__tbody" id="task-tbody">
-                                <div class="row-tbody task">
+                                <div data-id="id" onclick="viewTask(this)" class="row-tbody task">
                                      <div class="task-table__tbody0">
                                         <span>1</span>
                                     </div>
@@ -216,7 +215,7 @@
                         <span class="space__header-title">Xin vắng</span>
                     </div>
                     <div class="space__body">
-                        <div class="space__body-table">
+                        <div data-id="id" onclick="viewRequest(this)" class="space__body-table">
                             <div class="table__thead">
                                 <div class="request-table__thead request-table__thead0">
                                     <span>STT</span>
@@ -329,173 +328,6 @@
         </div>
     </div>
 
-    <!-- employee view detail -->
-    <div class="employee-view view">
-        <div class="employee-view__space view-space">
-            <div class="view__body">
-                <div class="employee-view__image">
-                    <img src="/"></img>
-                </div>
-                <div class="employee-view__id">
-                    <span>MSNV:</span>
-                    <span>1321231</span>
-                </div>
-                <div class="employee-view__name">
-                    <span>Tên:</span>
-                    <span>Nguyen Thi Lan</span>
-                </div>
-                <div class="employee-view__office">
-                    <span>Phòng ban:</span>
-                    <span>Kế toán</span>
-                </div>
-                <div class="employee-view__position">
-                    <span>Chức vụ:</span>
-                    <span>Nhân viên</span>
-                </div>
-                <div class="employee-view__account">
-                    <span>Tài khoản:</span>
-                    <span>nguyenthilan</span>
-                </div>
-                <div class="employee-view__room">
-                    <span>Số phòng:</span>
-                    <span>123123</span>
-                </div>
-                <div class="employee-view__reset">
-                    <span>Password:</span>
-                    <button>Reset</button>
-                </div>
-            </div>
-            <div class="view__action">
-                <button id="save-employee" class="btn btn-primary">Luu</button>
-                <button id="cancel-employee" class="btn btn-primary">Thoat</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="employee-new view">
-        <div class="employee-new__space view-space">
-            <div class="view__body">
-                <div class="employee-new__image">
-                    <img src="/"></img>
-                </div>
-                <div class="employee-new__id">
-                    <span>MSNV:</span>
-                    <span>1321231</span>
-                </div>
-                <div class="employee-new__name">
-                    <span>Tên:</span>
-                    <span>Nguyen Thi Lan</span>
-                </div>
-                <div class="employee-new__office">
-                    <span>Phòng ban:</span>
-                    <span>Kế toán</span>
-                </div>
-                <div class="employee-new__position">
-                    <span>Chức vụ:</span>
-                    <span>Nhân viên</span>
-                </div>
-                <div class="employee-new__account">
-                    <span>Tài khoản:</span>
-                    <span>nguyenthilan</span>
-                </div>
-                <div class="employee-new__room">
-                    <span>Số phòng:</span>
-                    <span>123123</span>
-                </div>
-                <div class="employee-new__reset">
-                    <span>Password:</span>
-                    <button>Reset</button>
-                </div>
-            </div>
-            <div class="view__action">
-                <button id="save-new-employee" class="btn btn-primary">Luu</button>
-                <button id="cancel-new-employee" class="btn btn-primary">Thoat</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- office view details -->
-    <div class="office-view view">
-        <div class="office-view__space view-space">
-            <div class="view__body">
-                <div class="office-view__image">
-                    <img src="/"></img>
-                </div>
-                <div class="office-view__id">
-                    <span>MSPB:</span>
-                    <span>1321231</span>
-                </div>
-                <div class="office-view__name">
-                    <span>Phong ban:</span>
-                    <span>ke toan</span>
-                </div>
-                <div class="office-view__office">
-                    <span>truong phong:</span>
-                    <span>Kế toán</span>
-                    <button class="change-captain" onclick="changeCaptainOffice(777)">Doi</button>
-                </div>
-                <div class="office-view__position">
-                    <span>so nhan vien:</span>
-                    <span>Nhân viên</span>
-                </div>
-                <div class="office-view__account">
-                    <span>mieu:</span>
-                    <span>nguyenthilan</span>
-                </div>
-                <div class="office-view__room">
-                    <span>Số phòng:</span>
-                    <span>123123</span>
-                </div>
-            </div>
-            <div class="view__action">
-                <button id="save-office" class="btn btn-primary">Luu</button>
-                <button id="cancel-office" class="btn btn-primary">Thoat</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="office-new view">
-        <div class="office-new__space view-space">
-            <div class="view__body">
-                <div class="office-new__image">
-                    <img src="/"></img>
-                </div>
-                <div class="office-new__id">
-                    <span>MSNV:</span>
-                    <span>1321231</span>
-                </div>
-                <div class="office-new__name">
-                    <span>Tên:</span>
-                    <span> Thi Lan</span>
-                </div>
-                <div class="office-new__office">
-                    <span>Phòng ban:</span>
-                    <span>Kế toán</span>
-                </div>
-                <div class="office-new__position">
-                    <span>Chức vụ:</span>
-                    <span>Nhân viên</span>
-                </div>
-                <div class="office-new__account">
-                    <span>Tài khoản:</span>
-                    <span>nguyenthilan</span>
-                </div>
-                <div class="office-new__room">
-                    <span>Số phòng:</span>
-                    <span>123123</span>
-                </div>
-                <div class="office-new__reset">
-                    <span>Password:</span>
-                    <button>Reset</button>
-                </div>
-            </div>
-            <div class="view__action">
-                <button id="save-new-office" class="btn btn-primary">Luu</button>
-                <button id="cancel-new-office" class="btn btn-primary">Thoat</button>
-            </div>
-        </div>
-    </div>
-
     <div class="task-new view">
         <div class="task-new__space view-space">
             <div class="view__body">
@@ -577,28 +409,124 @@
         </div>
     </div>
 
-    <div class="off-new view">
-        <div class="off-new__space view-space">
+    <div class="request-view view">
+        <div class="request-view__space view-space">
             <div class="view__body">
-                <div class="form-off">
-                    <form action="/" method="post" id="form-off">
-                        <div class="input-group">
-                            <label for="time">Thoi gian:</label>
-                            <input type="date" name="dateoff" id="dateoff">
-                        </div>
-                        <div class="input-group">
-                            <label for="description">Lý do:</label>
-                            <input type="text">
-                        </div>
-                    </form>
+                <div class="request-view__image">
+                    <img src="/"></img>
                 </div>
-            </div>
-            <div class="view__action">
-                <button id="save-off" class="btn btn-primary">Luu</button>
-                <button id="cancel-off" class="btn btn-primary">Thoat</button>
+                <div class="request-view__id">
+                    <span>MSPB:</span>
+                    <span>1321231</span>
+                </div>
+                <div class="request-view__name">
+                    <span>Phong ban:</span>
+                    <span>ke toan</span>
+                </div>
+                <div class="request-view__request">
+                    <span>truong phong:</span>
+                    <span>Kế toán</span>
+                </div>
+                <div class="request-view__position">
+                    <span>so nhan vien:</span>
+                    <span>Nhân viên</span>
+                </div>
+                <div class="request-view__account">
+                    <span>mieu:</span>
+                    <span>nguyenthilan</span>
+                </div>
+                <div class="request-view__room">
+                    <span>Số phòng:</span>
+                    <span>123123</span>
+                </div>
+                <div class="view__action">
+                    <button id="save-request" class="btn btn-primary">Luu</button>
+                    <button id="cancel-request" class="btn btn-primary">Thoat</button>
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="off-view view">
+        <div class="off-view__space view-space">
+            <div class="view__body">
+                <div class="off-view__image">
+                    <img src="/"></img>
+                </div>
+                <div class="off-view__id">
+                    <span>MSPB:</span>
+                    <span>1321231</span>
+                </div>
+                <div class="off-view__name">
+                    <span>Phong ban:</span>
+                    <span>ke toan</span>
+                </div>
+                <div class="off-view__off">
+                    <span>truong phong:</span>
+                    <span>Kế toán</span>
+                </div>
+                <div class="off-view__position">
+                    <span>so nhan vien:</span>
+                    <span>Nhân viên</span>
+                </div>
+                <div class="off-view__account">
+                    <span>mieu:</span>
+                    <span>nguyenthilan</span>
+                </div>
+                <div class="off-view__room">
+                    <span>Số phòng:</span>
+                    <span>123123</span>
+                </div>
+                <div class="view__action">
+                    <button id="save-off" class="btn btn-primary">Luu</button>
+                    <button id="cancel-off" class="btn btn-primary">Thoat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="off-new view">
+        <div class="off-new__space view-space">
+            <div class="view__body">
+                <div class="off-new__image">
+                    <img src="/"></img>
+                </div>
+                <div class="off-new__id">
+                    <span>MSNV:</span>
+                    <span>1321231</span>
+                </div>
+                <div class="off-new__name">
+                    <span>Tên:</span>
+                    <span> Thi Lan</span>
+                </div>
+                <div class="off-new__off">
+                    <span>Phòng ban:</span>
+                    <span>Kế toán</span>
+                </div>
+                <div class="off-new__position">
+                    <span>Chức vụ:</span>
+                    <span>Nhân viên</span>
+                </div>
+                <div class="off-new__account">
+                    <span>Tài khoản:</span>
+                    <span>nguyenthilan</span>
+                </div>
+                <div class="off-new__room">
+                    <span>Số phòng:</span>
+                    <span>123123</span>
+                </div>
+                <div class="off-new__reset">
+                    <span>Password:</span>
+                    <button>Reset</button>
+                </div>
+            </div>
+            <div class="view__action">
+                <button id="save-new-off" class="btn btn-primary">Luu</button>
+                <button id="cancel-new-off" class="btn btn-primary">Thoat</button>
+            </div>
+        </div>
+    </div>
+
     <script src="/main.js"></script>
 </body>
 

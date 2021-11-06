@@ -154,21 +154,19 @@ if (change) {
 //admin.php
 const admin = document.querySelector('.admin');
 if (admin) {
-    (function() {
-        (function addEmployee() {
-            const btnAdd = document.querySelector('#add-employee')
-            const view = document.querySelector('.employee-new')
-            const space = document.querySelector('.employee-new__space')
-            const btnEsc = document.querySelector('#cancel-new-employee')
+    (function addEmployee() {
+        const btnAdd = document.querySelector('#add-employee')
+        const view = document.querySelector('.employee-new')
+        const space = document.querySelector('.employee-new__space')
+        const btnEsc = document.querySelector('#cancel-new-employee')
 
-            btnAdd.addEventListener('click', function() {
-                showView(view);
-            })
+        btnAdd.addEventListener('click', function() {
+            showView(view);
+        })
 
-            closeViewByButton(btnEsc, view)
-            closeView(view)
-            clearViewClick(space)
-        })();
+        closeViewByButton(btnEsc, view)
+        closeView(view)
+        clearViewClick(space)
     })();
 
     function viewEmployee(e) {
@@ -224,10 +222,51 @@ if (admin) {
     }
 }
 
-//admin.php
+//manager.php
 const manager = document.querySelector('.manager');
 if (manager) {
 
+    (function addTask() {
+        const btnAdd = document.querySelector('#add-task')
+        const view = document.querySelector('.task-new')
+        const space = document.querySelector('.task-new__space')
+        const btnEsc = document.querySelector('#cancel-task')
+
+        btnAdd.addEventListener('click', function() {
+            showView(view);
+        })
+
+        closeViewByButton(btnEsc, view)
+        closeView(view)
+        clearViewClick(space)
+    })();
+
+    (function addOff() {
+        const btnAdd = document.querySelector('#add-off')
+        const view = document.querySelector('.off-new')
+        const space = document.querySelector('.off-new__space')
+        const btnEsc = document.querySelector('#cancel-off')
+
+        btnAdd.addEventListener('click', function() {
+            showView(view);
+        })
+
+        closeViewByButton(btnEsc, view)
+        closeView(view)
+        clearViewClick(space)
+    })();
+
+    function viewTask(e) {
+        const view = document.querySelector(".task-view")
+        const space = document.querySelector(".task-view__space")
+        const btnEsc = document.querySelector("#cancel-task")
+        clearViewClick(space)
+        showView(view)
+        closeView(view)
+        closeViewByButton(btnEsc, view)
+            //data-id = id of task
+        console.log(e.getAttribute('data-id'))
+    }
 
     function viewRequest(e) {
         const view = document.querySelector(".request-view")
@@ -238,6 +277,18 @@ if (manager) {
         closeView(view)
         closeViewByButton(btnEsc, view)
             //data-id = id of request
+        console.log(e.getAttribute('data-id'))
+    }
+
+    function viewOff(e) {
+        const view = document.querySelector(".off-view")
+        const space = document.querySelector(".off-view__space")
+        const btnEsc = document.querySelector("#cancel-off")
+        clearViewClick(space)
+        showView(view)
+        closeView(view)
+        closeViewByButton(btnEsc, view)
+            //data-id = id of off
         console.log(e.getAttribute('data-id'))
     }
 }
