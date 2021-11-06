@@ -146,7 +146,7 @@
                                 </div>
                             </div>
                             <div class="table__tbody" id="employee-tbody">
-                                <div data-id="id" class="row-tbody employee">
+                                <div data-id="id" class="row-tbody">
                                     <div class="employee-table__tbody0">
                                         <span>1</span>
                                     </div>

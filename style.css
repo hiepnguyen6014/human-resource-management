@@ -378,6 +378,7 @@ body {
     cursor: pointer;
 }
 
+.employee,
 .manager,
 .admin {
     display: flex;
@@ -982,6 +983,34 @@ a.active {
 .manager .employee-table__tbody3,
 .manager .employee-table__thead3 {
     width: 35%;
+}
+
+
+/* employee */
+
+.employee .task-table__tbody0,
+.employee .task-table__thead0 {
+    width: 5%;
+}
+
+.employee .task-table__tbody1,
+.employee .task-table__thead1 {
+    width: 15%;
+}
+
+.employee .task-table__tbody2,
+.employee .task-table__thead2 {
+    width: 15%;
+}
+
+.employee .task-table__tbody3,
+.employee .task-table__thead3 {
+    width: 50%;
+}
+
+.employee .task-table__tbody4,
+.employee .task-table__thead4 {
+    width: 15%;
 }
 
 

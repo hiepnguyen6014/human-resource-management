@@ -146,8 +146,8 @@
                                 </div>
                             </div>
                             <div class="table__tbody" id="employee-tbody">
-                                <div data-id="id" onclick="viewEmployee(this)" class="row-tbody employee">
-                                    <div class="employee-table__tbody0">
+                                <div data-id="id" onclick="viewEmployee(this)" class="row-tbody">
+                                    <!-- <div class="employee-table__tbody0">
                                         <span>1</span>
                                     </div>
                                     <div class="employee-table__tbody1">
@@ -164,7 +164,7 @@
                                     </div>
                                     <div class="employee-table__tbody5">
                                         <span>nguyenthuthuy</span>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>

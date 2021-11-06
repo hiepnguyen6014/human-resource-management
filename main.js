@@ -1,5 +1,6 @@
 const LOGIN_API = '/admin/loginAPI.php'
 const CHANGE_API = '/admin/changeAPI.php';
+ADMIN_EMPLOYEE_API = '/admin/employeeAPI.php';
 
 // change section
 (function changeSection() {
@@ -154,6 +155,45 @@ if (change) {
 //admin.php
 const admin = document.querySelector('.admin');
 if (admin) {
+    //load data
+
+    const employeeBody = document.querySelector('#employee-body')
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', ADMIN_EMPLOYEE_API)
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            const data = JSON.parse(xhr.responseText)
+            data.forEach((e, i) => {
+                const div = document.createElement('div')
+                div.setAttribute('class', 'row-tbody')
+                div.setAttribute('data-id', e.id)
+                div.setAttribute('onclick', 'viewEmployee(this)')
+                div.innerHTML = `
+                <div class="employee-table__tbody0">
+                    <span>${i}</span>
+                </div>
+                <div class="employee-table__tbody1">
+                    <span>${e.id}</span>
+                </div>
+                <div class="employee-table__tbody2">
+                    <span>${e.name}</span>
+                </div>
+                <div class="employee-table__tbody3">
+                    <span>${e.position}</span>
+                </div>
+                <div class="employee-table__tbody4">
+                    <span>${e.rank}</span>
+                </div>
+                <div class="employee-table__tbody5">
+                    <span>${e.username}</span>
+                </div>
+                `
+                employeeBody.appendChild(div)
+            })
+        }
+    }
+    xhr.send()
+
     (function addEmployee() {
         const btnAdd = document.querySelector('#add-employee')
         const view = document.querySelector('.employee-new')
@@ -289,6 +329,49 @@ if (manager) {
         closeView(view)
         closeViewByButton(btnEsc, view)
             //data-id = id of off
+        console.log(e.getAttribute('data-id'))
+    }
+}
+
+//employee.php
+const employee = document.querySelector('.employee');
+if (employee) {
+    (function addOff() {
+        const btnAdd = document.querySelector('#add-off')
+        const view = document.querySelector('.off-new')
+        const space = document.querySelector('.off-new__space')
+        const btnEsc = document.querySelector('#cancel-off')
+
+        btnAdd.addEventListener('click', function() {
+            showView(view);
+        })
+
+        closeViewByButton(btnEsc, view)
+        closeView(view)
+        clearViewClick(space)
+    })();
+
+    function viewOff(e) {
+        const view = document.querySelector(".off-view")
+        const space = document.querySelector(".off-view__space")
+        const btnEsc = document.querySelector("#cancel-off")
+        clearViewClick(space)
+        showView(view)
+        closeView(view)
+        closeViewByButton(btnEsc, view)
+            //data-id = id of off
+        console.log(e.getAttribute('data-id'))
+    }
+
+    function viewTask(e) {
+        const view = document.querySelector(".task-view")
+        const space = document.querySelector(".task-view__space")
+        const btnEsc = document.querySelector("#cancel-task")
+        clearViewClick(space)
+        showView(view)
+        closeView(view)
+        closeViewByButton(btnEsc, view)
+            //data-id = id of task
         console.log(e.getAttribute('data-id'))
     }
 }
