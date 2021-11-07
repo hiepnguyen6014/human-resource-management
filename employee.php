@@ -149,7 +149,7 @@
                                 </div>
                             </div>
                             <div class="table__tbody" id="task-tbody">
-                                <!-- <div data-id="id" onclick="viewTask(this)" class="row-tbody task">
+                                <div data-id="id" onclick="viewTask(this)" class="row-tbody task">
                                      <div class="task-table__tbody0">
                                         <span>1</span>
                                     </div>
@@ -165,7 +165,7 @@
                                     <div class="task-table__tbody4">
                                         <span>waiting</span>
                                     </div>
-                                </div> -->
+                                </div>
                                 <!-- <?php
                                     /* require 'api/connection.php';
 

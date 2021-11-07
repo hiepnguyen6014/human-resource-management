@@ -1,5 +1,4 @@
 <?php
-    start_session();
     require('../connection.php');
 
     $sql = "SELECT `id`, `title`, `description`, `startDate`, `endDate`, `status` FROM `task`";

@@ -158,7 +158,7 @@
                                 </div>
                             </div>
                             <div class="table__tbody" id="employee-tbody">
-                                <!-- <div data-id="id" class="row-tbody">
+                                <div data-id="id" class="row-tbody">
                                     <div class="employee-table__tbody0">
                                         <span>1</span>
                                     </div>
@@ -171,10 +171,10 @@
                                     <div class="employee-table__tbody3">
                                         <span>Thiết kế</span>
                                     </div>
-                                </div> -->
-                                <?php
+                                </div>
+                               <!--  <?php
                                     
-                                ?>
+                                ?> -->
                             </div>
                         </div>
                     </div>
