@@ -157,7 +157,7 @@ const admin = document.querySelector('.admin');
 if (admin) {
     //load data
 
-    const employeeBody = document.querySelector('#employee-body')
+    /* const employeeBody = document.querySelector('#employee-body')
     const xhr = new XMLHttpRequest()
     xhr.open('GET', ADMIN_EMPLOYEE_API)
     xhr.onload = function() {
@@ -192,7 +192,7 @@ if (admin) {
             })
         }
     }
-    xhr.send()
+    xhr.send() */
 
     (function addEmployee() {
         const btnAdd = document.querySelector('#add-employee')
@@ -336,6 +336,43 @@ if (manager) {
 //employee.php
 const employee = document.querySelector('.employee');
 if (employee) {
+    //load data
+    (function loadEmployeeTask() {
+        const taskBody = document.querySelector('#task-tbody')
+        const TASK_API = '/api/employee/get-tasks.php'
+        const xhr = new XMLHttpRequest()
+        xhr.open('GET', TASK_API, true)
+        xhr.onload = function() {
+            const data = JSON.parse(xhr.responseText).data
+            console.log(data)
+            data.forEach((e, i) => {
+                const div = document.createElement('div')
+                div.className = "row-tbody task"
+                div.setAttribute('data-id', e.id)
+                div.setAttribute('onclick', "viewTask(this)")
+                div.innerHTML = `
+                    <div class="task-table__tbody0">
+                        <span>${i}</span>
+                    </div>
+                    <div class="task-table__tbody1">
+                        <span>${e.startDate}</span>
+                    </div>
+                    <div class="task-table__tbody2">
+                        <span>${e.endDate}</span>
+                    </div>
+                    <div class="task-table__tbody3">
+                        <span>${e.title}</span>
+                    </div>
+                    <div class="task-table__tbody4">
+                        <span>${e.status}</span>
+                    </div>
+                `
+                taskBody.appendChild(div)
+            })
+        }
+        xhr.send()
+    })();
+
     (function addOff() {
         const btnAdd = document.querySelector('#add-off')
         const view = document.querySelector('.off-new')

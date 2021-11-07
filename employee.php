@@ -1,4 +1,16 @@
-<html lang="en">
+<?php
+    session_start();
+    if(!isset($_SESSION['username']) || !isset($_SESSION['type'])){
+        header("Location: login.php");
+    }
+
+    $type = $_SESSION['type'];
+    if($type != 3){
+        header("Location: login.php");
+    }
+  
+    $username = $_SESSION['username'];
+?>
 
 <head>
     <meta charset="UTF-8">
@@ -20,7 +32,7 @@
     <div class="employee">
         <nav class="employee__navigation navigation">
             <div class="navigation__logo">
-                <a href="#">
+                <a href="/">
                     <img class="navigation__logo-image" src="images/white_logo.png" alt="logo">
                 </a>
             </div>
@@ -137,7 +149,7 @@
                                 </div>
                             </div>
                             <div class="table__tbody" id="task-tbody">
-                                <div data-id="id" onclick="viewTask(this)" class="row-tbody task">
+                                <!-- <div data-id="id" onclick="viewTask(this)" class="row-tbody task">
                                      <div class="task-table__tbody0">
                                         <span>1</span>
                                     </div>
@@ -153,7 +165,45 @@
                                     <div class="task-table__tbody4">
                                         <span>waiting</span>
                                     </div>
-                                </div>
+                                </div> -->
+                                <!-- <?php
+                                    /* require 'api/connection.php';
+
+                                    $sql = "SELECT `id`, `title`, `startDate`, `endDate`, `status` FROM `task`";
+                                    $result = $conn->query($sql);
+
+                                    if ($result->num_rows > 0) {
+                                        $i = 1;
+                                        while($row = $result->fetch_assoc()) {
+                                            $id = $row["id"];
+                                            $start_day = $row["startDate"];
+                                            $row["endDate"];
+                                            $row["title"];
+                                            $row["status"];
+                                            $html = '<div data-id="$id" onclick="viewTask($id)" class="row-tbody task">';
+                                            echo $html;
+                                                <div class="task-table__tbody0">
+                                                    <span>$i</span>
+                                                </div>
+                                                <div class="task-table__tbody1">
+                                                    <span>$start_day</span>
+                                                </div>
+                                                <div class="task-table__tbody2">
+                                                    <span></span>
+                                                </div>
+                                                <div class="task-table__tbody3">
+                                                    <span></span>
+                                                </div>
+                                                <div class="task-table__tbody4">
+                                                    <span></span>
+                                                </div>
+                                            </div>`;
+                                            $i++;
+                                        }
+                                    }
+                                    $conn->close(); */
+
+                                ?> -->
                             </div>
                         </div>
                     </div>
@@ -357,5 +407,3 @@
 
     <script src="/main.js"></script>
 </body>
-
-</html>

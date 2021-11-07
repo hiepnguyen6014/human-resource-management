@@ -1,4 +1,16 @@
-<html lang="en">
+<?php
+    session_start();
+    if(!isset($_SESSION['username']) || !isset($_SESSION['type'])){
+        header("Location: login.php");
+    }
+
+    $type = $_SESSION['type'];
+    if($type != 2){
+        header("Location: login.php");
+    }
+  
+    $username = $_SESSION['username'];
+?>
 
 <head>
     <meta charset="UTF-8">
@@ -20,7 +32,7 @@
     <div class="manager">
         <nav class="manager__navigation navigation">
             <div class="navigation__logo">
-                <a href="#">
+                <a href="/">
                     <img class="navigation__logo-image" src="images/white_logo.png" alt="logo">
                 </a>
             </div>
@@ -146,7 +158,7 @@
                                 </div>
                             </div>
                             <div class="table__tbody" id="employee-tbody">
-                                <div data-id="id" class="row-tbody">
+                                <!-- <div data-id="id" class="row-tbody">
                                     <div class="employee-table__tbody0">
                                         <span>1</span>
                                     </div>
@@ -159,7 +171,10 @@
                                     <div class="employee-table__tbody3">
                                         <span>Thiết kế</span>
                                     </div>
-                                </div>
+                                </div> -->
+                                <?php
+                                    
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -529,5 +544,3 @@
 
     <script src="/main.js"></script>
 </body>
-
-</html>

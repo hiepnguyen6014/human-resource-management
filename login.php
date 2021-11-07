@@ -1,3 +1,21 @@
+<?php
+    session_start();
+    if(isset($_SESSION['username']) && isset($_SESSION['type'])){
+        $type = $_SESSION['type'];
+        if ($type == 1){
+            header("Location: admin.php");
+        }
+        else if ($type == 2){
+            header("Location: manager.php");
+        }
+        else {
+            header("Location: employee.php");
+        }
+    }
+
+    $username = $_SESSION['username'];
+?>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,7 +35,7 @@
 <body>
     <div class="login">
         <div class="login__container">
-            <form class="login__container__form" method="POST">
+            <form class="login__container__form" method="POST" action="api/loginAPI.php">
                 <img class="login__container__image" src="images/white_logo.webp" alt="logo">
                 <div class="login__container__inputs">
                     <div class="login__container__input">

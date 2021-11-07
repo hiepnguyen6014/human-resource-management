@@ -1,4 +1,16 @@
-<html lang="en">
+<?php
+    session_start();
+    if(!isset($_SESSION['username']) || !isset($_SESSION['type'])){
+        header("Location: login.php");
+    }
+
+    $type = $_SESSION['type'];
+    if($type != 1){
+        header("Location: login.php");
+    }
+  
+    $username = $_SESSION['username'];
+?>
 
 <head>
     <meta charset="UTF-8">
@@ -20,7 +32,7 @@
     <div class="admin">
         <nav class="admin__navigation navigation">
             <div class="navigation__logo">
-                <a href="#">
+                <a href="/">
                     <img class="navigation__logo-image" src="/images/white_logo.webp" alt="logo">
                 </a>
             </div>
@@ -492,5 +504,3 @@
     </div>
     <script src="/main.js"></script>
 </body>
-
-</html>
