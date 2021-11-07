@@ -69,7 +69,7 @@
                 </div>
                 <div class="container__header__profile">
                     <div class="container__header__profile-image">
-                        <img id="profile-view" src="/images/background_login.webp" alt="profile">
+                        <img onclick="viewProfile('<?php echo $username; ?>')" src="/images/background_login.webp" alt="profile">
                     </div>
                     <div class="container__header__profile-name">
                         <span>Roberto Carlos</span>
@@ -159,7 +159,7 @@
                             </div>
                             <div class="table__tbody" id="employee-tbody">
                                 <div data-id="id" onclick="viewEmployee(this)" class="row-tbody">
-                                    <!-- <div class="employee-table__tbody0">
+                                    <div class="employee-table__tbody0">
                                         <span>1</span>
                                     </div>
                                     <div class="employee-table__tbody1">
@@ -176,7 +176,7 @@
                                     </div>
                                     <div class="employee-table__tbody5">
                                         <span>nguyenthuthuy</span>
-                                    </div> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -37,20 +37,16 @@ ADMIN_EMPLOYEE_API = '/admin/employeeAPI.php';
 })();
 
 //view profile
-(function viewProfile() {
-    const btnView = document.querySelector('#profile-view')
+function viewProfile(username) {
+    console.log(username)
     const view = document.querySelector('.profile-view')
     const space = document.querySelector('.profile-view__space')
     const btnEsc = document.querySelector('#cancel-profile')
-
-    btnView.addEventListener('click', function() {
-        showView(view);
-    })
-
+    view.style.display = 'block'
     closeViewByButton(btnEsc, view)
     closeView(view)
     clearViewClick(space)
-})();
+}
 
 function clearViewClick(viewSpace) {
     viewSpace.addEventListener('click', function(e) {
@@ -74,6 +70,19 @@ function closeViewByButton(button, view) {
     })
 }
 
+//logout.php
+(function logout() {
+    const logout = document.querySelector('#logout')
+    logout.addEventListener('click', function() {
+        console.log('logout')
+        const xhr = new XMLHttpRequest()
+        xhr.open('GET', 'logout.php')
+        xhr.send()
+
+        window.location.href = 'index.php'
+    })
+})();
+
 
 // login.php
 const login = document.querySelector('.login');
@@ -89,7 +98,7 @@ if (login) {
             })
         })
 
-        submitButton.addEventListener('click', e => {
+        /* submitButton.addEventListener('click', e => {
             e.preventDefault()
             const formData = new FormData(document.querySelector('.login__container__form'))
 
@@ -105,7 +114,7 @@ if (login) {
                 }
             }
             xhr.send(formData)
-        })
+        }) */
     })();
 }
 

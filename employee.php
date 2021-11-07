@@ -64,7 +64,7 @@
                 </div>
                 <div class="container__header__profile">
                     <div class="container__header__profile-image">
-                        <img id="profile-view" src="images/background_login.webp" alt="profile">
+                        <img onclick="viewProfile('<?php echo $username; ?>')" src="images/background_login.webp" alt="profile">
                     </div>
                     <div class="container__header__profile-name">
                         <span>Roberto Carlos</span>

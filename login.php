@@ -11,9 +11,9 @@
         else {
             header("Location: employee.php");
         }
+        $username = $_SESSION['username'];
     }
 
-    $username = $_SESSION['username'];
 ?>
 
 <head>
