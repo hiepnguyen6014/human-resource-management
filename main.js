@@ -1,6 +1,17 @@
+const API = {
+    'get-staffs': '/api/get-staffs.php',
+    'get-offices': '/api/get-offices.php',
+    'add-staff': '/api/add-staff.php',
+    'check-username': '/api/check-username.php',
+
+}
+
+
+
 //check current href
 var currentHref = window.location.href;
-const numberEachPage = 14;
+const numberEachPage = 15;
+let dataPagination = [];
 
 (function logout() {
     var logout = document.getElementById('logout');
@@ -22,12 +33,12 @@ function switchPage(page) {
     })
 }
 
-function createPagination(paginationElement, numberEachPage, number) {
-    const staffPagination = document.getElementById(paginationElement);
+function createPagination(paginationElement, numberEachPage, number, list) {
+    const pagination = document.getElementById(paginationElement);
     const pageNumber = Math.ceil(number / numberEachPage);
     let html = `
     <li class="page-item">
-        <a class="page-link" onclick="prePag()" aria-label="Previous">
+        <a class="page-link" onclick="prePag('${paginationElement}', '${list}')" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
             <span class="sr-only">Previous</span>
         </a>
@@ -36,19 +47,19 @@ function createPagination(paginationElement, numberEachPage, number) {
     for (let i = 1; i <= pageNumber; i++) {
         html += `
         <li class="page-item">
-            <a class="page-link" onclick="loadStaffs(${i})">${i}</a>
+            <a class="page-link" onclick="loadDataForStaffTable(${i}, '${paginationElement}', '${list}')">${i}</a>
         </li>
         `;
     }
     html += `
     <li class="page-item">
-        <a class="page-link" onclick="nextPag()" aria-label="Next">
+        <a class="page-link" onclick="nextPag('${paginationElement}', '${list}')" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
             <span class="sr-only">Next</span>
         </a>
     </li>
     `;
-    staffPagination.innerHTML = html;
+    pagination.innerHTML = html;
 }
 
 function dataForPagination(data) {
@@ -69,19 +80,134 @@ function dataForPagination(data) {
     return result;
 }
 
+function paginationColor(pagination, page) {
+    Array.from(document.querySelectorAll('#' + pagination + ' li')).forEach(e => {
+            e.classList.remove('active');
+        })
+        /* console.log(`#${pagination} li:nth-child(${page + 1})`); */
+    document.querySelector(`#${pagination} li:nth-child(${page + 1})`).classList.add('active');
+    /* console.log(currentPage); */
+}
+
+function loadDataForStaffTable(page, paginationId, tableList) {
+    const table = document.getElementById(tableList);
+    paginationColor(paginationId, page);
+    table.innerHTML = '';
+    dataPagination[page - 1].forEach(e => {
+
+        const tr = document.createElement('tr');
+        if (e.position == 1) {
+            tr.classList.add('bg-info');
+            tr.classList.add('bg-gradient');
+        }
+        tr.dataset.id = e.id;
+        tr.innerHTML = `
+                <td>${e.name}</td>
+                <td>${e.office}</td>
+                <td>${(e.position == 1) ? 'Captain' : 'Employee'}</td>
+                <td>${e.username}</td>
+                `;
+        table.appendChild(tr);
+    });
+}
+
+
+function prePag(pagination, list) {
+    let currentPage;
+    const paginationList = document.querySelectorAll('#' + pagination + ' li');
+    Array.from(paginationList).forEach((value, index) => {
+        if (value.classList.contains('active')) {
+            currentPage = index;
+        }
+    })
+
+    if (currentPage == 1) {
+        loadDataForStaffTable(paginationList.length - 2, pagination, list);
+    } else {
+        loadDataForStaffTable(currentPage - 1, pagination, list);
+    }
+}
+
+function nextPag(pagination, list) {
+    let currentPage;
+    const paginationList = document.querySelectorAll('#' + pagination + ' li');
+    Array.from(paginationList).forEach((value, index) => {
+        if (value.classList.contains('active')) {
+            currentPage = index;
+        }
+    })
+
+    if (currentPage == paginationList.length - 2) {
+        loadDataForStaffTable(1, pagination, list);
+    } else {
+        loadDataForStaffTable(currentPage + 1, pagination, list);
+    }
+}
+
+function officeSelect(id) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', API["get-offices"], false);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            const offices = JSON.parse(this.responseText);
+            if (offices.status === 'success') {
+                const select = document.getElementById(id);
+                offices.data.forEach(office => {
+                    const option = document.createElement('option');
+                    option.value = office.id;
+                    option.innerText = office.name;
+                    select.appendChild(option);
+                });
+            }
+        }
+    }
+    xhr.send();
+}
+
+function setEventSelect(id) {
+    const select = document.getElementById(id);
+    select.addEventListener('change', function() {
+        console.log(this.value);
+        /* const xhr = new XMLHttpRequest();
+        xhr.open('GET', '/api/get-office-type.php?office_id=' + select.value, false);
+        xhr.onload = function() {
+            if (this.status == 200) {
+                const officeType = JSON.parse(this.responseText);
+                if (officeType.status === 'success') {
+                    const select = document.getElementById('type');
+                    select.innerHTML = '';
+                    officeType.data.forEach(type => {
+                        const option = document.createElement('option');
+                        option.value = type.id;
+                        option.innerText = type.name;
+                        select.appendChild(option);
+                    });
+                }
+            }
+        }
+        xhr.send(); */
+    })
+}
+
 // js admin
 if (currentHref.includes('admin/')) {
 
-    const staffList = document.getElementById('staff-list');
+
     // STAFF
-    let staffsArray = [];
-    let currentPage = 0;
+
     //load staffs
     function loadData(page) {
         if (page === 'staff') {
+            const staffPaginationId = 'staff-pagination';
+            const staffList = 'staff-list';
+            const select = 'office-staff';
+
+            officeSelect(select);
+            setEventSelect(select);
+
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', '/api/get-staffs.php', false);
+            xhr.open('GET', API["get-staffs"] + '?office=1', false);
             xhr.onload = function() {
                 if (this.status == 200) {
 
@@ -89,61 +215,20 @@ if (currentHref.includes('admin/')) {
                     if (staffs.status === 'success') {
 
                         // cerate pagination
-                        createPagination('staff-pagination', numberEachPage, staffs.data.length);
+                        createPagination(staffPaginationId, numberEachPage, staffs.data.length, staffList);
 
                         //create staffs array
+                        dataPagination = dataForPagination(staffs.data);
 
-                        staffsArray = dataForPagination(staffs.data);
+                        //load staffs to table
+                        loadDataForStaffTable(1, staffPaginationId, staffList);
 
                     }
                 }
             }
             xhr.send();
-            loadStaffs(0);
+
             /* console.log(staffsArray); */
-        }
-    }
-
-    function loadStaffs(page) {
-        currentPage = page;
-        paginationColor();
-        staffList.innerHTML = '';
-        staffsArray[page].forEach(staff => {
-
-            const tr = document.createElement('tr');
-            tr.dataset.id = staff.id;
-            tr.innerHTML = `
-                    <td>${staff.name}</td>
-                    <td>${staff.office}</td>
-                    <td>${staff.type}</td>
-                    <td>${staff.username}</td>
-                    `;
-            staffList.appendChild(tr);
-        });
-    }
-
-    function paginationColor() {
-        Array.from(document.querySelectorAll('#staff-pagination li')).forEach(e => {
-            e.classList.remove('active');
-        })
-        document.querySelector(`#staff-pagination li:nth-child(${currentPage + 2})`).classList.add('active');
-        /* console.log(currentPage); */
-    }
-
-    function prePag() {
-        if (currentPage == 0) {
-            loadStaffs(staffsArray.length - 1);
-        } else
-        if (currentPage > 0) {
-            loadStaffs(currentPage - 1);
-        }
-    }
-
-    function nextPag() {
-        if (currentPage == staffsArray.length - 1) {
-            loadStaffs(0);
-        } else if (currentPage < staffsArray.length - 1) {
-            loadStaffs(currentPage + 1);
         }
     }
 
@@ -151,24 +236,8 @@ if (currentHref.includes('admin/')) {
     (function() {
 
         //load office
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', '/api/get-offices.php', false);
-        xhr.onload = function() {
-            if (this.status == 200) {
-                const offices = JSON.parse(this.responseText);
-                if (offices.status === 'success') {
-                    const select = document.getElementById('office-add-staff');
-                    /*                     console.log(offices.data); */
-                    offices.data.forEach(office => {
-                        const option = document.createElement('option');
-                        option.value = office.id;
-                        option.innerText = office.name;
-                        select.appendChild(option);
-                    });
-                }
-            }
-        }
-        xhr.send();
+        officeSelect('office-add-staff');
+
 
         //check username
         const username = document.getElementById('username-add-staff');
@@ -177,7 +246,7 @@ if (currentHref.includes('admin/')) {
                 document.getElementById('username-error-add-staff').innerText = '';
             } else {
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', `/api/check-username.php?username=${username.value}`, false);
+                xhr.open('GET', `${API["check-username"]}?username=${username.value}`, false);
                 xhr.onload = function() {
                     if (this.status == 200) {
                         const response = JSON.parse(this.responseText);
@@ -205,3 +274,6 @@ if (currentHref.includes('admin/')) {
 
 
 }
+
+
+switchPage('staff')

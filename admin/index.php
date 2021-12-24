@@ -27,49 +27,67 @@
             <div class="row">
                 <div class="col-md-12 mb-3">
                     <div class="card" style="position: relative;">
-                        <div class="card-header d-flex justify-content-between">
+                        <div class="card-header d-flex justify-content-between mobile-hide">
                             <div class="d-flex">
                                 <input type="text" class="search-input" placeholder="Search...">
                                 <button type="button" class="btn btn-outline-primary px-3 btn-search">
                                     <i class="fas fa-search"></i>
                                 </button>
+                                <!-- <div class="btn-group">
+                                    <button class="btn btn-outline-primary" data-bs-toggle="modal"
+                                        data-bs-target="#add-staff">
+                                        <i class="fas fa-plus"></i>
+                                        <span></span>
+                                    </button>
+                                </div> -->
                             </div>
+                            <div>
+                            <div class="input-group">
+                                <select class="form-select" name="office" id="office-staff">
+                                    <!-- <option value="">Select Office</option>
+                                    <option value="1">Office 1</option>
+                                    <option value="2">Office 2</option>
+                                    <option value="3">Office 3</option> -->
+                                </select>
+                            </div>
+                            </div>
+
                             <div class="btn-group">
                                 <button class="btn btn-outline-primary" data-bs-toggle="modal"
                                     data-bs-target="#add-staff">
                                     <i class="fas fa-plus"></i>
-                                    <span>Add Staff</span>
+                                    <span>More</span>
                                 </button>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="table-responsive">
-                            <table id="example" class="table table-hover w-100 mb-0"
-                                style="min-height: calc(100vh - 140px);">
-                                <thead class="align-middle">
-                                    <tr>
-                                        <th>Full Name</th>
-                                        <th>Office</th>
-                                        <th>Position</th>
-                                        <th>Username</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="staff-list" class="align-middle">
+                    <div class="table-responsive">
+                        <table id="staff-table" class="table table-hover w-100 mb-0 text-center">
+                            <thead class="align-middle bg-secondary text-white font-weight-bold ">
+                                <tr>
+                                    <th>Full Name</th>
+                                    <th>Office</th>
+                                    <th>Position</th>
+                                    <th>Username</th>
+                                </tr>
+                            </thead>
+                            <tbody id="staff-list" class="align-middle">
 
-                                    <!-- <tr data-id="1">
+                                <!-- <tr data-id="1">
                                         <td>s</td>
                                         <td>System Architect</td>
                                         <td>Edinburgh</td>
                                         <td>61</td>
                                     
                                     </tr> -->
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
+                    </div>
 
-                        <div class="card-header d-flex justify-content-center" style="height: 55px;">
-                            <ul class="pagination" id="staff-pagination">
-                                <!-- <li class="page-item">
+                    <div class="card-header d-flex justify-content-center pagination-ind">
+                        <ul class="pagination" id="staff-pagination">
+                            <!-- <li class="page-item">
                                     <a class="page-link" href="#" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                         <span class="sr-only">Previous</span>
@@ -92,11 +110,11 @@
                                         <span class="sr-only">Next</span>
                                     </a>
                                 </li> -->
-                            </ul>
-                        </div>
+                        </ul>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </main>
 
@@ -128,7 +146,7 @@
                                 </span>
                             </div>
                             <div id="username-error-add-staff">
-                                
+
                             </div>
                         </div>
                         <div class="mt-3">

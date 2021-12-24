@@ -11,8 +11,8 @@
 
     //check username in warehouse
     if (in_array($username, $warehouse_username)) {
-        echo json_encode(array('status' => 'failed', 'data' => 'Username is existed'));
+        echo json_encode(array('status' => 'failed', 'data' => 'Username is exist.'));
     } else {
-        echo json_encode(array('status' => 'success', 'data' => 'Username is available'));
+        echo json_encode(array('status' => 'success', 'data' => 'Username is available.'));
     }
 ?>

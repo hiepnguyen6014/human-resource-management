@@ -305,9 +305,6 @@ body {
         height: calc(100% - var(--topNavbarHeight));
         top: var(--topNavbarHeight);
     }
-    .search-input {
-        width: 400px;
-    }
 }
 
 @media (max-width: 991px) {
@@ -316,6 +313,12 @@ body {
     }
     .navbar {
         background-color: var(--bs-gray-700);
+    }
+    .mobile-hide {
+        display: none !important;
+    }
+    .pagination-ind {
+        width: calc(100% - 12px) !important;
     }
 }
 
@@ -382,11 +385,13 @@ body {
     border-bottom-right-radius: 0.3rem;
 }
 
-
-/* 
 tr {
     height: 3.5rem !important;
-} */
+}
+
+#staff-table td {
+    width: 25%;
+}
 
 th {
     font-size: 1.2rem;
@@ -453,4 +458,12 @@ main {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.pagination-ind {
+    height: 55px;
+    position: absolute;
+    bottom: 10px;
+    width: calc(100% - 282px);
+    border: none;
 }
