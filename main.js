@@ -3,8 +3,13 @@ const API = {
     'get-offices': '/api/get-offices.php',
     'add-staff': '/api/add-staff.php',
     'check-username': '/api/check-username.php',
-
+    'get-staff-detail': '/api/get-staff-detail.php',
+    'reset-password': '/api/reset-password.php',
 }
+
+window.onload = () => {
+    switchPage('staff');
+};
 
 
 
@@ -25,7 +30,7 @@ function switchPage(page) {
     Array.from(document.querySelectorAll('main')).forEach(e => {
         if (e.id == page) {
             /* console.log(e.id); */
-            loadData(e.id)
+            loadData(e.id, 1);
             document.getElementById(e.id).classList.remove('d-none');
         } else {
             e.classList.add('d-none');
@@ -96,6 +101,7 @@ function loadDataForStaffTable(page, paginationId, tableList) {
     dataPagination[page - 1].forEach(e => {
 
         const tr = document.createElement('tr');
+        tr.setAttribute('onclick', `showDetail('${e.username}')`);
         if (e.position == 1) {
             tr.classList.add('bg-info');
             tr.classList.add('bg-gradient');
@@ -152,6 +158,7 @@ function officeSelect(id) {
             const offices = JSON.parse(this.responseText);
             if (offices.status === 'success') {
                 const select = document.getElementById(id);
+                select.innerHTML = '';
                 offices.data.forEach(office => {
                     const option = document.createElement('option');
                     option.value = office.id;
@@ -164,31 +171,48 @@ function officeSelect(id) {
     xhr.send();
 }
 
-function setEventSelect(id) {
-    const select = document.getElementById(id);
-    select.addEventListener('change', function() {
-        console.log(this.value);
-        /* const xhr = new XMLHttpRequest();
-        xhr.open('GET', '/api/get-office-type.php?office_id=' + select.value, false);
-        xhr.onload = function() {
-            if (this.status == 200) {
-                const officeType = JSON.parse(this.responseText);
-                if (officeType.status === 'success') {
-                    const select = document.getElementById('type');
-                    select.innerHTML = '';
-                    officeType.data.forEach(type => {
-                        const option = document.createElement('option');
-                        option.value = type.id;
-                        option.innerText = type.name;
-                        select.appendChild(option);
-                    });
-                }
-            }
+function resetPassword(username) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', API["reset-password"], false);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            console.log(this.responseText);
         }
-        xhr.send(); */
-    })
+    }
+    const formData = new FormData();
+    formData.append('username', username);
+    xhr.send(formData);
 }
 
+function showDetail(username) {
+    // open modal by js
+    const detailModal = document.getElementById('view-staff');
+    const modal = new bootstrap.Modal(detailModal)
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', API["get-staff-detail"] + '?username=' + username, false);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            const staff = JSON.parse(this.responseText);
+            if (staff.status === 'success') {
+                document.getElementById('view-staff-modal-image').src = '/images/' + staff.data.image;
+                document.getElementById('view-staff-modal-fullname').innerText = staff.data.first_name + ' ' + staff.data.last_name;
+                document.getElementById('view-staff-modal-email').innerText = staff.data.email;
+                document.getElementById('view-staff-modal-firstname').value = staff.data.first_name;
+                document.getElementById('view-staff-modal-lastname').value = staff.data.last_name;
+                document.getElementById('view-staff-modal-office').value = staff.data.office;
+                document.getElementById('view-staff-modal-position').value = (staff.data.position == 1) ? 'Captain' : 'Employee';
+                document.getElementById('view-staff-modal-username').value = staff.data.username;
+                document.getElementById('view-staff-modal-salary').value = staff.data.salary;
+                document.getElementById('view-staff-modal-phone').value = staff.data.phone;
+                document.getElementById('view-staff-modal-address').value = staff.data.address;
+                document.getElementById('reset-password').setAttribute('onclick', `resetPassword('${staff.data.username}')`);
+                modal.show()
+            }
+        }
+    }
+    xhr.send();
+}
 // js admin
 if (currentHref.includes('admin/')) {
 
@@ -203,8 +227,6 @@ if (currentHref.includes('admin/')) {
             const select = 'office-staff';
 
             officeSelect(select);
-            setEventSelect(select);
-
 
             const xhr = new XMLHttpRequest();
             xhr.open('GET', API["get-staffs"] + '?office=1', false);
@@ -228,52 +250,114 @@ if (currentHref.includes('admin/')) {
             }
             xhr.send();
 
-            /* console.log(staffsArray); */
-        }
-    }
-
-    //staff modal
-    (function() {
-
-        //load office
-        officeSelect('office-add-staff');
-
-
-        //check username
-        const username = document.getElementById('username-add-staff');
-        username.addEventListener('keyup', function() {
-            if (username.value.length == 0) {
-                document.getElementById('username-error-add-staff').innerText = '';
-            } else {
+            const selectInput = document.getElementById(select);
+            selectInput.addEventListener('change', function() {
+                const number = this.value;
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', `${API["check-username"]}?username=${username.value}`, false);
+                xhr.open('GET', API["get-staffs"] + '?office=' + number, false);
                 xhr.onload = function() {
                     if (this.status == 200) {
-                        const response = JSON.parse(this.responseText);
-                        const icon = document.getElementById('icon-check-username');
-                        const message = document.getElementById('username-error-add-staff');
-                        if (response.status === 'success') {
-                            //get first child of icon
-                            icon.children[0].classList.remove('d-none');
-                            icon.children[1].classList.add('d-none');
 
-                            message.innerHTML = `<small class="text-success">${response.data}</small>`;
-                        } else {
-                            icon.children[1].classList.remove('d-none');
-                            icon.children[0].classList.add('d-none');
+                        const staffs = JSON.parse(this.responseText);
+                        if (staffs.status === 'success') {
 
-                            message.innerHTML = `<small class="text-danger">${response.data}</small>`;
+                            // cerate pagination
+                            createPagination(staffPaginationId, numberEachPage, staffs.data.length, staffList);
+
+                            //create staffs array
+                            dataPagination = dataForPagination(staffs.data);
+
+                            //load staffs to table
+                            loadDataForStaffTable(1, staffPaginationId, staffList);
+
                         }
                     }
                 }
                 xhr.send();
-            }
+            })
 
-        })
-    })()
+            let search = document.getElementById('search-staff-input');
+            const btnSearch = document.getElementById('search-staff');
+            btnSearch.addEventListener('click', function() {
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', API["get-staffs"] + '?search=' + search.value + '&office=' + selectInput.value, false);
+                xhr.onload = function() {
+                    if (this.status == 200) {
+
+                        const staffs = JSON.parse(this.responseText);
+                        if (staffs.status === 'success') {
+
+                            // cerate pagination
+                            createPagination(staffPaginationId, numberEachPage, staffs.data.length, staffList);
+
+                            //create staffs array
+                            dataPagination = dataForPagination(staffs.data);
+
+                            //load staffs to table
+                            loadDataForStaffTable(1, staffPaginationId, staffList);
+
+                        }
+                    }
+                }
+                xhr.send();
+            })
+
+            //pointer input and press enter
+            search.addEventListener('keyup', function(event) {
+                if (event.keyCode === 13) {
+                    btnSearch.click();
+                }
+            })
+
+            //active input
+            search.addEventListener('focus', function() {
+                this.select();
+            })
 
 
+        }
+
+        //staff modal
+        (function() {
+
+            //load office
+            officeSelect('office-add-staff');
+
+
+            //check username
+            const username = document.getElementById('username-add-staff');
+            username.addEventListener('keyup', function() {
+                if (username.value.length == 0) {
+                    document.getElementById('username-error-add-staff').innerText = '';
+                } else {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('GET', `${API["check-username"]}?username=${username.value}`, false);
+                    xhr.onload = function() {
+                        if (this.status == 200) {
+                            const response = JSON.parse(this.responseText);
+                            const icon = document.getElementById('icon-check-username');
+                            const message = document.getElementById('username-error-add-staff');
+                            if (response.status === 'success') {
+                                //get first child of icon
+                                icon.children[0].classList.remove('d-none');
+                                icon.children[1].classList.add('d-none');
+
+                                message.innerHTML = `<small class="text-success">${response.data}</small>`;
+                            } else {
+                                icon.children[1].classList.remove('d-none');
+                                icon.children[0].classList.add('d-none');
+
+                                message.innerHTML = `<small class="text-danger">${response.data}</small>`;
+                            }
+                        }
+                    }
+                    xhr.send();
+                }
+
+            })
+        })()
+
+
+    }
 }
-
-
-switchPage('staff')

@@ -16,12 +16,10 @@
 </head>
 
 <body>
-
     <?php
         require_once "header.php";
     ?>
     <main class="vh-100 d-none" id="staff">
-
         <!-- manage product -->
         <div class="container-fluid mt-2">
             <div class="row">
@@ -29,8 +27,9 @@
                     <div class="card" style="position: relative;">
                         <div class="card-header d-flex justify-content-between mobile-hide">
                             <div class="d-flex">
-                                <input type="text" class="search-input" placeholder="Search...">
-                                <button type="button" class="btn btn-outline-primary px-3 btn-search">
+                                <input type="text" class="search-input w-250" placeholder="Search..."
+                                    id="search-staff-input">
+                                <button type="button" class="btn btn-outline-primary px-3 btn-search" id="search-staff">
                                     <i class="fas fa-search"></i>
                                 </button>
                                 <!-- <div class="btn-group">
@@ -42,14 +41,14 @@
                                 </div> -->
                             </div>
                             <div>
-                            <div class="input-group">
-                                <select class="form-select" name="office" id="office-staff">
-                                    <!-- <option value="">Select Office</option>
+                                <div class="input-group w-300">
+                                    <select class="form-select" name="office" id="office-staff">
+                                        <!-- <option value="">Select Office</option>
                                     <option value="1">Office 1</option>
                                     <option value="2">Office 2</option>
                                     <option value="3">Office 3</option> -->
-                                </select>
-                            </div>
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="btn-group">
@@ -64,7 +63,8 @@
 
                     <div class="table-responsive">
                         <table id="staff-table" class="table table-hover w-100 mb-0 text-center">
-                            <thead class="align-middle bg-secondary text-white font-weight-bold ">
+                            <thead class="align-middle bg-secondary text-white font-weight-bold"
+                                style="letter-spacing: 1px;">
                                 <tr>
                                     <th>Full Name</th>
                                     <th>Office</th>
@@ -74,7 +74,7 @@
                             </thead>
                             <tbody id="staff-list" class="align-middle">
 
-                                <!-- <tr data-id="1">
+                                <!-- <tr data-toggle="modal" data-id="1" data-target="#view-staff">
                                         <td>s</td>
                                         <td>System Architect</td>
                                         <td>Edinburgh</td>
@@ -141,8 +141,8 @@
                                 <input type="text" class="form-control" name="username" id="username-add-staff"
                                     placeholder="Staff's username" required>
                                 <span class="input-group-text" id="icon-check-username">
-                                    <i class="far fa-check-circle text-success"></i>
-                                    <i class="far fa-times-circle d-none text-danger"></i>
+                                    <i class="far fa-check-circle text-success fz-24"></i>
+                                    <i class="far fa-times-circle d-none text-danger fz-24"></i>
                                 </span>
                             </div>
                             <div id="username-error-add-staff">
@@ -163,403 +163,493 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" form="add-staff-form" class="btn btn-outline-primary px-3">Add</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" form="add-staff-form" class="btn btn-primary px-3">Add</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <main class="vh-100 d-none" id="office">
-
-        <!-- manage product -->
-        <div class="container-fluid mt-2">
-            <div class="row">
-                <div class="col-md-12 mb-3">
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between">
-                            <div class="d-flex">
-                                <input type="text" class="search-input" placeholder="Search...">
-                                <button type="button" class="btn btn-outline-primary px-3 btn-search">
-                                    <i class="fas fa-search"></i>
-                                </button>
+    <div class="modal fade mt-5" id="view-staff">
+        <div class="modal-dialog modal-lg mt-5">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Staff Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-0">
+                    <div class="row">
+                        <div class="col-lg-4 col-12 border-end">
+                            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                                <img class="rounded-circle border" width="160px" src="/" id="view-staff-modal-image">
+                                <span class="font-weight-bold fz-24" id="view-staff-modal-fullname"></span>
+                                <span class="text-black-50" id="view-staff-modal-email">edogaru@mail.com.my</span>
                             </div>
-                            <div class="btn-group">
-                                <button class="btn btn-outline-primary" data-bs-toggle="modal"
-                                    data-bs-target="#add-product">
-                                    <i class="fas fa-plus"></i>
-                                    <span>Add Product</span>
-                                </button>
+
+                        </div>
+                        <div class="col-lg-8 col-12">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="pt-3">
+                                        <label>First Name</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="view-staff-modal-firstname" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3">
+                                        <label>Office</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="view-staff-modal-office" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3">
+                                        <label>Salary</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-dollar-sign" style="font-size: 18px;"></i>
+                                            </span>
+                                            <input type="text" class="form-control" id="view-staff-modal-salary" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3">
+                                        <label>Username</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="view-staff-modal-username" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="pt-3">
+                                        <label>Last Name</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="view-staff-modal-lastname" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3">
+                                        <label>Phone</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="view-staff-modal-phone" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3">
+                                        <label>Position</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="view-staff-modal-position" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3">
+                                        <label>Password</label>
+                                        <div class="input-group">
+                                            <input type="password" class="form-control" value="password" disabled>
+                                            <button class="btn btn-outline-danger" id="reset-password">Reset</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col pb-3">
+                                    <div class="pt-3">
+                                        <label>Address</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="view-staff-modal-address" disabled>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="table-responsive">
-                            <table class="table table-hover w-100" style="min-height: calc(100vh - 56px);">
-                                <thead class="align-middle">
-                                    <tr>
-                                        <th>Tên sản phẩm</th>
-                                        <th>Giá sản phẩm</th>
-                                        <th>Số lượng trong kho</th>
-                                        <th>Nhà sản xuất</th>
-                                        <th>Ngày tạo</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="products" class="align-middle">
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="card-header d-flex justify-content-center" style="height: 55px;">
-                            <ul class="pagination">
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">1</a>
-                                </li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="#">2
-                                        <span class="sr-only">(current)</span>
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">3</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
 
-    <main class="vh-100 d-none" id="vacation">
+        <main class="vh-100 d-none" id="office">
 
-        <!-- manage product -->
-        <div class="container-fluid mt-2">
-            <div class="row">
-                <div class="col-md-12 mb-3">
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between">
-                            <div class="d-flex">
-                                <input type="text" class="search-input" placeholder="Search...">
-                                <button type="button" class="btn btn-outline-primary px-3 btn-search">
-                                    <i class="fas fa-search"></i>
-                                </button>
+            <!-- manage product -->
+            <div class="container-fluid mt-2">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between">
+                                <div class="d-flex">
+                                    <input type="text" class="search-input" placeholder="Search...">
+                                    <button type="button" class="btn btn-outline-primary px-3 btn-search">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-outline-primary" data-bs-toggle="modal"
+                                        data-bs-target="#add-product">
+                                        <i class="fas fa-plus"></i>
+                                        <span>Add Product</span>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="btn-group">
-                                <button class="btn btn-outline-primary" data-bs-toggle="modal"
-                                    data-bs-target="#add-product">
-                                    <i class="fas fa-plus"></i>
-                                    <span>Add Product</span>
-                                </button>
+
+                            <div class="table-responsive">
+                                <table class="table table-hover w-100" style="min-height: calc(100vh - 56px);">
+                                    <thead class="align-middle">
+                                        <tr>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Giá sản phẩm</th>
+                                            <th>Số lượng trong kho</th>
+                                            <th>Nhà sản xuất</th>
+                                            <th>Ngày tạo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="products" class="align-middle">
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                        </div>
 
-                        <div class="table-responsive">
-                            <table id="example" class="table table-hover w-100">
-                                <thead class="align-middle">
-                                    <tr>
-                                        <th>Tên sản phẩm</th>
-                                        <th>Giá sản phẩm</th>
-                                        <th>Số lượng trong kho</th>
-                                        <th>Nhà sản xuất</th>
-                                        <th>Ngày tạo</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="products" class="align-middle">
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="card-header d-flex justify-content-center" style="height: 55px;">
-                            <ul class="pagination">
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">1</a>
-                                </li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="#">2
-                                        <span class="sr-only">(current)</span>
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">3</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </li>
-                            </ul>
+                            <div class="card-header d-flex justify-content-center" style="height: 55px;">
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">1</a>
+                                    </li>
+                                    <li class="page-item active">
+                                        <a class="page-link" href="#">2
+                                            <span class="sr-only">(current)</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">3</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
-    <script src="/main.js"></script>
+        </main>
+
+        <main class="vh-100 d-none" id="vacation">
+
+            <!-- manage product -->
+            <div class="container-fluid mt-2">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between">
+                                <div class="d-flex">
+                                    <input type="text" class="search-input" placeholder="Search...">
+                                    <button type="button" class="btn btn-outline-primary px-3 btn-search">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-outline-primary" data-bs-toggle="modal"
+                                        data-bs-target="#add-product">
+                                        <i class="fas fa-plus"></i>
+                                        <span>Add Product</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table id="example" class="table table-hover w-100">
+                                    <thead class="align-middle">
+                                        <tr>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Giá sản phẩm</th>
+                                            <th>Số lượng trong kho</th>
+                                            <th>Nhà sản xuất</th>
+                                            <th>Ngày tạo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="products" class="align-middle">
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>s</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="card-header d-flex justify-content-center" style="height: 55px;">
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">1</a>
+                                    </li>
+                                    <li class="page-item active">
+                                        <a class="page-link" href="#">2
+                                            <span class="sr-only">(current)</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">3</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <script src="/main.js"></script>
 </body>
 
 </html>

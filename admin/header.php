@@ -12,7 +12,7 @@
         <div class="offcanvas-body p-0">
             <nav class="navbar-dark custom-navbar">
                 <div class="avatar-space">
-                    <img src="/images/avt-chibi-doc_115941237.jpg" alt="avt" class="avatar">
+                    <img src="/images/default.webp" alt="avt" class="avatar">
                 </div>
                 <ul class="navbar-nav">
                     <li class="mb-2">
