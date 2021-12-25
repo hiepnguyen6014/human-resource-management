@@ -545,3 +545,15 @@ main {
         transform: translateY(0);
     }
 }
+
+#icon-swap-captain {
+    cursor: pointer;
+}
+
+#icon-swap-captain:hover {
+    background-color: #beb5ff;
+}
+
+.w-90 {
+    width: 90px !important;
+}

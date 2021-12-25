@@ -410,7 +410,8 @@
                         <div class="mt-3">
                             <label for="office-add-office" class="form-label">Description</label>
                             <div class="input-group">
-                                <textarea class="form-control" name="description" id="description-office" rows="3"></textarea>
+                                <textarea class="form-control" name="description" id="description-office"
+                                    rows="3"></textarea>
                             </div>
                         </div>
                     </form>
@@ -431,47 +432,77 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-0">
-                    <form action="/api/update-office.php" method="post" id="view-office-form">
+                    <form onsubmit="return false" method="post" id="view-office-form" class="w-100">
                         <div class="row">
                             <div class="col-lg-6">
-                                <div class="mt-3">
+                                <div class="mt-2">
                                     <label for="name-view-office" class="form-label">Name</label>
                                     <div class="input-group">
                                         <input type="text" name="name" id="name-view-office" class="form-control"
-                                            placeholder="Office's name" required>
+                                            required>
                                     </div>
                                 </div>
-                                <div class="mt-3">
-                                    <label for="room-view-office" class="form-label">Room</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" name="room" id="room-view-office"
-                                            placeholder="Office's room" required>
+                                <div class="row">
+                                    <div class="mt-2 col">
+                                        <label for="room-view-office" class="form-label">Room</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="room" id="room-view-office"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2 col">
+                                        <label for="phone-view-office" class="form-label">Phone</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="phone" id="phone-view-office"
+                                                required>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="mt-3">
-                                    <label for="phone-view-office" class="form-label">Phone</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" name="phone" id="phone-view-office"
-                                            placeholder="Office's phone" required>
-                                    </div>
-                                </div>
+
                             </div>
                             <div class="col-lg-6">
-                                <div class="mt-3">
-                                    <label for="description-view-office" class="form-label">Description</label>
+                                <input type="hidden" id="id-office" value="1">
+                                <div class="mt-2">
+                                    <label for="create-view-office" class="form-label">Create At</label>
                                     <div class="input-group">
-                                        <textarea class="form-control" name="description" id="description-view-office"
-                                            rows="3"></textarea>
+                                        <input type="text" id="create-view-office" class="form-control">
                                     </div>
+                                </div>
+                                <div class="mt-2">
+                                    <label for="captain-view-office" class="form-label">Captain</label>
+                                    <div class="input-group">
+                                        <select id="captain-view-office" class="form-control">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                        </select>
+                                        <span onclick="changeCaptain()" class="input-group-text"
+                                            id="icon-swap-captain">
+                                            <i class="fas fa-sync-alt text-success fz-24"></i>
+                                        </span>
+                                    </div>
+                                    <input type="hidden" id="change-captain-id">
+                                </div>
+                            </div>
+                            <div class="my-2 col">
+                                <label for="description-view-office" class="form-label">Description</label>
+                                <div class="input-group">
+                                    <textarea class="form-control" name="description" id="description-view-office"
+                                        rows="3"></textarea>
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" id="change-office-id">
+                        <input type="hidden" id="change-room-id">
+                        <input type="hidden" id="change-phone-id">
+                        <input type="hidden" id="change-description-id">
+                        <input type="hidden" id="change-name-id">
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger">Delete</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" form="view-office-form" class="btn btn-primary px-3">Update</button>
+                    <button onclick="deleteOffice()" class="btn btn-outline-secondary w-90">Delete</button>
+                    <button type="button" class="btn btn-outline-secondary w-90" data-bs-dismiss="modal">Close</button>
+                    <button onclick="updateOffice()" class="btn btn-outline-secondary w-90">Update</button>
                 </div>
             </div>
         </div>

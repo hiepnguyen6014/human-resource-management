@@ -8,6 +8,9 @@ const API = {
     'get-offices-list': '/api/get-offices-list.php',
     'search-office': '/api/search-office.php',
     'view-office': '/api/view-office.php',
+    'change-captain': '/api/change-captain.php',
+    'delete-office': '/api/delete-office.php',
+    'update-office': '/api/update-office.php',
 }
 
 window.onload = () => {
@@ -237,7 +240,7 @@ function loadDataForOfficeTable(page, paginationId, tableList) {
                 <td>${e.room}</td>
                 <td>${e.captain}</td>
                 <td>${e.phone}</td>
-                `;
+        `;
         table.appendChild(tr);
     });
 }
@@ -253,17 +256,91 @@ function showDetailOffice(id) {
         if (this.status == 200) {
             const office = JSON.parse(this.responseText);
             if (office.status === 'success') {
-                /* document.getElementById('view-office-modal-name').innerText = office.data.name;
-                document.getElementById('view-office-modal-room').innerText = office.data.room;
-                document.getElementById('view-office-modal-captain').innerText = office.data.captain;
-                document.getElementById('view-office-modal-phone').innerText = office.data.phone;
-                document.getElementById('view-office-modal-cerate').innerText = office.data.cerate;
-                document.getElementById('view-office-modal-description').innerText = office.data.description; */
+                document.getElementById('name-view-office').value = office.data.name;
+                document.getElementById('room-view-office').value = office.data.room;
+                document.getElementById('captain-view-office').value = 1;
+                document.getElementById('phone-view-office').value = office.data.phone;
+                document.getElementById('create-view-office').value = office.data.created_at;
+                document.getElementById('description-view-office').value = office.data.description;
+                document.getElementById('change-office-id').value = office.data.id;
+                document.getElementById('change-phone-id').value = office.data.phone;
+                document.getElementById('change-name-id').value = office.data.name;
+                document.getElementById('change-description-id').value = office.data.description;
+                document.getElementById('change-room-id').value = office.data.room;
                 modal.show()
             }
         }
     }
     xhr.send();
+}
+
+function changeCaptain() {
+    const officeId = document.getElementById('change-office-id').value;
+    const captainId = document.getElementById('captain-view-office').value;
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', API["change-captain"], false);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            document.getElementById('captain-view-office').value = captainId;
+            console.log(this.responseText);
+        }
+    }
+    const formData = new FormData();
+    formData.append('office', officeId);
+    formData.append('new', captainId);
+    xhr.send(formData);
+}
+
+function deleteOffice() {
+    const room = document.getElementById('change-captain-id').value;
+    const comfirm = confirm('Are you sure to delete this office?');
+    if (comfirm) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', API["delete-office"], false);
+        xhr.onload = function() {
+            if (this.status == 200) {
+                console.log(this.responseText);
+            }
+        }
+        const formData = new FormData();
+        formData.append('room', room);
+        xhr.send(formData);
+    }
+}
+
+function updateOffice() {
+    //old data
+    const officeId = document.getElementById('change-office-id').value;
+    const phone = document.getElementById('change-phone-id').value;
+    const name = document.getElementById('change-name-id').value;
+    const description = document.getElementById('change-description-id').value;
+    const room = document.getElementById('change-room-id').value;
+
+    // new data
+    const newPhone = document.getElementById('phone-view-office').value;
+    const newName = document.getElementById('name-view-office').value;
+    const newDescription = document.getElementById('description-view-office').value;
+    const newRoom = document.getElementById('room-view-office').value;
+
+    // compare old and new data
+    if (phone != newPhone || name != newName || description != newDescription || room != newRoom) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', API["update-office"], false);
+        xhr.onload = function() {
+            if (this.status == 200) {
+                console.log(this.responseText);
+            }
+        }
+        const formData = new FormData();
+        formData.append('id', officeId);
+        formData.append('phone', newPhone);
+        formData.append('name', newName);
+        formData.append('description', newDescription);
+        formData.append('room', newRoom);
+        xhr.send(formData);
+    } else {
+        console.log('No change');
+    }
 }
 // js admin
 if (currentHref.includes('admin/')) {
