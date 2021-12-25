@@ -69,12 +69,14 @@
                                 <span>Office</span>
                             </a>
                         </li>
-                        <li>
+                        <li style="position: relative;">
                             <a onclick="switchPage('vacation')" class="nav-link nav-link-custom p-3 text-white">
                                 <span class="me-2"><i class="icon fas fa-exclamation-triangle"></i></span>
 
                                 <span>Vacation</span>
+                                
                             </a>
+                            <span class="number-icon" id="vacation-number">5</span>
                         </li>
                     </div>
 

@@ -11,10 +11,16 @@ const API = {
     'change-captain': '/api/change-captain.php',
     'delete-office': '/api/delete-office.php',
     'update-office': '/api/update-office.php',
+    'get-vacations': '/api/get-vacations.php',
+    'view-vacation': '/api/view-vacation.php',
+    'disagree-vacation': '/api/disagree-vacation.php',
+    'agree-vacation': '/api/agree-vacation.php',
+    'seen-vacation': '/api/seen-vacation.php',
+    'search-vacation': '/api/search-vacation.php',
 }
 
 window.onload = () => {
-    switchPage('office');
+    switchPage('vacation');
 };
 
 
@@ -44,7 +50,7 @@ function switchPage(page) {
     })
 }
 
-function createPagination(paginationElement, numberEachPage, number, list) {
+function createPaginationStaff(paginationElement, numberEachPage, number, list) {
     const pagination = document.getElementById(paginationElement);
     const pageNumber = Math.ceil(number / numberEachPage);
     let html = `
@@ -59,6 +65,64 @@ function createPagination(paginationElement, numberEachPage, number, list) {
         html += `
         <li class="page-item">
             <a class="page-link" onclick="loadDataForStaffTable(${i}, '${paginationElement}', '${list}')">${i}</a>
+        </li>
+        `;
+    }
+    html += `
+    <li class="page-item">
+        <a class="page-link" onclick="nextPag('${paginationElement}', '${list}')" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+        </a>
+    </li>
+    `;
+    pagination.innerHTML = html;
+}
+
+function createPaginationVacation(paginationElement, numberEachPage, number, list) {
+    const pagination = document.getElementById(paginationElement);
+    const pageNumber = Math.ceil(number / numberEachPage);
+    let html = `
+    <li class="page-item">
+        <a class="page-link" onclick="prePag('${paginationElement}', '${list}')" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+        </a>
+    </li>`;
+
+    for (let i = 1; i <= pageNumber; i++) {
+        html += `
+        <li class="page-item">
+            <a class="page-link" onclick="loadDataForVacationTable(${i}, '${paginationElement}', '${list}')">${i}</a>
+        </li>
+        `;
+    }
+    html += `
+    <li class="page-item">
+        <a class="page-link" onclick="nextPag('${paginationElement}', '${list}')" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+        </a>
+    </li>
+    `;
+    pagination.innerHTML = html;
+}
+
+function createPaginationOffice(paginationElement, numberEachPage, number, list) {
+    const pagination = document.getElementById(paginationElement);
+    const pageNumber = Math.ceil(number / numberEachPage);
+    let html = `
+    <li class="page-item">
+        <a class="page-link" onclick="prePag('${paginationElement}', '${list}')" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+        </a>
+    </li>`;
+
+    for (let i = 1; i <= pageNumber; i++) {
+        html += `
+        <li class="page-item">
+            <a class="page-link" onclick="loadDataForOfficeTable(${i}, '${paginationElement}', '${list}')">${i}</a>
         </li>
         `;
     }
@@ -125,6 +189,7 @@ function loadDataForStaffTable(page, paginationId, tableList) {
 
 
 function prePag(pagination, list) {
+    console.log(typeof pagination);
     let currentPage;
     const paginationList = document.querySelectorAll('#' + pagination + ' li');
     Array.from(paginationList).forEach((value, index) => {
@@ -134,9 +199,21 @@ function prePag(pagination, list) {
     })
 
     if (currentPage == 1) {
-        loadDataForStaffTable(paginationList.length - 2, pagination, list);
+        if (pagination.includes('staff')) {
+            loadDataForStaffTable(paginationList.length - 2, pagination, list);
+        } else if (pagination.includes('office')) {
+            loadDataForOfficeTable(paginationList.length - 2, pagination, list);
+        } else if (pagination.includes('vacation')) {
+            loadDataForVacationTable(paginationList.length - 2, pagination, list);
+        }
     } else {
-        loadDataForStaffTable(currentPage - 1, pagination, list);
+        if (pagination.includes('staff')) {
+            loadDataForStaffTable(currentPage - 1, pagination, list);
+        } else if (pagination.includes('office')) {
+            loadDataForOfficeTable(currentPage - 1, pagination, list);
+        } else if (pagination.includes('vacation')) {
+            loadDataForVacationTable(currentPage - 1, pagination, list);
+        }
     }
 }
 
@@ -150,9 +227,21 @@ function nextPag(pagination, list) {
     })
 
     if (currentPage == paginationList.length - 2) {
-        loadDataForStaffTable(1, pagination, list);
+        if (pagination.includes('staff')) {
+            loadDataForStaffTable(1, pagination, list);
+        } else if (pagination.includes('office')) {
+            loadDataForOfficeTable(1, pagination, list);
+        } else if (pagination.includes('vacation')) {
+            loadDataForVacationTable(1, pagination, list);
+        }
     } else {
-        loadDataForStaffTable(currentPage + 1, pagination, list);
+        if (pagination.includes('staff')) {
+            loadDataForStaffTable(currentPage + 1, pagination, list);
+        } else if (pagination.includes('office')) {
+            loadDataForOfficeTable(currentPage + 1, pagination, list);
+        } else if (pagination.includes('vacation')) {
+            loadDataForVacationTable(currentPage + 1, pagination, list);
+        }
     }
 }
 
@@ -342,6 +431,105 @@ function updateOffice() {
         console.log('No change');
     }
 }
+
+function loadDataForVacationTable(page, paginationId, tableList) {
+    const table = document.getElementById(tableList);
+    paginationColor(paginationId, page);
+    table.innerHTML = '';
+    let count = 0;
+    dataPagination[page - 1].forEach(e => {
+
+        const tr = document.createElement('tr');
+        tr.setAttribute('onclick', `showDetailVacation('${e.id}')`);
+        if (e.seen) {
+            tr.className = 'non-seen';
+        }
+        tr.dataset.id = e.id;
+        tr.innerHTML = `
+                <td>${e.send_at}</td> 
+                <td>${e.username}</td> 
+                <td>${e.office}</td>
+                <td>${e.date_off}</td>
+                <td>${e.status}</td>
+        `;
+        table.appendChild(tr);
+    });
+    for (let i = 0; i < dataPagination.length; i++) {
+        for (let j = 0; j < dataPagination[i].length; j++) {
+            if (dataPagination[i][j].seen) {
+                count++;
+            }
+        }
+    }
+    document.getElementById('vacation-number').innerHTML = count;
+}
+
+function showDetailVacation(id) {
+    // open modal by js
+    const detailModal = document.getElementById('view-vacation');
+    const modal = new bootstrap.Modal(detailModal)
+
+    // seen vacation
+    const xml = new XMLHttpRequest();
+    xml.open('POST', API["seen-vacation"], false);
+    xml.onload = function() {
+        if (this.status == 200) {
+            console.log(this.responseText, 'see this vacation');
+        }
+    }
+    const formData = new FormData();
+    formData.append('id', id);
+    xml.send(formData);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', API["view-vacation"] + '?id=' + id, false);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            const vacation = JSON.parse(this.responseText);
+            if (vacation.status === 'success') {
+                /* console.log(vacation.data); */
+                document.getElementById('seen-at-view-vacation').innerHTML = vacation.data.send_at;
+                document.getElementById('name-view-vacation').value = vacation.data.username;
+                document.getElementById('office-view-vacation').value = vacation.data.office;
+                document.getElementById('date-view-vacation').value = vacation.data.date_off;
+                document.getElementById('number-view-vacation').value = vacation.data.number_off;
+                document.getElementById('reason-view-vacation').value = vacation.data.description;
+                document.getElementById('id-view-vacation').value = vacation.data.id;
+                document.getElementById('file-view-vacation').href = '/files/' + vacation.data.id + '/' + vacation.data.file;
+                modal.show()
+            }
+        }
+    }
+    xhr.send();
+}
+
+function disagreeVacation() {
+    const id = document.getElementById('id-view-vacation').value;
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', API["disagree-vacation"], false);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            console.log(this.responseText);
+        }
+    }
+    const formData = new FormData();
+    formData.append('id', id);
+    xhr.send(formData);
+}
+
+function agreeVacation() {
+    const id = document.getElementById('id-view-vacation').value;
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', API["agree-vacation"], false);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            console.log(this.responseText);
+        }
+    }
+    const formData = new FormData();
+    formData.append('id', id);
+    xhr.send(formData);
+}
 // js admin
 if (currentHref.includes('admin/')) {
 
@@ -367,7 +555,7 @@ if (currentHref.includes('admin/')) {
 
                         if (staffs.data.length > 0) {
                             // cerate pagination
-                            createPagination(staffPaginationId, numberEachPage, staffs.data.length, staffList);
+                            createPaginationStaff(staffPaginationId, numberEachPage, staffs.data.length, staffList);
 
                             //create staffs array
                             dataPagination = dataForPagination(staffs.data);
@@ -397,7 +585,7 @@ if (currentHref.includes('admin/')) {
 
                             if (staffs.data.length > 0) {
                                 // cerate pagination
-                                createPagination(staffPaginationId, numberEachPage, staffs.data.length, staffList);
+                                createPaginationStaff(staffPaginationId, numberEachPage, staffs.data.length, staffList);
 
                                 //create staffs array
                                 dataPagination = dataForPagination(staffs.data);
@@ -427,7 +615,7 @@ if (currentHref.includes('admin/')) {
                         if (staffs.status === 'success') {
 
                             // cerate pagination
-                            createPagination(staffPaginationId, numberEachPage, staffs.data.length, staffList);
+                            createPaginationStaff(staffPaginationId, numberEachPage, staffs.data.length, staffList);
 
                             //create staffs array
                             dataPagination = dataForPagination(staffs.data);
@@ -470,7 +658,7 @@ if (currentHref.includes('admin/')) {
                         console.log(offices.data.length);
                         if (offices.data.length > 0) {
                             // cerate pagination
-                            createPagination(officePaginationId, numberEachPage, offices.data.length, officeList);
+                            createPaginationOffice(officePaginationId, numberEachPage, offices.data.length, officeList);
 
                             //create offices array
                             dataPagination = dataForPagination(offices.data);
@@ -502,7 +690,7 @@ if (currentHref.includes('admin/')) {
                             console.log(offices.data.length);
                             if (offices.data.length > 0) {
                                 // cerate pagination
-                                createPagination(officePaginationId, numberEachPage, offices.data.length, officeList);
+                                createPaginationOffice(officePaginationId, numberEachPage, offices.data.length, officeList);
 
                                 //create offices array
                                 dataPagination = dataForPagination(offices.data);
@@ -531,7 +719,84 @@ if (currentHref.includes('admin/')) {
             search.addEventListener('focus', function() {
                 this.select();
             })
+        } else if (page === 'vacation') {
+            const vacationPaginationId = 'vacation-pagination';
+            const vacationList = 'vacation-list';
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', API["get-vacations"], false);
+            xhr.onload = function() {
+                if (this.status == 200) {
+
+                    const vacations = JSON.parse(this.responseText);
+                    if (vacations.status === 'success') {
+
+                        console.log(vacations.data.length);
+                        if (vacations.data.length > 0) {
+                            // cerate pagination
+                            createPaginationVacation(vacationPaginationId, numberEachPage, vacations.data.length, vacationList);
+
+                            //create vacations array
+                            dataPagination = dataForPagination(vacations.data);
+
+                            //load vacations to table
+                            loadDataForVacationTable(1, vacationPaginationId, vacationList);
+                        } else {
+                            const table = document.getElementById(vacationList);
+                            table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                        }
+
+                    }
+                }
+            }
+            xhr.send();
+
+            let search = document.getElementById('search-vacation-input');
+            const btnSearch = document.getElementById('search-vacation');
+            btnSearch.addEventListener('click', function() {
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', API["search-vacation"] + '?search=' + search.value, false);
+                xhr.onload = function() {
+                    if (this.status == 200) {
+
+                        const vacations = JSON.parse(this.responseText);
+                        if (vacations.status === 'success') {
+
+                            console.log(vacations.data.length);
+                            if (vacations.data.length > 0) {
+                                // cerate pagination
+                                createPaginationVacation(vacationPaginationId, numberEachPage, vacations.data.length, vacationList);
+
+                                //create vacations array
+                                dataPagination = dataForPagination(vacations.data);
+
+                                //load vacations to table
+                                loadDataForVacationTable(1, vacationPaginationId, vacationList);
+                            } else {
+                                const table = document.getElementById(vacationList);
+                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                            }
+
+                        }
+                    }
+                }
+                xhr.send();
+            })
+
+            //pointer input and press enter
+            search.addEventListener('keyup', function(event) {
+                if (event.keyCode === 13) {
+                    btnSearch.click();
+                }
+            })
+
+            //active input
+            search.addEventListener('focus', function() {
+                this.select();
+            })
         }
+
 
         //staff modal
         (function() {

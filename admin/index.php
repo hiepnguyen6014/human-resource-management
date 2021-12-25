@@ -42,7 +42,7 @@
                             </div>
                             <div>
                                 <div class="input-group w-300">
-                                    <select class="form-select" name="office" id="office-staff">
+                                    <select class="form-select" name="vacation" id="office-staff">
                                         <!-- <option value="">Select Office</option>
                                     <option value="1">Office 1</option>
                                     <option value="2">Office 2</option>
@@ -476,8 +476,7 @@
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                         </select>
-                                        <span onclick="changeCaptain()" class="input-group-text"
-                                            id="icon-swap-captain">
+                                        <span onclick="changeCaptain()" class="input-group-text" id="icon-swap-captain">
                                             <i class="fas fa-sync-alt text-success fz-24"></i>
                                         </span>
                                     </div>
@@ -509,170 +508,50 @@
     </div>
 
     <main class="vh-100 d-none" id="vacation">
-
         <!-- manage product -->
         <div class="container-fluid mt-2">
             <div class="row">
                 <div class="col-md-12 mb-3">
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between">
+                    <div class="card" style="position: relative;">
+                        <div class="card-header d-flex justify-content-between mobile-hide">
                             <div class="d-flex">
-                                <input type="text" class="search-input" placeholder="Search...">
-                                <button type="button" class="btn btn-outline-primary px-3 btn-search">
+                                <input type="text" class="search-input w-250" placeholder="Search..."
+                                    id="search-vacation-input">
+                                <button type="button" class="btn btn-outline-primary px-3 btn-search"
+                                    id="search-vacation">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
-                            <div class="btn-group">
-                                <button class="btn btn-outline-primary" data-bs-toggle="modal"
-                                    data-bs-target="#add-product">
-                                    <i class="fas fa-plus"></i>
-                                    <span>Add Product</span>
-                                </button>
-                            </div>
                         </div>
+                    </div>
 
-                        <div class="table-responsive">
-                            <table id="example" class="table table-hover w-100">
-                                <thead class="align-middle">
-                                    <tr>
-                                        <th>Tên sản phẩm</th>
-                                        <th>Giá sản phẩm</th>
-                                        <th>Số lượng trong kho</th>
-                                        <th>Nhà sản xuất</th>
-                                        <th>Ngày tạo</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="products" class="align-middle">
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
+                    <div class="table-responsive">
+                        <table id="vacation-table" class="table table-hover w-100 mb-0 text-center">
+                            <thead class="align-middle bg-secondary text-white font-weight-bold"
+                                style="letter-spacing: 1px;">
+                                <tr>
+                                    <th>Send At</th>
+                                    <th>Username</th>
+                                    <th>Office</th>
+                                    <th>Date Off</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vacation-list" class="align-middle">
+                                <!-- <tr class="fw-bold" data-toggle="modal" data-id="1" data-target="#view-vacation">
+                                    <td>2021/12/12 12:12</td>
+                                    <td>Tran trung quan</td>
+                                    <td>Marketing</td>
+                                    <td>Ngay nghi</td>
+                                    <td>Ngay nghi</td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
 
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>s</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="card-header d-flex justify-content-center" style="height: 55px;">
-                            <ul class="pagination">
-                                <li class="page-item">
+                    <div class="card-header d-flex justify-content-center pagination-ind">
+                        <ul class="pagination" id="vacation-pagination">
+                            <!-- <li class="page-item">
                                     <a class="page-link" href="#" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                         <span class="sr-only">Previous</span>
@@ -694,14 +573,74 @@
                                         <span aria-hidden="true">&raquo;</span>
                                         <span class="sr-only">Next</span>
                                     </a>
-                                </li>
-                            </ul>
-                        </div>
+                                </li> -->
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
+        </div>
     </main>
+
+    <div class="modal fade mt-5" id="view-vacation">
+        <div class="modal-dialog modal-lg mt-5">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Vacation Details (<span id="seen-at-view-vacation"></span>)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-0">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mt-2">
+                                <label for="name-view-vacation" class="form-label">Name</label>
+                                <div class="input-group">
+                                    <input type="text" id="name-view-vacation" class="form-control" disable>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <label for="date-view-vacation" class="form-label">Date Start</label>
+                                <div class="input-group">
+                                    <input type="text" id="date-view-vacation" class="form-control" disable>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mt-2">
+                                <label for="office-view-vacation" class="form-label">Office</label>
+                                <div class="input-group">
+                                    <input type="text" id="office-view-vacation" class="form-control" disable>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <label for="number-view-vacation" class="form-label">Number day of</label>
+                                <div class="input-group">
+                                    <input type="text" id="number-view-vacation" class="form-control" disable>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <label for="reason-view-vacation" class="form-label">Reason</label>
+                            <div class="input-group">
+                                <textarea id="reason-view-vacation" class="form-control" rows="3" disable></textarea>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <label for="file-view-vacation" class="form-label">File</label>
+                            <div class="input-group">
+                                <a href="/" target="_blank" id="file-view-vacation">Xem</a> 
+                            </div>
+                        </div>
+                        <input type="hidden" id="id-view-vacation">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="disagreeVacation()" class="btn btn-outline-secondary w-90">Disagree</button>
+                    <button onclick="agreeVacation()" class="btn btn-outline-secondary w-90">Agree</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="alert d-flex align-items-center p-3 mb-0 text-white bg-primary d-none" role="alert" id="alert">
         <div id="alert-icon">

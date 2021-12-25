@@ -450,6 +450,10 @@ tr {
     width: 25% !important;
 }
 
+#vacation-table td {
+    width: 20% !important;
+}
+
 th {
     font-size: 1.2rem;
     font-weight: 300;
@@ -498,7 +502,7 @@ hr {
 .non-seen {
     /* line-height: 600; */
     font-weight: 900;
-    background-color: #ffffbf;
+    background-color: #efefef;
 }
 
 main {
@@ -556,4 +560,17 @@ main {
 
 .w-90 {
     width: 90px !important;
+}
+
+.number-icon {
+    position: absolute;
+    color: white;
+    background-color: #8ebb41;
+    padding: 0px 4px;
+    border-radius: 50%;
+    top: 10px;
+    left: 106px;
+    font-size: 12px;
+    border: 1px solid white;
+    line-height: 14px;
 }
