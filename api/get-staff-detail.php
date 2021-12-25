@@ -11,6 +11,8 @@
             "salary" => "120000",
             "phone" => "2346236487",
             "address" => "19 Nguyen Huu Tho, Phu Nhuan, Da Nang",
+            "birthday" => "1996-12-12",
+            "join" => "2019-12-12",
             "image" => "default.webp",
         ];
 

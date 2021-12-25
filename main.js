@@ -5,10 +5,13 @@ const API = {
     'check-username': '/api/check-username.php',
     'get-staff-detail': '/api/get-staff-detail.php',
     'reset-password': '/api/reset-password.php',
+    'get-offices-list': '/api/get-offices-list.php',
+    'search-office': '/api/search-office.php',
+    'view-office': '/api/view-office.php',
 }
 
 window.onload = () => {
-    switchPage('staff');
+    switchPage('office');
 };
 
 
@@ -101,7 +104,7 @@ function loadDataForStaffTable(page, paginationId, tableList) {
     dataPagination[page - 1].forEach(e => {
 
         const tr = document.createElement('tr');
-        tr.setAttribute('onclick', `showDetail('${e.username}')`);
+        tr.setAttribute('onclick', `showDetailStaff('${e.username}')`);
         if (e.position == 1) {
             tr.classList.add('bg-info');
             tr.classList.add('bg-gradient');
@@ -172,19 +175,23 @@ function officeSelect(id) {
 }
 
 function resetPassword(username) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', API["reset-password"], false);
-    xhr.onload = function() {
-        if (this.status == 200) {
-            console.log(this.responseText);
+    // comfirm
+    const comfirm = confirm('Are you sure to reset password?');
+    if (comfirm) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', API["reset-password"], false);
+        xhr.onload = function() {
+            if (this.status == 200) {
+                console.log(this.responseText);
+            }
         }
+        const formData = new FormData();
+        formData.append('username', username);
+        xhr.send(formData);
     }
-    const formData = new FormData();
-    formData.append('username', username);
-    xhr.send(formData);
 }
 
-function showDetail(username) {
+function showDetailStaff(username) {
     // open modal by js
     const detailModal = document.getElementById('view-staff');
     const modal = new bootstrap.Modal(detailModal)
@@ -206,7 +213,52 @@ function showDetail(username) {
                 document.getElementById('view-staff-modal-salary').value = staff.data.salary;
                 document.getElementById('view-staff-modal-phone').value = staff.data.phone;
                 document.getElementById('view-staff-modal-address').value = staff.data.address;
+                document.getElementById('view-staff-modal-birthday').value = staff.data.birthday;
+                document.getElementById('view-staff-modal-join').value = staff.data.join;
                 document.getElementById('reset-password').setAttribute('onclick', `resetPassword('${staff.data.username}')`);
+                modal.show()
+            }
+        }
+    }
+    xhr.send();
+}
+
+function loadDataForOfficeTable(page, paginationId, tableList) {
+    const table = document.getElementById(tableList);
+    paginationColor(paginationId, page);
+    table.innerHTML = '';
+    dataPagination[page - 1].forEach(e => {
+
+        const tr = document.createElement('tr');
+        tr.setAttribute('onclick', `showDetailOffice('${e.id}')`);
+        tr.dataset.id = e.id;
+        tr.innerHTML = `
+                <td>${e.name}</td>
+                <td>${e.room}</td>
+                <td>${e.captain}</td>
+                <td>${e.phone}</td>
+                `;
+        table.appendChild(tr);
+    });
+}
+
+function showDetailOffice(id) {
+    // open modal by js
+    const detailModal = document.getElementById('view-office');
+    const modal = new bootstrap.Modal(detailModal)
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', API["view-office"] + '?id=' + id, false);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            const office = JSON.parse(this.responseText);
+            if (office.status === 'success') {
+                /* document.getElementById('view-office-modal-name').innerText = office.data.name;
+                document.getElementById('view-office-modal-room').innerText = office.data.room;
+                document.getElementById('view-office-modal-captain').innerText = office.data.captain;
+                document.getElementById('view-office-modal-phone').innerText = office.data.phone;
+                document.getElementById('view-office-modal-cerate').innerText = office.data.cerate;
+                document.getElementById('view-office-modal-description').innerText = office.data.description; */
                 modal.show()
             }
         }
@@ -236,14 +288,19 @@ if (currentHref.includes('admin/')) {
                     const staffs = JSON.parse(this.responseText);
                     if (staffs.status === 'success') {
 
-                        // cerate pagination
-                        createPagination(staffPaginationId, numberEachPage, staffs.data.length, staffList);
+                        if (staffs.data.length > 0) {
+                            // cerate pagination
+                            createPagination(staffPaginationId, numberEachPage, staffs.data.length, staffList);
 
-                        //create staffs array
-                        dataPagination = dataForPagination(staffs.data);
+                            //create staffs array
+                            dataPagination = dataForPagination(staffs.data);
 
-                        //load staffs to table
-                        loadDataForStaffTable(1, staffPaginationId, staffList);
+                            //load staffs to table
+                            loadDataForStaffTable(1, staffPaginationId, staffList);
+                        } else {
+                            const table = document.getElementById(staffList);
+                            table.innerHTML = `<tr><td colspan="4">No data</td></tr>`;
+                        }
 
                     }
                 }
@@ -261,15 +318,19 @@ if (currentHref.includes('admin/')) {
                         const staffs = JSON.parse(this.responseText);
                         if (staffs.status === 'success') {
 
-                            // cerate pagination
-                            createPagination(staffPaginationId, numberEachPage, staffs.data.length, staffList);
+                            if (staffs.data.length > 0) {
+                                // cerate pagination
+                                createPagination(staffPaginationId, numberEachPage, staffs.data.length, staffList);
 
-                            //create staffs array
-                            dataPagination = dataForPagination(staffs.data);
+                                //create staffs array
+                                dataPagination = dataForPagination(staffs.data);
 
-                            //load staffs to table
-                            loadDataForStaffTable(1, staffPaginationId, staffList);
-
+                                //load staffs to table
+                                loadDataForStaffTable(1, staffPaginationId, staffList);
+                            } else {
+                                const table = document.getElementById(staffList);
+                                table.innerHTML = `<tr><td colspan="4">No data</td></tr>`;
+                            }
                         }
                     }
                 }
@@ -316,6 +377,83 @@ if (currentHref.includes('admin/')) {
             })
 
 
+        } else if (page === 'office') {
+            const officePaginationId = 'office-pagination';
+            const officeList = 'office-list';
+            const select = 'office-office';
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', API["get-offices-list"], false);
+            xhr.onload = function() {
+                if (this.status == 200) {
+
+                    const offices = JSON.parse(this.responseText);
+                    if (offices.status === 'success') {
+
+                        console.log(offices.data.length);
+                        if (offices.data.length > 0) {
+                            // cerate pagination
+                            createPagination(officePaginationId, numberEachPage, offices.data.length, officeList);
+
+                            //create offices array
+                            dataPagination = dataForPagination(offices.data);
+
+                            //load offices to table
+                            loadDataForOfficeTable(1, officePaginationId, officeList);
+                        } else {
+                            const table = document.getElementById(officeList);
+                            table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                        }
+
+                    }
+                }
+            }
+            xhr.send();
+
+            let search = document.getElementById('search-office-input');
+            const btnSearch = document.getElementById('search-office');
+            btnSearch.addEventListener('click', function() {
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', API["search-office"] + '?search=' + search.value, false);
+                xhr.onload = function() {
+                    if (this.status == 200) {
+
+                        const offices = JSON.parse(this.responseText);
+                        if (offices.status === 'success') {
+
+                            console.log(offices.data.length);
+                            if (offices.data.length > 0) {
+                                // cerate pagination
+                                createPagination(officePaginationId, numberEachPage, offices.data.length, officeList);
+
+                                //create offices array
+                                dataPagination = dataForPagination(offices.data);
+
+                                //load offices to table
+                                loadDataForOfficeTable(1, officePaginationId, officeList);
+                            } else {
+                                const table = document.getElementById(officeList);
+                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                            }
+
+                        }
+                    }
+                }
+                xhr.send();
+            })
+
+            //pointer input and press enter
+            search.addEventListener('keyup', function(event) {
+                if (event.keyCode === 13) {
+                    btnSearch.click();
+                }
+            })
+
+            //active input
+            search.addEventListener('focus', function() {
+                this.select();
+            })
         }
 
         //staff modal

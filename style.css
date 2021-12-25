@@ -445,8 +445,9 @@ tr {
     height: 3.1rem !important;
 }
 
+#office-table td,
 #staff-table td {
-    width: 25%;
+    width: 25% !important;
 }
 
 th {
@@ -522,4 +523,25 @@ main {
     bottom: 10px;
     width: calc(100% - 282px);
     border: none;
+}
+
+#alert {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    box-shadow: 0 0 5px 1px black;
+    border-radius: 0.2rem;
+    animation: alert 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+
+@keyframes alert {
+    from {
+        opacity: 0;
+        transform: translateY(-200%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
