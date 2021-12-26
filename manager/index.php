@@ -189,7 +189,7 @@
                             </div>
                             <div>
                                 <div class="input-group w-300">
-                                    <select class="form-select" name="status" id="office-staff">
+                                    <select class="form-select" name="status" id="type-vacation-manager">
                                         <option value="0">All</option>
                                         <option value="1">Pending</option>
                                         <option value="2">Approve</option>
@@ -324,7 +324,7 @@
                             </div>
                             <div>
                                 <div class="input-group w-300">
-                                    <select class="form-select" name="status" id="office-staff">
+                                    <select class="form-select" name="status" id="type-vacation-send">
                                         <option value="0">All</option>
                                         <option value="1">Pending</option>
                                         <option value="2">Approve</option>
@@ -352,7 +352,7 @@
                                 <tr>
                                     <th>Send At</th>
                                     <th>Date Off</th>
-                                    <th>Number Off</th>
+                                    <th>Number day</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -400,61 +400,53 @@
         </div>
     </main>
 
-    <div class="modal fade mt-5" id="add-staff" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md mt-5">
+    <div class="modal fade mt-5" id="view-vacation-send">
+        <div class="modal-dialog modal-lg mt-5">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Staff</h5>
+                    <h5 class="modal-title">Detail Off Request (<span id="send-view-vacation-send"></span>)</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/api/add-staff.php" method="POST" id="add-staff-form">
-                        <div class="mt-3 row">
-                            <div class="col-lg-6">
-                                <label for="firstname-add-staff" class="form-label">First Name</label>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mt-2">
+                                <label for="date-view-vacation-send" class="form-label">Date Start</label>
                                 <div class="input-group">
-                                    <input type="text" name="firstname" id="firstname-add-staff" class="form-control"
-                                        placeholder="Staff's first name" required>
+                                    <input type="text" id="date-view-vacation-send" class="form-control" disabled>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <label for="lastname-add-staff" class="form-label">Last Name</label>
+                            <div class="mt-2">
+                                <label for="reason-view-vacation-send" class="form-label">Reason</label>
                                 <div class="input-group">
-                                    <input type="text" name="lastname" id="lastname-add-staff" class="form-control"
-                                        placeholder="Staff's last name" required>
+                                    <textarea id="reason-view-vacation-send" class="form-control" disabled></textarea>
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-3">
-                            <label for="username-add-staff" class="form-label">Username</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="username" id="username-add-staff"
-                                    placeholder="Staff's username" required>
-                                <span class="input-group-text" id="icon-check-username">
-                                    <i class="far fa-check-circle text-success fz-24"></i>
-                                    <i class="far fa-times-circle d-none text-danger fz-24"></i>
-                                </span>
+                        <div class="col-lg-6">
+                            <div class="mt-2">
+                                <label for="number-view-vacation-send" class="form-label">Number day of</label>
+                                <div class="input-group">
+                                    <input type="text" id="number-view-vacation-send" class="form-control" disabled>
+                                </div>
                             </div>
-                            <div id="username-error-add-staff">
+                            <div class="mt-2">
+                                <label for="feedback-view-vacation-send" class="form-label">Feedback</label>
+                                <div class="input-group">
+                                    <textarea id="feedback-view-vacation-send" class="form-control" disabled></textarea>
+                                </div>
+                            </div>
+                        </div>
 
+
+                        <div class="mt-2">
+                            <div class="input-group d-inline-block">
+                                <a href="/" target="_blank" class="btn btn-outline-info btn-sm"
+                                    id="file-view-vacation-send">View File</a>
                             </div>
                         </div>
-                        <div class="mt-3">
-                            <label for="office-add-staff" class="form-label">Office</label>
-                            <div class="input-group">
-                                <select class="form-select" name="office" id="office-add-staff">
-                                    <!-- <option value="">Select Office</option>
-                                    <option value="1">Office 1</option>
-                                    <option value="2">Office 2</option>
-                                    <option value="3">Office 3</option> -->
-                                </select>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" form="add-staff-form" class="btn btn-primary px-3">Add</button>
+                        <input type="hidden" id="id-view-vacation-send">
+                    </div>
                 </div>
             </div>
         </div>

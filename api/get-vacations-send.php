@@ -8,6 +8,7 @@
             'seen' => rand(0, 1),
             'send_at' => date('Y-m-d', strtotime('+' . $i . ' days')),
             'date_off' => date('Y-m-d', strtotime('+' . $i . ' days')),
+            'number_off' => rand(1, 5),
             'status' => 'pending',
         );
     }

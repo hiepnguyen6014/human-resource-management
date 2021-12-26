@@ -72,12 +72,13 @@
                             <span class="number-icon" id="vacation-number">5</span>
                         </a>
                     </li>
-                    <li>
+                    <li style="position: relative;">
                         <a onclick="switchPageManager('vacation-send')" class="nav-link nav-link-custom p-3 text-white">
                             <span class="me-2">
                                 <i class="icon fas fa-calendar-times"></i>
                             </span>
                             <span>Vacation</span>
+                            <span class="number-icon" id="vacation-send-number">5</span>
                         </a>
                         
                     </li>
