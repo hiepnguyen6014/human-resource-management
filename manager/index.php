@@ -336,8 +336,7 @@
                             </div>
 
                             <div class="btn-group">
-                                <button class="btn btn-outline-primary" data-bs-toggle="modal"
-                                    data-bs-target="#add-staff">
+                                <button class="btn btn-outline-primary" onclick="offRequest()">
                                     <i class="fas fa-plus"></i>
                                     <span>More</span>
                                 </button>
@@ -451,6 +450,68 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade mt-5" id="add-vacation-send">
+        <div class="modal-dialog modal-lg mt-5">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xin nghỉ phép</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="mt-2">
+                                <label for="date-add-vacation-send" class="form-label">Ngày bắt đầu</label>
+                                <div class="input-group">
+                                    <input type="date" id="date-add-vacation-send" class="form-control">
+                                    <span class="input-group-text" id="icon-check-date">
+                                        <i class="far fa-check-circle d-none text-success fz-24"></i>
+                                        <i class="far fa-times-circle text-danger fz-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="mt-2">
+                                <label for="number-dayoff-vacation-send" class="form-label">Số ngày nghỉ</label>
+                                <div class="input-group">
+                                    <select name="number" id="number-dayoff-vacation-send" class="form-select">
+
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="mt-2">
+                                <label for="file-vacation-send" class="form-label">File đíng kèm</label>
+                                <div class="input-group">
+                                    <input type="file" name="file" id="file-vacation-send" class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="mt-2">
+                            <label for="reason-add-vacation-send" class="form-label">Lý do</label>
+                            <div class="input-group">
+                                <textarea id="reason-add-vacation-send" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <input type="hidden" id="id-add-vacation-send">
+                        <input type="hidden" id="lastest-add-vacation-send">
+                        <input type="hidden" id="available-add-vacation-send">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-secondary w-90">Thoát</button>
+                    <button class="btn btn-outline-secondary w-90" id="btn-send-vacation">Gửi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="alert d-flex align-items-center p-3 mb-0 text-white bg-primary d-none" role="alert" id="alert-manager">
         <div id="alert-icon">

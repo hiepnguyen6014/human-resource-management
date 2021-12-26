@@ -28,13 +28,12 @@ const API = {
     'search-vacation-send': '/api/search-vacation-send.php',
     'filter-vacations-send': '/api/filter-vacations-send.php',
     'filter-vacations-manager': '/api/filter-vacations-manager.php',
+    'check-before-vacation': '/api/check-before-vacation.php',
 }
 
 window.onload = () => {
     switchPageManager('vacation-send');
 };
-
-
 
 //check current href
 var currentHref = window.location.href;
@@ -882,6 +881,77 @@ function showDetailVacationSend(id) {
                 document.getElementById('id-view-vacation-send').value = vacation.data.id;
                 document.getElementById('file-view-vacation-send').href = '/files/' + vacation.data.id + '/' + vacation.data.file;
                 modal.show()
+            }
+        }
+    }
+    xhr.send();
+}
+
+function offRequest() {
+    const modal = new bootstrap.Modal(document.getElementById('add-vacation-send'));
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', API["check-before-vacation"], false);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            const vacation = JSON.parse(this.responseText);
+            if (vacation.status === 'success') {
+                if (localStorage.getItem('status-button') === 0 || localStorage.getItem('status-button') === null) {
+                    document.getElementById('btn-send-vacation').disabled = true;
+                } else {
+                    document.getElementById('btn-send-vacation').disabled = false;
+                }
+                document.getElementById('id-add-vacation-send').value = vacation.data.date_off;
+                document.getElementById('lastest-add-vacation-send').value = vacation.data.lastest_off_date;
+                document.getElementById('available-add-vacation-send').value = vacation.data.available_off_date;
+
+                let select = document.getElementById('number-dayoff-vacation-send');
+                modal.show();
+
+                for (let i = 1; i <= vacation.data.available_off_date; i++) {
+                    let option = document.createElement('option');
+                    option.value = i;
+                    option.innerHTML = i;
+                    select.appendChild(option);
+                }
+
+                const date = document.getElementById('date-add-vacation-send');
+                date.addEventListener('change', function() {
+                    //compare date
+                    const date_off = new Date(date.value);
+                    const lastest_off_date = new Date(vacation.data.lastest_off_date);
+                    const diff = date_off.getTime() - lastest_off_date.getTime();
+                    // convert diff to days
+                    const days1 = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+                    //get time in Asia/Ho Chi Minh
+                    const today = new Date(new Date().toLocaleDateString('vn-VN', { timeZone: 'Asia/Ho_Chi_Minh' }));
+                    const diff2 = date_off.getTime() - today.getTime();
+                    // convert diff to days
+                    const days2 = Math.floor(diff2 / (1000 * 60 * 60 * 24));
+
+                    const icon = document.getElementById('icon-check-date');
+
+                    console.log(days1, days2);
+                    if (days1 > 6 && days2 > 1) {
+                        //get first child of icon
+                        icon.children[0].classList.remove('d-none');
+                        icon.children[1].classList.add('d-none');
+
+                        //enable button
+                        document.getElementById('btn-send-vacation').disabled = false;
+
+                        //add 1 to localStorage
+                        localStorage.setItem('status-button', 1);
+                    } else {
+                        icon.children[1].classList.remove('d-none');
+                        icon.children[0].classList.add('d-none');
+
+                        //disable button
+                        document.getElementById('btn-send-vacation').disabled = true;
+                        localStorage.setItem('status-button', 0);
+                    }
+                })
             }
         }
     }
