@@ -579,7 +579,7 @@
                 </div>
             </div>
         </div>
-        </div>
+        
     </main>
 
     <div class="modal fade mt-5" id="view-vacation">
@@ -595,13 +595,13 @@
                             <div class="mt-2">
                                 <label for="name-view-vacation" class="form-label">Name</label>
                                 <div class="input-group">
-                                    <input type="text" id="name-view-vacation" class="form-control" disable>
+                                    <input type="text" id="name-view-vacation" class="form-control" disabled>
                                 </div>
                             </div>
                             <div class="mt-2">
                                 <label for="date-view-vacation" class="form-label">Date Start</label>
                                 <div class="input-group">
-                                    <input type="text" id="date-view-vacation" class="form-control" disable>
+                                    <input type="text" id="date-view-vacation" class="form-control" disabled>
                                 </div>
                             </div>
                         </div>
@@ -609,20 +609,20 @@
                             <div class="mt-2">
                                 <label for="office-view-vacation" class="form-label">Office</label>
                                 <div class="input-group">
-                                    <input type="text" id="office-view-vacation" class="form-control" disable>
+                                    <input type="text" id="office-view-vacation" class="form-control" disabled>
                                 </div>
                             </div>
                             <div class="mt-2">
                                 <label for="number-view-vacation" class="form-label">Number day of</label>
                                 <div class="input-group">
-                                    <input type="text" id="number-view-vacation" class="form-control" disable>
+                                    <input type="text" id="number-view-vacation" class="form-control" disabled>
                                 </div>
                             </div>
                         </div>
                         <div class="mt-2">
                             <label for="reason-view-vacation" class="form-label">Reason</label>
                             <div class="input-group">
-                                <textarea id="reason-view-vacation" class="form-control" rows="3" disable></textarea>
+                                <textarea id="reason-view-vacation" class="form-control" rows="3" disabled></textarea>
                             </div>
                         </div>
                         <div class="mt-2">

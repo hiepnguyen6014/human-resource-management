@@ -574,3 +574,8 @@ main {
     border: 1px solid white;
     line-height: 14px;
 }
+
+#vacation-send-table th,
+#staff-manager-table th {
+    width: 25% !important;
+}
