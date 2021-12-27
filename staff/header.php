@@ -28,7 +28,9 @@
                 <div class="collapse" id="dashboard">
                     <li>
                         <a href="#" class="nav-link nav-link-custom p-3 text-white">
-                            <span class="me-2"><i class="icon fas fa-tasks"></i></span>
+                            <span class="me-2">
+                            <i class="icon fas fa-clipboard-list"></i>
+                            </span>
                             <span>To Do</span>
                         </a>
                     </li>
@@ -57,27 +59,20 @@
                     </a>
                 </li>
                 <div class="collapse" id="feature">
-                    <li>
-                        <a onclick="switchPage('staff-manager')" class="nav-link nav-link-custom p-3 text-white">
-                            <span class="me-2"><i class="fas fa-user-cog"></i></span>
-                            <span>Staff</span>
-                        </a>
-                    </li>
                     <li style="position: relative;">
-                        <a onclick="switchPage('vacation-request')" class="nav-link nav-link-custom p-3 text-white">
+                        <a onclick="switchPage('task-staff')" class="nav-link nav-link-custom p-3 text-white">
                             <span class="me-2">
-                                <i class="icon fas fa-business-time"></i>
+                            <i class="icon fas fa-tasks"></i>
                             </span>
-                            <span>Vacation Request</span>
-                            <span class="number-icon" id="vacation-number">5</span>
+                            <span>Nhiệm vụ</span>
                         </a>
                     </li>
                     <li style="position: relative;">
-                        <a onclick="switchPage('vacation-send')" class="nav-link nav-link-custom p-3 text-white">
+                        <a onclick="switchPage('vacation-staff')" class="nav-link nav-link-custom p-3 text-white">
                             <span class="me-2">
                                 <i class="icon fas fa-calendar-times"></i>
                             </span>
-                            <span>Vacation</span>
+                            <span>Nghỉ phép</span>
                             <span class="number-icon" id="vacation-send-number">5</span>
                         </a>
                         

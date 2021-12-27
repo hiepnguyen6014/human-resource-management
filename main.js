@@ -28,11 +28,14 @@ const API = {
     'search-vacation-send': '/api/search-vacation-send.php',
     'filter-vacations-send': '/api/filter-vacations-send.php',
     'filter-vacations-manager': '/api/filter-vacations-manager.php',
-    'check-before-vacation': '/api/check-before-vacation.php',
+    'CHECK_BEFORE_VACATION': '/api/check-before-vacation.php',
+    'VIEW_PROFILE': '/api/view-profile.php',
+    'UPDATE_PROFILE': '/api/update-profile.php',
+    'CHANGE_PASSWORD': '/api/change-password.php',
 }
 
 window.onload = () => {
-    switchPageManager('vacation-send');
+    switchPage('vacation-staff');
 };
 
 //check current href
@@ -49,18 +52,6 @@ let dataPagination = [];
 })()
 
 function switchPage(page) {
-    Array.from(document.querySelectorAll('main')).forEach(e => {
-        if (e.id == page) {
-            /* console.log(e.id); */
-            loadData(e.id);
-            document.getElementById(e.id).classList.remove('d-none');
-        } else {
-            e.classList.add('d-none');
-        }
-    })
-}
-
-function switchPageManager(page) {
     Array.from(document.querySelectorAll('main')).forEach(e => {
         if (e.id == page) {
             /* console.log(e.id); */
@@ -891,7 +882,7 @@ function offRequest() {
     const modal = new bootstrap.Modal(document.getElementById('add-vacation-send'));
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API["check-before-vacation"], false);
+    xhr.open('GET', API.CHECK_BEFORE_VACATION, false);
     xhr.onload = function() {
         if (this.status == 200) {
             const vacation = JSON.parse(this.responseText);
@@ -956,6 +947,89 @@ function offRequest() {
         }
     }
     xhr.send();
+}
+
+function viewProfile() {
+    const modal = new bootstrap.Modal(document.getElementById('view-profile'));
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', API.VIEW_PROFILE, false);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            const profile = JSON.parse(this.responseText);
+            if (profile.status === 'success') {
+                document.getElementById('view-profile-modal-image').src = '/images/' + profile.data.image;
+                document.getElementById('view-profile-modal-fullname').innerText = profile.data.first_name + ' ' + profile.data.last_name;
+                document.getElementById('view-profile-modal-username').innerText = profile.data.username;
+                document.getElementById('view-profile-modal-email').value = profile.data.email;
+                document.getElementById('view-profile-modal-firstname').value = profile.data.first_name;
+                document.getElementById('view-profile-modal-lastname').value = profile.data.last_name;
+                document.getElementById('view-profile-modal-position').value = (profile.data.position == 1) ? 'Captain' : 'Employee';
+                document.getElementById('view-profile-modal-salary').value = profile.data.salary;
+                document.getElementById('view-profile-modal-phone').value = profile.data.phone;
+                document.getElementById('view-profile-modal-address').value = profile.data.address;
+                document.getElementById('view-profile-modal-birthday').value = profile.data.birthday;
+                document.getElementById('view-profile-modal-join').value = profile.data.join;
+                // document.getElementById('reset-password').setAttribute('onclick', `resetPassword('${profile.data.username}')`);
+                modal.show()
+
+                const buttonChangePassword = document.getElementById('btn-change-password');
+
+                if (localStorage.getItem('change-password') === 0 || localStorage.getItem('change-password') === null) {
+                    buttonChangePassword.disabled = true;
+                }
+
+                const passwordInput = document.querySelectorAll('.view-profile-modal-new-password');
+                passwordInput.forEach(function(item) {
+                    item.addEventListener('keyup', function() {
+                        let pass1 = passwordInput[0].value;
+                        let pass2 = passwordInput[1].value;
+                        const icon = document.querySelectorAll('.icon-password-check')
+                        if (pass1 === pass2 && pass1 !== '' && pass2 !== '' && pass1.length >= 6) {
+                            icon.forEach(function(item) {
+                                item.children[0].classList.remove('d-none');
+                                item.children[1].classList.add('d-none');
+                                localStorage.setItem('change-password', 1);
+                                buttonChangePassword.disabled = false;
+                            })
+                        } else {
+                            icon.forEach(function(item) {
+                                item.children[1].classList.remove('d-none');
+                                item.children[0].classList.add('d-none');
+                                localStorage.setItem('change-password', 0);
+                                buttonChangePassword.disabled = true;
+                            })
+
+                        }
+                    })
+
+                })
+            }
+        }
+    }
+    xhr.send();
+}
+
+function updateProfile() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', API.UPDATE_PROFILE, false);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            console.log(this.responseText);
+        }
+    }
+    xhr.send(new FormData(document.getElementById('update-profile')));
+}
+
+function changePassword() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', API.CHANGE_PASSWORD, false);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            console.log(this.responseText);
+        }
+    }
+
+    xhr.send(new FormData(document.getElementById('form-change-password')));
 }
 
 // js admin
@@ -1558,6 +1632,119 @@ if (currentHref.includes('admin/')) {
                 xhr.send();
             })
 
+        }
+    }
+} else if (currentHref.includes('staff/')) {
+    function loadData(page) {
+        if (page === 'task-staff') {
+            document.title = 'Nhiệm vụ';
+        } else if (page === 'vacation-staff') {
+            document.title = 'Nghỉ phép';
+            const vacationPaginationId = 'vacation-send-pagination';
+            const vacationList = 'vacation-send-list';
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', API["get-vacations-send"], false);
+            xhr.onload = function() {
+                if (this.status == 200) {
+
+                    const vacations = JSON.parse(this.responseText);
+                    if (vacations.status === 'success') {
+
+                        console.log(vacations.data.length);
+                        if (vacations.data.length > 0) {
+                            // cerate pagination
+                            createPaginationVacationSend(vacationPaginationId, numberEachPage, vacations.data.length, vacationList);
+
+                            //create vacations array
+                            dataPagination = dataForPagination(vacations.data);
+
+                            //load vacations to table
+                            loadDataForVacationTableSend(1, vacationPaginationId, vacationList);
+                        } else {
+                            const table = document.getElementById(vacationList);
+                            table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                        }
+
+                    }
+                }
+            }
+            xhr.send();
+
+            let search = document.getElementById('search-vacation-send-input');
+            const btnSearch = document.getElementById('search-vacation-send');
+            btnSearch.addEventListener('click', function() {
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', API["search-vacation-send"] + '?search=' + search.value, false);
+                xhr.onload = function() {
+                    if (this.status == 200) {
+
+                        const vacations = JSON.parse(this.responseText);
+                        if (vacations.status === 'success') {
+
+                            console.log(vacations.data.length);
+                            if (vacations.data.length > 0) {
+                                // cerate pagination
+                                createPaginationVacationSend(vacationPaginationId, numberEachPage, vacations.data.length, vacationList);
+
+                                //create vacations array
+                                dataPagination = dataForPagination(vacations.data);
+
+                                //load vacations to table
+                                loadDataForVacationTableSend(1, vacationPaginationId, vacationList);
+                            } else {
+                                const table = document.getElementById(vacationList);
+                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                            }
+
+                        }
+                    }
+                }
+                xhr.send();
+            })
+
+            //pointer input and press enter
+            search.addEventListener('keyup', function(event) {
+                if (event.keyCode === 13) {
+                    btnSearch.click();
+                }
+            })
+
+            //active input
+            search.addEventListener('focus', function() {
+                this.select();
+            })
+
+            const selectInput = document.getElementById('type-vacation-send');
+            selectInput.addEventListener('change', function() {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', API["filter-vacations-send"] + '?type=' + selectInput.value, false);
+                xhr.onload = function() {
+                    if (this.status == 200) {
+
+                        const vacations = JSON.parse(this.responseText);
+                        if (vacations.status === 'success') {
+
+                            if (vacations.data.length > 0) {
+                                // cerate pagination
+                                createPaginationVacationSend(vacationPaginationId, numberEachPage, vacations.data.length, vacationList);
+
+                                //create vacations array
+                                dataPagination = dataForPagination(vacations.data);
+
+                                //load vacations to table
+                                loadDataForVacationTableSend(1, vacationPaginationId, vacationList);
+                            } else {
+                                const table = document.getElementById(vacationList);
+                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                            }
+
+                        }
+                    }
+                }
+                xhr.send();
+            })
         }
     }
 }
