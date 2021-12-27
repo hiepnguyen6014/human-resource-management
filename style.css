@@ -579,3 +579,22 @@ main {
 #staff-manager-table th {
     width: 25% !important;
 }
+
+.accordion-button:not(.collapsed) {
+    color: #ffffff;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.accordion-button {
+    background-color: transparent;
+}
+
+.accordion-button::after {
+    filter: brightness(10);
+}
+
+.accordion-button:not(.collapsed)::after {
+    transform: rotate(-180deg);
+    filter: brightness(10);
+}

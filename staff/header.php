@@ -11,26 +11,23 @@
 <div class="offcanvas offcanvas-start sidebar-nav" tabindex="-1" id="sidebar">
     <div class="offcanvas-body p-0">
         <nav class="navbar-dark custom-navbar">
-            <div class="avatar-space">
+            <div class="avatar-space" onclick="viewProfile()">
                 <img src="/images/default.webp" alt="avt" class="avatar">
             </div>
             <ul class="navbar-nav">
-                <li class="mb-2">
+                <li>
                     <hr class="dropdown-divider" />
                 </li>
-                <li class="mb-2 py-2">
-                    <a class="text-white fw-bold text-uppercase px-3 mb-3 text-decoration-none"
-                        data-bs-toggle="collapse" href="#dashboard" role="button" aria-expanded="false"
-                        aria-controls="dashboard">
+                <li class="p-3 position-relative accordion-button" data-bs-toggle="collapse" href="#dashboard" role="button"
+                    aria-expanded="false" aria-controls="dashboard">
+                    <a class="text-white fw-bold text-uppercase px-3 text-decoration-none">
                         Dashboard
                     </a>
                 </li>
                 <div class="collapse" id="dashboard">
                     <li>
                         <a href="#" class="nav-link nav-link-custom p-3 text-white">
-                            <span class="me-2">
-                            <i class="icon fas fa-clipboard-list"></i>
-                            </span>
+                            <span class="me-2"><i class="icon fas fa-clipboard-list"></i></span>
                             <span>To Do</span>
                         </a>
                     </li>
@@ -48,17 +45,18 @@
                     </li>
                 </div>
 
-                <li class="mb-2">
+
+                <li>
                     <hr class="dropdown-divider" />
                 </li>
-                <li class="mb-2 py-2">
-                    <a class="text-white fw-bold text-uppercase px-3 mb-3 text-decoration-none"
+                <li class="p-3 accordion-button" 
                         data-bs-toggle="collapse" href="#feature" role="button" aria-expanded="false"
                         aria-controls="feature">
+                    <a class="text-white fw-bold text-uppercase px-3 text-decoration-none">
                         Management
                     </a>
                 </li>
-                <div class="collapse" id="feature">
+                <div class="collapse show" id="feature">
                     <li style="position: relative;">
                         <a onclick="switchPage('task-staff')" class="nav-link nav-link-custom p-3 text-white">
                             <span class="me-2">
