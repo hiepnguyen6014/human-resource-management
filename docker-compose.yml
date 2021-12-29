@@ -14,12 +14,12 @@ services:
             MYSQL_PASSWORD: user
 
     web:
-        build: ./www
+        build: ./src
         restart: always
         ports:
             - 8080:80
         volumes:
-            - ./www:/var/www/html/
+            - ./src:/var/www/html/
         depends_on:
             - "mysql-server"
     phpmyadmin:
