@@ -15,9 +15,9 @@
                     <img src="/images/default.webp" alt="avt" class="avatar">
                 </div>
                 <ul class="navbar-nav">
-                    <li>
+                 
                         <hr class="dropdown-divider" />
-                    </li>
+                   
                     <li class="p-3 accordion-button" data-bs-toggle="collapse" href="#dashboard" role="button"
                         aria-expanded="false" aria-controls="dashboard">
                         <a class="text-white fw-bold text-uppercase px-3 text-decoration-none">
@@ -27,7 +27,7 @@
                     <div class="collapse" id="dashboard">
                         <li>
                             <a href="#" class="nav-link nav-link-custom p-3 text-white">
-                                <span class="me-2"><i class="icon fas fa-tasks"></i></span>
+                                <span class="me-2"><i class="icon fas fa-clipboard-list"></i></span>
                                 <span>To Do</span>
                             </a>
                         </li>
@@ -45,9 +45,9 @@
                         </li>
                     </div>
 
-                    <li>
+            
                         <hr class="dropdown-divider" />
-                    </li>
+     
                     <li class="mp-3 accordion-button" data-bs-toggle="collapse" href="#feature" role="button"
                         aria-expanded="false" aria-controls="feature">
                         <a class="text-white fw-bold text-uppercase px-3 text-decoration-none">
@@ -78,9 +78,9 @@
                         </li>
                     </div>
 
-                    <li class="mb-2">
+                    <div>
                         <hr class="dropdown-divider" />
-                    </li>
+                    </div>
                 </ul>
                 <div id="logout">
                     <i class="fas fa-sign-out-alt"></i>

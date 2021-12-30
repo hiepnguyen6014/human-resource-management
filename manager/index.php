@@ -19,23 +19,85 @@
     <?php
         require_once "header.php";
     ?>
-
-    main.
+    <!-- <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                Accordion Item #1
+            </button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+            data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
+                <code>.accordion-flush</code> class. This is the first item's accordion body.
+            </div>
+        </div>
+    </div> -->
     <main class="vh-100 d-none" id="task-manager">
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="flush-headingOne">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                    Accordion Item #1
-                </button>
-            </h2>
-            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
-                data-bs-parent="#accordionFlushExample">
-                <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
-                    <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+        <div class="container-fluid mt-2">
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <div class="card" style="position: relative;">
+                        <div class="card-header d-flex justify-content-between mobile-hide">
+                            <div class="d-flex">
+                                <input type="text" class="search-input w-250" placeholder="Search..."
+                                    id="search-task-manager-input">
+                                <button type="button" class="btn btn-outline-primary px-3 btn-search"
+                                    id="search-task-manager">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <div>
+                                <div class="input-group w-300">
+                                    <select class="form-select" name="status" id="type-task-manager">
+                                        <option value="0">Tất cả</option>
+                                        <option value="1">Mới</option>
+                                        <option value="2">Đang làm</option>
+                                        <option value="3">Chờ duyệt</option>
+                                        <option value="4">Trả về</option>
+                                        <option value="5">Trung Bình</option>
+                                        <option value="6">Khá</option>
+                                        <option value="7">Tốt</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="btn-group">
+                                <button class="btn btn-outline-primary" onclick="createTask()">
+                                    <i class="fas fa-plus"></i>
+                                    <span>More</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table id="task-manager-table" class="table table-hover w-100 mb-0 text-center">
+                            <thead class="align-middle bg-secondary text-white font-weight-bold"
+                                style="letter-spacing: 1px;">
+                                <tr>
+                                    <th>Tên nhiệm vụ</th>
+                                    <th>Người phụ trách</th>
+                                    <th>Hạn chót</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody id="task-manager-list" class="align-middle">
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="card-header d-flex justify-content-center pagination-ind">
+                        <ul class="pagination" id="task-manager-pagination">
+
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
+
     <main class="vh-100 d-none" id="staff-manager">
         <!-- manage product -->
         <div class="container-fluid mt-2">
@@ -116,7 +178,6 @@
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </main>
 

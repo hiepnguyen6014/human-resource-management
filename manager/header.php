@@ -27,7 +27,7 @@
                 <div class="collapse" id="dashboard">
                     <li>
                         <a href="#" class="nav-link nav-link-custom p-3 text-white">
-                            <span class="me-2"><i class="icon fas fa-tasks"></i></span>
+                            <span class="me-2"><i class="icon fas fa-clipboard-list"></i></span>
                             <span>To Do</span>
                         </a>
                     </li>

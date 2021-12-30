@@ -1,5 +1,6 @@
 const API = {
-    'get-staffs': '/api/get-staffs.php',
+    //admin
+    'GET_STAFFS': '/api/admin/get-staffs.php',
     'get-offices': '/api/get-offices.php',
     'add-staff': '/api/add-staff.php',
     'check-username': '/api/check-username.php',
@@ -13,6 +14,8 @@ const API = {
     'update-office': '/api/update-office.php',
     'get-vacations': '/api/get-vacations.php',
     'view-vacation': '/api/view-vacation.php',
+
+    //staff
     'disagree-vacation': '/api/disagree-vacation.php',
     'agree-vacation': '/api/agree-vacation.php',
     'seen-vacation': '/api/seen-vacation.php',
@@ -25,6 +28,8 @@ const API = {
     'search-vacation-manager': '/api/search-vacation-manager.php',
     'get-vacations-send': '/api/get-vacations-send.php',
     'view-vacation-send': '/api/view-vacation-send.php',
+
+    //manager
     'search-vacation-send': '/api/search-vacation-send.php',
     'filter-vacations-send': '/api/filter-vacations-send.php',
     'filter-vacations-manager': '/api/filter-vacations-manager.php',
@@ -35,7 +40,7 @@ const API = {
 }
 
 window.onload = () => {
-    switchPage('vacation-staff');
+    switchPage('task-manager');
 };
 
 //check current href
@@ -1528,6 +1533,113 @@ if (currentHref.includes('admin/')) {
         } else if (page === 'vacation-send') {
             const vacationPaginationId = 'vacation-send-pagination';
             const vacationList = 'vacation-send-list';
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', API["get-vacations-send"], false);
+            xhr.onload = function() {
+                if (this.status == 200) {
+
+                    const vacations = JSON.parse(this.responseText);
+                    if (vacations.status === 'success') {
+
+                        console.log(vacations.data.length);
+                        if (vacations.data.length > 0) {
+                            // cerate pagination
+                            createPaginationVacationSend(vacationPaginationId, numberEachPage, vacations.data.length, vacationList);
+
+                            //create vacations array
+                            dataPagination = dataForPagination(vacations.data);
+
+                            //load vacations to table
+                            loadDataForVacationTableSend(1, vacationPaginationId, vacationList);
+                        } else {
+                            const table = document.getElementById(vacationList);
+                            table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                        }
+
+                    }
+                }
+            }
+            xhr.send();
+
+            let search = document.getElementById('search-vacation-send-input');
+            const btnSearch = document.getElementById('search-vacation-send');
+            btnSearch.addEventListener('click', function() {
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', API["search-vacation-send"] + '?search=' + search.value, false);
+                xhr.onload = function() {
+                    if (this.status == 200) {
+
+                        const vacations = JSON.parse(this.responseText);
+                        if (vacations.status === 'success') {
+
+                            console.log(vacations.data.length);
+                            if (vacations.data.length > 0) {
+                                // cerate pagination
+                                createPaginationVacationSend(vacationPaginationId, numberEachPage, vacations.data.length, vacationList);
+
+                                //create vacations array
+                                dataPagination = dataForPagination(vacations.data);
+
+                                //load vacations to table
+                                loadDataForVacationTableSend(1, vacationPaginationId, vacationList);
+                            } else {
+                                const table = document.getElementById(vacationList);
+                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                            }
+
+                        }
+                    }
+                }
+                xhr.send();
+            })
+
+            //pointer input and press enter
+            search.addEventListener('keyup', function(event) {
+                if (event.keyCode === 13) {
+                    btnSearch.click();
+                }
+            })
+
+            //active input
+            search.addEventListener('focus', function() {
+                this.select();
+            })
+
+            const selectInput = document.getElementById('type-vacation-send');
+            selectInput.addEventListener('change', function() {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', API["filter-vacations-send"] + '?type=' + selectInput.value, false);
+                xhr.onload = function() {
+                    if (this.status == 200) {
+
+                        const vacations = JSON.parse(this.responseText);
+                        if (vacations.status === 'success') {
+
+                            if (vacations.data.length > 0) {
+                                // cerate pagination
+                                createPaginationVacationSend(vacationPaginationId, numberEachPage, vacations.data.length, vacationList);
+
+                                //create vacations array
+                                dataPagination = dataForPagination(vacations.data);
+
+                                //load vacations to table
+                                loadDataForVacationTableSend(1, vacationPaginationId, vacationList);
+                            } else {
+                                const table = document.getElementById(vacationList);
+                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                            }
+
+                        }
+                    }
+                }
+                xhr.send();
+            })
+
+        } else if (page === 'task-manager') {
+            const vacationPaginationId = 'task-manager-pagination';
+            const vacationList = 'task-manager-list';
 
             const xhr = new XMLHttpRequest();
             xhr.open('GET', API["get-vacations-send"], false);
