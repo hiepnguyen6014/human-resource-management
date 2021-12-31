@@ -515,7 +515,7 @@
                 <div class="modal-footer">
                     <button onclick="deleteOffice()" class="btn btn-outline-secondary w-90">Xoá</button>
                     <button type="button" class="btn btn-outline-secondary w-90" data-bs-dismiss="modal">Thoát</button>
-                    <button onclick="updateOffice()" class="btn btn-outline-secondary w-90">Cập nhập</button>
+                    <button onclick="updateOffice()" class="btn btn-outline-secondary w-90">Mới</button>
                 </div>
             </div>
         </div>
@@ -529,7 +529,7 @@
                     <div class="card" style="position: relative;">
                         <div class="card-header d-flex justify-content-between mobile-hide">
                             <div class="d-flex">
-                                <input type="text" class="search-input w-250" placeholder="Search..."
+                                <input type="text" class="search-input w-250" placeholder="Tìm kiếm..."
                                     id="search-vacation-input">
                                 <button type="button" class="btn btn-outline-primary px-3 btn-search"
                                     id="search-vacation">
@@ -544,11 +544,11 @@
                             <thead class="align-middle bg-secondary text-white font-weight-bold"
                                 style="letter-spacing: 1px;">
                                 <tr>
-                                    <th>Send At</th>
-                                    <th>Username</th>
-                                    <th>Office</th>
-                                    <th>Date Off</th>
-                                    <th>Status</th>
+                                    <th>Thời gian gửi</th>
+                                    <th>Tài khoản</th>
+                                    <th>Phòng ban</th>
+                                    <th>Ngày nghỉ</th>
+                                    <th>Trạng thái</th>
                                 </tr>
                             </thead>
                             <tbody id="vacation-list" class="align-middle">
@@ -600,20 +600,20 @@
         <div class="modal-dialog modal-lg mt-5">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Vacation Details (<span id="seen-at-view-vacation"></span>)</h5>
+                    <h5 class="modal-title">Thông tin nghỉ phép (<span id="seen-at-view-vacation"></span>)</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-0">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="mt-2">
-                                <label for="name-view-vacation" class="form-label">Name</label>
+                                <label for="name-view-vacation" class="form-label">Tài khoản</label>
                                 <div class="input-group">
                                     <input type="text" id="name-view-vacation" class="form-control" disabled>
                                 </div>
                             </div>
                             <div class="mt-2">
-                                <label for="date-view-vacation" class="form-label">Date Start</label>
+                                <label for="date-view-vacation" class="form-label">Ngày bắt đầu</label>
                                 <div class="input-group">
                                     <input type="text" id="date-view-vacation" class="form-control" disabled>
                                 </div>
@@ -621,36 +621,36 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="mt-2">
-                                <label for="office-view-vacation" class="form-label">Office</label>
+                                <label for="office-view-vacation" class="form-label">Phòng văn</label>
                                 <div class="input-group">
                                     <input type="text" id="office-view-vacation" class="form-control" disabled>
                                 </div>
                             </div>
                             <div class="mt-2">
-                                <label for="number-view-vacation" class="form-label">Number day of</label>
+                                <label for="number-view-vacation" class="form-label">Số ngày nghỉ</label>
                                 <div class="input-group">
                                     <input type="text" id="number-view-vacation" class="form-control" disabled>
                                 </div>
                             </div>
                         </div>
                         <div class="mt-2">
-                            <label for="reason-view-vacation" class="form-label">Reason</label>
+                            <label for="reason-view-vacation" class="form-label">Lý do</label>
                             <div class="input-group">
                                 <textarea id="reason-view-vacation" class="form-control" rows="3" disabled></textarea>
                             </div>
                         </div>
                         <div class="mt-2">
-                            <label for="file-view-vacation" class="form-label">File</label>
+                            <label for="file-view-vacation" class="form-label">Tệp đính kèm</label>
                             <div class="input-group">
-                                <a href="/" target="_blank" id="file-view-vacation">Xem</a>
+                                <a href="/" target="_blank" class="btn btn-outline-primary" id="file-view-vacation">Xem</a>
                             </div>
                         </div>
                         <input type="hidden" id="id-view-vacation">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="disagreeVacation()" class="btn btn-outline-secondary w-90">Disagree</button>
-                    <button onclick="agreeVacation()" class="btn btn-outline-secondary w-90">Agree</button>
+                    <button onclick="disagreeVacation()" class="btn btn-outline-secondary w-90">Từ chối</button>
+                    <button onclick="agreeVacation()" class="btn btn-outline-secondary w-90">Đồng ý</button>
                 </div>
             </div>
         </div>
