@@ -57,14 +57,6 @@ var currentHref = window.location.href;
 const numberEachPage = 15;
 let dataPagination = [];
 
-(function logout() {
-    var logout = document.getElementById('logout');
-    logout.addEventListener('click', function() {
-        //redirect to login page
-        window.location.href = '/logout.php';
-    })
-})()
-
 function switchPage(page) {
     Array.from(document.querySelectorAll('main')).forEach(e => {
         if (e.id == page) {
@@ -1211,13 +1203,53 @@ function showDetailTaskManager(id) {
 
 }
 
+function logout() {
+    var logout = document.getElementById('logout');
+    logout.addEventListener('click', function() {
+        //redirect to login page
+        window.location.href = '/logout.php';
+    })
+}
+
+if (currentHref.includes('change')) {
+    const btn = document.getElementById('change-password__button');
+
+    // disable button
+    btn.disabled = true;
+    btn.style.backgroundColor = "rgb(104 75 75)";
+    btn.style.cursor = "not-allowed";
+
+    const input = document.querySelectorAll('input');
+    input.forEach(function(item) {
+        item.addEventListener('keyup', function() {
+            const input1 = document.getElementById('new-password');
+            const input2 = document.getElementById('confirm-password');
+            if (input1.value === input2.value && input1.value.length > 7) {
+                //show icon
+                document.getElementById('check1').style.display = 'block';
+                document.getElementById('check2').style.display = 'block';
+                btn.disabled = false;
+                btn.style.backgroundColor = "rgb(24 21 21)";
+                btn.style.cursor = "pointer";
+            } else {
+                document.getElementById('check1').style.display = 'none';
+                document.getElementById('check2').style.display = 'none';
+                btn.disabled = true;
+                btn.style.backgroundColor = "rgb(104 75 75)";
+                btn.style.cursor = "not-allowed";
+            }
+        })
+    })
+}
+
 // js admin
 if (currentHref.includes('admin/')) {
     // STAFF
-
-    //load staffs
+    logout()
+        //load staffs
     function loadData(page) {
         if (page === 'staff') {
+            document.title = "Quản lý nhân viên";
             const staffPaginationId = 'staff-pagination';
             const staffList = 'staff-list';
             const select = 'office-staff';
@@ -1322,6 +1354,7 @@ if (currentHref.includes('admin/')) {
 
 
         } else if (page === 'office') {
+            document.title = "Quản lý phòng ban";
             const officePaginationId = 'office-pagination';
             const officeList = 'office-list';
             const select = 'office-office';
@@ -1399,6 +1432,7 @@ if (currentHref.includes('admin/')) {
                 this.select();
             })
         } else if (page === 'vacation') {
+            document.title = "Quản lý nghỉ phép";
             const vacationPaginationId = 'vacation-pagination';
             const vacationList = 'vacation-list';
 
@@ -1522,7 +1556,8 @@ if (currentHref.includes('admin/')) {
 
     }
 } else if (currentHref.includes('manager/')) {
-    // staff
+    logout()
+        // staff
     function loadData(page) {
         console.log(page);
         if (page === 'staff-manager') {
@@ -1941,6 +1976,8 @@ if (currentHref.includes('admin/')) {
         }
     }
 } else if (currentHref.includes('staff/')) {
+    logout()
+
     function loadData(page) {
         if (page === 'task-staff') {
             document.title = 'Nhiệm vụ';

@@ -142,10 +142,21 @@ body {
     transform: scale(105%);
 }
 
-.login__container__failed {
-    display: none;
+.logout-change-btn {
     position: absolute;
-    top: 64%;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    background-color: #2e0b0b;
+    top: 1rem;
+    color: white;
+    right: 2rem;
+    border-radius: 44px;
+    cursor: pointer;
+}
+
+.login__container__failed {
+    position: absolute;
+    top: 66%;
     animation: loginFailed 0.2s ease-in-out;
     color: rgb(255, 255, 255);
     font-weight: 600;
@@ -211,6 +222,14 @@ body {
     right: 0;
 }
 
+.change-password .icon-password {
+    position: absolute;
+    top: 50%;
+    right: -0.9rem;
+    width: 20px;
+    height: 20px;
+}
+
 .change-password__container {
     position: absolute;
     top: 40%;
@@ -229,6 +248,7 @@ body {
     margin-top: 20px;
     background-color: white;
     padding: 2rem;
+    min-width: 14rem;
 }
 
 .change-password__container__title {
@@ -270,10 +290,9 @@ body {
     border: none;
     padding: 0.6rem;
     font-size: 1rem;
-    background-color: var(--main-color);
+    background-color: rgb(24 21 21);
     color: white;
     width: 100%;
-    opacity: 0.8;
     cursor: pointer;
 }
 
@@ -282,8 +301,13 @@ body {
     font-size: 0.7rem;
 }
 
-.change-password button:hover {
+
+/* .change-password button:hover {
     opacity: 1;
+} */
+
+#change-password__button {
+    opacity: 0.7;
 }
 
 .change-password .done-icon {
@@ -367,6 +391,9 @@ body {
     }
     .pagination-ind {
         display: none !important;
+    }
+    .change-password__container {
+        margin-top: 2rem;
     }
 }
 

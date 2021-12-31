@@ -1,3 +1,22 @@
+<?php
+    session_start();
+    if (!isset($_SESSION['username'])) {
+        header("Location: /");
+    }
+    else {
+        $type = $_SESSION['type'];
+        $active = $_SESSION['active'];
+
+        if ($active != 1) {
+            header("Location: /change.php");
+        }
+        if ($type != 0) {
+            header("Location: /");
+        }
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,8 +30,8 @@
         integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/style.css" />
-    <title>Admin Dashboard</title>
-    <link rel="shortcut icon" href="favi.ico" type="image/x-icon">
+    <title>Trang chủ</title>
+    <link rel="shortcut icon" href="/favi.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -27,7 +46,7 @@
                     <div class="card" style="position: relative;">
                         <div class="card-header d-flex justify-content-between mobile-hide">
                             <div class="d-flex">
-                                <input type="text" class="search-input w-250" placeholder="Search..."
+                                <input type="text" class="search-input w-250" placeholder="Tìm kiếm..."
                                     id="search-staff-input">
                                 <button type="button" class="btn btn-outline-primary px-3 btn-search" id="search-staff">
                                     <i class="fas fa-search"></i>
@@ -55,7 +74,7 @@
                                 <button class="btn btn-outline-primary" data-bs-toggle="modal"
                                     data-bs-target="#add-staff">
                                     <i class="fas fa-plus"></i>
-                                    <span>More</span>
+                                    <span>Thêm</span>
                                 </button>
                             </div>
                         </div>
@@ -66,10 +85,10 @@
                             <thead class="align-middle bg-secondary text-white font-weight-bold"
                                 style="letter-spacing: 1px;">
                                 <tr>
-                                    <th>Full Name</th>
-                                    <th>Office</th>
-                                    <th>Position</th>
-                                    <th>Username</th>
+                                    <th>Họ & tên</th>
+                                    <th>Phòng ban</th>
+                                    <th>Vị trí</th>
+                                    <th>Tên đăng nhập</th>
                                 </tr>
                             </thead>
                             <tbody id="staff-list" class="align-middle">
@@ -123,32 +142,30 @@
         <div class="modal-dialog modal-md mt-5">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Staff</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm nhân viên</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="/api/add-staff.php" method="POST" id="add-staff-form">
                         <div class="mt-3 row">
                             <div class="col-lg-6">
-                                <label for="firstname-add-staff" class="form-label">First Name</label>
+                                <label for="firstname-add-staff" class="form-label">Tên</label>
                                 <div class="input-group">
-                                    <input type="text" name="firstname" id="firstname-add-staff" class="form-control"
-                                        placeholder="Staff's first name" required>
+                                    <input type="text" name="firstname" id="firstname-add-staff" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <label for="lastname-add-staff" class="form-label">Last Name</label>
+                                <label for="lastname-add-staff" class="form-label">Họ</label>
                                 <div class="input-group">
-                                    <input type="text" name="lastname" id="lastname-add-staff" class="form-control"
-                                        placeholder="Staff's last name" required>
+                                    <input type="text" name="lastname" id="lastname-add-staff" class="form-control" required>
                                 </div>
                             </div>
                         </div>
                         <div class="mt-3">
-                            <label for="username-add-staff" class="form-label">Username</label>
+                            <label for="username-add-staff" class="form-label">Tên đăng nhập</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" name="username" id="username-add-staff"
-                                    placeholder="Staff's username" required>
+                                    placeholder="username" required>
                                 <span class="input-group-text" id="icon-check-username">
                                     <i class="far fa-check-circle text-success fz-24"></i>
                                     <i class="far fa-times-circle d-none text-danger fz-24"></i>
@@ -159,7 +176,7 @@
                             </div>
                         </div>
                         <div class="mt-3">
-                            <label for="office-add-staff" class="form-label">Office</label>
+                            <label for="office-add-staff" class="form-label">Phòng ban</label>
                             <div class="input-group">
                                 <select class="form-select" name="office" id="office-add-staff">
                                     <!-- <option value="">Select Office</option>
@@ -172,8 +189,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" form="add-staff-form" class="btn btn-primary px-3">Add</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Thoát</button>
+                    <button type="submit" form="add-staff-form" class="btn btn-outline-primary px-3">Thêm</button>
                 </div>
             </div>
         </div>
@@ -183,7 +200,7 @@
         <div class="modal-dialog modal-lg mt-5">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Staff Details</h5>
+                    <h5 class="modal-title">Thông tin nhân viên</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-0">
@@ -192,7 +209,7 @@
                             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                                 <img class="rounded-circle border" width="160px" src="/" id="view-staff-modal-image">
                                 <span class="font-weight-bold fz-24" id="view-staff-modal-fullname"></span>
-                                <span class="text-black-50" id="view-staff-modal-email">edogaru@mail.com.my</span>
+                                <span class="text-black-50" id="view-staff-modal-email"></span>
                             </div>
 
                         </div>
@@ -200,28 +217,28 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="pt-3">
-                                        <label>First Name</label>
+                                        <label>Tên</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="view-staff-modal-firstname"
                                                 disabled>
                                         </div>
                                     </div>
                                     <div class="pt-3">
-                                        <label>Birthday</label>
+                                        <label>Ngày sinh</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="view-staff-modal-birthday"
                                                 disabled>
                                         </div>
                                     </div>
                                     <div class="pt-3">
-                                        <label>Office</label>
+                                        <label>Phòng ban</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="view-staff-modal-office"
                                                 disabled>
                                         </div>
                                     </div>
                                     <div class="pt-3">
-                                        <label>Salary</label>
+                                        <label>Lương</label>
                                         <div class="input-group">
                                             <span class="input-group-text">
                                                 <i class="fas fa-dollar-sign" style="font-size: 18px;"></i>
@@ -231,7 +248,7 @@
                                         </div>
                                     </div>
                                     <div class="pt-3">
-                                        <label>Username</label>
+                                        <label>Tên đăng nhập</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="view-staff-modal-username"
                                                 disabled>
@@ -240,34 +257,34 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="pt-3">
-                                        <label>Last Name</label>
+                                        <label>Họ và tên đệm</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="view-staff-modal-lastname"
                                                 disabled>
                                         </div>
                                     </div>
                                     <div class="pt-3">
-                                        <label>Date join</label>
+                                        <label>Ngày tham gia</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="view-staff-modal-join" disabled>
                                         </div>
                                     </div>
                                     <div class="pt-3">
-                                        <label>Phone</label>
+                                        <label>Số điện thoại</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="view-staff-modal-phone"
                                                 disabled>
                                         </div>
                                     </div>
                                     <div class="pt-3">
-                                        <label>Position</label>
+                                        <label>Chức vụ</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="view-staff-modal-position"
                                                 disabled>
                                         </div>
                                     </div>
                                     <div class="pt-3">
-                                        <label>Password</label>
+                                        <label>Mật khẩu</label>
                                         <div class="input-group">
                                             <input type="password" class="form-control" value="password" disabled>
                                             <button class="btn btn-outline-danger" id="reset-password">Reset</button>
@@ -276,7 +293,7 @@
                                 </div>
                                 <div class="col pb-3">
                                     <div class="pt-3">
-                                        <label>Address</label>
+                                        <label>Địa chỉ</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="view-staff-modal-address"
                                                 disabled>
@@ -299,7 +316,7 @@
                     <div class="card" style="position: relative;">
                         <div class="card-header d-flex justify-content-between mobile-hide">
                             <div class="d-flex">
-                                <input type="text" class="search-input w-250" placeholder="Search..."
+                                <input type="text" class="search-input w-250" placeholder="Tìm kiếm..."
                                     id="search-office-input">
                                 <button type="button" class="btn btn-outline-primary px-3 btn-search"
                                     id="search-office">
@@ -310,7 +327,7 @@
                                 <button class="btn btn-outline-primary" data-bs-toggle="modal"
                                     data-bs-target="#add-office">
                                     <i class="fas fa-plus"></i>
-                                    <span>More</span>
+                                    <span>Thêm</span>
                                 </button>
                             </div>
                         </div>
@@ -321,10 +338,10 @@
                             <thead class="align-middle bg-secondary text-white font-weight-bold"
                                 style="letter-spacing: 1px;">
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Room</th>
-                                    <th>Captain</th>
-                                    <th>Phone</th>
+                                    <th>Tên phòng</th>
+                                    <th>Phòng</th>
+                                    <th>Trưởng phòng</th>
+                                    <th>Số điện thoại</th>
                                 </tr>
                             </thead>
                             <tbody id="office-list" class="align-middle">
@@ -378,37 +395,34 @@
         <div class="modal-dialog modal-md mt-5">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Office</h5>
+                    <h5 class="modal-title">Thêm phòng ban</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="/api/add-office.php" method="POST" id="add-office-form">
                         <div class="mt-3">
-                            <label for="name-add-office" class="form-label">Name</label>
+                            <label for="name-add-office" class="form-label">Tên phòng ban</label>
                             <div class="input-group">
-                                <input type="text" name="name" id="name-add-office" class="form-control"
-                                    placeholder="Office's name" required>
+                                <input type="text" name="name" id="name-add-office" class="form-control" required>
                             </div>
                         </div>
                         <div class="mt-3 row">
                             <div class="col-lg-6">
-                                <label for="room-add-office" class="form-label">Room</label>
+                                <label for="room-add-office" class="form-label">Số phòng</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="room" id="room-add-office"
-                                        placeholder="Office's room" required>
+                                    <input type="text" class="form-control" name="room" id="room-add-office" required>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <label for="phone-add-office" class="form-label">Phone</label>
+                                <label for="phone-add-office" class="form-label">Số điện thoại</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="phone" id="phone-add-office"
-                                        placeholder="Office's phone" required>
+                                    <input type="text" class="form-control" name="phone" id="phone-add-office" required>
                                 </div>
                             </div>
 
                         </div>
                         <div class="mt-3">
-                            <label for="office-add-office" class="form-label">Description</label>
+                            <label for="office-add-office" class="form-label">Mô tả</label>
                             <div class="input-group">
                                 <textarea class="form-control" name="description" id="description-office"
                                     rows="3"></textarea>
@@ -417,8 +431,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" form="add-office-form" class="btn btn-primary px-3">Add</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Thoát</button>
+                    <button type="submit" form="add-office-form" class="btn btn-outline-primary px-3">Thêm</button>
                 </div>
             </div>
         </div>
@@ -428,7 +442,7 @@
         <div class="modal-dialog modal-lg mt-5">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Office Details</h5>
+                    <h5 class="modal-title">Thông tin phòng ban</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-0">
@@ -436,7 +450,7 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="mt-2">
-                                    <label for="name-view-office" class="form-label">Name</label>
+                                    <label for="name-view-office" class="form-label">Tên phòng ban</label>
                                     <div class="input-group">
                                         <input type="text" name="name" id="name-view-office" class="form-control"
                                             required>
@@ -444,14 +458,14 @@
                                 </div>
                                 <div class="row">
                                     <div class="mt-2 col">
-                                        <label for="room-view-office" class="form-label">Room</label>
+                                        <label for="room-view-office" class="form-label">Số phòng</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" name="room" id="room-view-office"
                                                 required>
                                         </div>
                                     </div>
                                     <div class="mt-2 col">
-                                        <label for="phone-view-office" class="form-label">Phone</label>
+                                        <label for="phone-view-office" class="form-label">Số điện thoại</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" name="phone" id="phone-view-office"
                                                 required>
@@ -463,13 +477,13 @@
                             <div class="col-lg-6">
                                 <input type="hidden" id="id-office" value="1">
                                 <div class="mt-2">
-                                    <label for="create-view-office" class="form-label">Create At</label>
+                                    <label for="create-view-office" class="form-label">Ngày tạo</label>
                                     <div class="input-group">
                                         <input type="text" id="create-view-office" class="form-control">
                                     </div>
                                 </div>
                                 <div class="mt-2">
-                                    <label for="captain-view-office" class="form-label">Captain</label>
+                                    <label for="captain-view-office" class="form-label">Trưởng phòng</label>
                                     <div class="input-group">
                                         <select id="captain-view-office" class="form-control">
                                             <option value="1">1</option>
@@ -484,7 +498,7 @@
                                 </div>
                             </div>
                             <div class="my-2 col">
-                                <label for="description-view-office" class="form-label">Description</label>
+                                <label for="description-view-office" class="form-label">Mô tả</label>
                                 <div class="input-group">
                                     <textarea class="form-control" name="description" id="description-view-office"
                                         rows="3"></textarea>
@@ -499,9 +513,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="deleteOffice()" class="btn btn-outline-secondary w-90">Delete</button>
-                    <button type="button" class="btn btn-outline-secondary w-90" data-bs-dismiss="modal">Close</button>
-                    <button onclick="updateOffice()" class="btn btn-outline-secondary w-90">Update</button>
+                    <button onclick="deleteOffice()" class="btn btn-outline-secondary w-90">Xoá</button>
+                    <button type="button" class="btn btn-outline-secondary w-90" data-bs-dismiss="modal">Thoát</button>
+                    <button onclick="updateOffice()" class="btn btn-outline-secondary w-90">Cập nhập</button>
                 </div>
             </div>
         </div>

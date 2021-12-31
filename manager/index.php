@@ -1,3 +1,22 @@
+<?php
+    session_start();
+    if (!isset($_SESSION['username'])) {
+        header("Location: /");
+    }
+    else {
+        $type = $_SESSION['type'];
+        $active = $_SESSION['active'];
+
+        if ($active != 1) {
+            header("Location: /change.php");
+        }
+        if ($type != 1) {
+            header("Location: /");
+        }
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +31,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/style.css" />
     <title>Admin Dashboard</title>
-    <link rel="shortcut icon" href="favi.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favi.ico" type="image/x-icon">
 </head>
 
 <body>

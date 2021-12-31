@@ -15,9 +15,9 @@
                 <img src="/images/default.webp" alt="avt" class="avatar">
             </div>
             <ul class="navbar-nav">
-                <li>
+                <div>
                     <hr class="dropdown-divider" />
-                </li>
+                </div>
                 <li class="p-3 position-relative accordion-button" data-bs-toggle="collapse" href="#dashboard" role="button"
                     aria-expanded="false" aria-controls="dashboard">
                     <a class="text-white fw-bold text-uppercase px-3 text-decoration-none">
@@ -45,9 +45,9 @@
                     </li>
                 </div>
 
-                <li>
+                <div>
                     <hr class="dropdown-divider" />
-                </li>
+                </div>
                 <li class="p-3 position-relative accordion-button" data-bs-toggle="collapse" href="#feature" role="button"
                     aria-expanded="false" aria-controls="feature">
                     <a class="text-white fw-bold text-uppercase px-3 text-decoration-none">
@@ -90,9 +90,9 @@
                     </li>
                 </div>
 
-                <li class="mb-2">
+                <div>
                     <hr class="dropdown-divider" />
-                </li>
+                </div>
             </ul>
             <div id="logout">
                 <i class="fas fa-sign-out-alt"></i>

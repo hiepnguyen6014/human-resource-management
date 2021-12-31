@@ -1,3 +1,20 @@
+<?php
+    session_start();
+    if (!isset($_SESSION['username'])) {
+        header("Location: /");
+    }
+    else {
+        $type = $_SESSION['type'];
+        $active = $_SESSION['active'];
+
+        if ($active != 1) {
+            header("Location: /change.php");
+        }
+        if ($type != 2) {
+            header("Location: /");
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,7 +44,7 @@
                     <div class="card" style="position: relative;">
                         <div class="card-header d-flex justify-content-between mobile-hide">
                             <div class="d-flex">
-                                <input type="text" class="search-input w-250" placeholder="Search..."
+                                <input type="text" class="search-input w-250" placeholder="Tìm kiếm..."
                                     id="search-task-staff-input">
                                 <button type="button" class="btn btn-outline-primary px-3 btn-search"
                                     id="search-task-staff">

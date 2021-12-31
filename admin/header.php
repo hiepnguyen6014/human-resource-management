@@ -21,26 +21,26 @@
                     <li class="p-3 accordion-button" data-bs-toggle="collapse" href="#dashboard" role="button"
                         aria-expanded="false" aria-controls="dashboard">
                         <a class="text-white fw-bold text-uppercase px-3 text-decoration-none">
-                            Dashboard
+                            Tổng quan
                         </a>
                     </li>
                     <div class="collapse" id="dashboard">
                         <li>
-                            <a href="#" class="nav-link nav-link-custom p-3 text-white">
+                            <a href="/" class="nav-link nav-link-custom p-3 text-white">
                                 <span class="me-2"><i class="icon fas fa-clipboard-list"></i></span>
-                                <span>To Do</span>
+                                <span>Cần làm</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link nav-link-custom p-3 text-white">
+                            <a href="/" class="nav-link nav-link-custom p-3 text-white">
                                 <span class="me-2"><i class="icon fas fa-spinner"></i></span>
-                                <span>In Progress</span>
+                                <span>Đang thực hiện</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link nav-link-custom p-3 text-white">
+                            <a href="/" class="nav-link nav-link-custom p-3 text-white">
                                 <span class="me-2"><i class="icon fas fa-clipboard-check"></i></span>
-                                <span>Done</span>
+                                <span>Hoàn thành</span>
                             </a>
                         </li>
                     </div>
@@ -51,20 +51,20 @@
                     <li class="mp-3 accordion-button" data-bs-toggle="collapse" href="#feature" role="button"
                         aria-expanded="false" aria-controls="feature">
                         <a class="text-white fw-bold text-uppercase px-3 text-decoration-none">
-                            Management
+                            Quản lý
                         </a>
                     </li>
                     <div class="collapse show" id="feature">
                         <li>
                             <a onclick="switchPage('staff')" class="nav-link nav-link-custom p-3 text-white">
                                 <span class="me-2"><i class="fas fa-user-cog"></i></span>
-                                <span>Staff</span>
+                                <span>Nhân viên</span>
                             </a>
                         </li>
                         <li>
                             <a onclick="switchPage('office')" class="nav-link nav-link-custom p-3 text-white">
                                 <span class="me-2"><i class="icon fas fa-building"></i></i></span>
-                                <span>Office</span>
+                                <span>Phòng ban</span>
                             </a>
                         </li>
                         <li style="position: relative;">
@@ -72,7 +72,7 @@
                                 <span class="me-2">
                                     <i class="icon fas fa-business-time"></i>
                                 </span>
-                                <span>Vacation</span>
+                                <span>Nghỉ phép</span>
                             </a>
                             <span class="number-icon" id="vacation-number">5</span>
                         </li>
@@ -84,7 +84,7 @@
                 </ul>
                 <div id="logout">
                     <i class="fas fa-sign-out-alt"></i>
-                    <span class="p-1 d-inline-block text-white">Sign Out</span>
+                    <span class="p-1 d-inline-block text-white">Đăng xuất</span>
                 </div>
             </nav>
         </div>
