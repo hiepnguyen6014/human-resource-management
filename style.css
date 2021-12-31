@@ -599,3 +599,118 @@ main {
     transform: rotate(-180deg);
     filter: brightness(10);
 }
+
+.receiver-message {
+    border-radius: 1rem;
+    background-color: rgba(57, 192, 237, .2);
+    max-width: 90%;
+}
+
+.sender-message {
+    border-radius: 1rem;
+    background-color: rgba(94, 178, 206, 0.2);
+    max-width: 90%;
+}
+
+.btn-action {
+    cursor: pointer;
+    padding: 6px 13px;
+    background-color: gray;
+    color: white;
+    border-radius: 4px;
+}
+
+.view-task-message {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+
+/* custom scroll */
+
+.view-task-message::-webkit-scrollbar {
+    width: 5px;
+}
+
+.view-task-message::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.view-task-message::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+.view-task-message::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.view-task-message::-webkit-scrollbar-thumb:active {
+    background: #555;
+}
+
+
+/* rate */
+
+.my-btn {
+    margin: 30%
+}
+
+.example-block {
+    transition: background 0.4s ease-out;
+    position: relative;
+    display: inline-block;
+    height: auto
+}
+
+.example-block:hover {
+    cursor: pointer;
+    animation: levitate 1s ease-in-out infinite
+}
+
+@keyframes levitate {
+    0% {
+        transform: translate(0, 0px)
+    }
+    50% {
+        transform: translate(0, -9px)
+    }
+    100% {
+        transform: translate(0, 0px)
+    }
+}
+
+.example-block .image {
+    transition: ease-in-out, transform 0.4s ease-in- out
+}
+
+.example-block:hover .image {
+    transform: scale(1.8)
+}
+
+.input-hidden {
+    position: absolute;
+    left: -9999px
+}
+
+input[type=radio]:checked+label>img {
+    animation: levitate 0.5s ease-in-out infinite;
+    transform: scale(2.0)
+}
+
+input[type=radio]+label>img {
+    transition: 500ms all
+}
+
+.modal-footer {
+    background-color: rgb(238, 238, 238)
+}
+
+@media (max-width: 400px) {
+    img {
+        width: auto;
+        height: auto
+    }
+}
+
+
+/* end */

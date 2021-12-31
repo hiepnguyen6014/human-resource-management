@@ -28,36 +28,42 @@
                         <div class="card-header d-flex justify-content-between mobile-hide">
                             <div class="d-flex">
                                 <input type="text" class="search-input w-250" placeholder="Search..."
-                                    id="search-staff-manager-input">
+                                    id="search-task-staff-input">
                                 <button type="button" class="btn btn-outline-primary px-3 btn-search"
-                                    id="search-staff-manager">
+                                    id="search-task-staff">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
 
-                            <!-- 
-                            <div class="btn-group">
-                                <button class="btn btn-outline-primary" data-bs-toggle="modal"
-                                    data-bs-target="#add-staff-manager">
-                                    <i class="fas fa-plus"></i>
-                                    <span>More</span>
-                                </button>
-                            </div> -->
+                            <div>
+                                <div class="input-group w-300">
+                                    <select class="form-select" name="status" id="type-task-staff">
+                                        <option value="0">Tất cả</option>
+                                        <option value="1">Mới</option>
+                                        <option value="2">Đang làm</option>
+                                        <option value="3">Chờ duyệt</option>
+                                        <option value="4">Trả về</option>
+                                        <option value="5">Trung Bình</option>
+                                        <option value="6">Khá</option>
+                                        <option value="7">Tốt</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="table-responsive">
-                        <table id="staff-manager-table" class="table table-hover w-100 mb-0 text-center">
+                        <table id="staff-staff-table" class="table table-hover w-100 mb-0 text-center">
                             <thead class="align-middle bg-secondary text-white font-weight-bold"
                                 style="letter-spacing: 1px;">
                                 <tr>
-                                    <th>Full Name</th>
-                                    <th>Username</th>
-                                    <th>Phone</th>
-                                    <th>Email</th>
+                                    <th>Ngày giao</th>
+                                    <th>Tên tác vụ</th>
+                                    <th>Hạn chót</th>
+                                    <th>Trạng thái</th>
                                 </tr>
                             </thead>
-                            <tbody id="staff-manager-list" class="align-middle">
+                            <tbody id="task-staff-list" class="align-middle">
 
                                 <!-- <tr data-toggle="modal" data-id="1" data-target="#view-staff-manager">
                                         <td>s</td>
@@ -71,7 +77,7 @@
                     </div>
 
                     <div class="card-header d-flex justify-content-center pagination-ind">
-                        <ul class="pagination" id="staff-manager-pagination">
+                        <ul class="pagination" id="task-staff-pagination">
                             <!-- <li class="page-item">
                                     <a class="page-link" href="#" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
@@ -102,6 +108,82 @@
         </div>
         </div>
     </main>
+
+    <div class="modal fade mt-5" id="view-task-staff">
+        <div class="modal-dialog modal-lg mt-5">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-center">
+                    <h5 class="modal-title">Chi tiết nhiệm vụ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-0">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mt-2">
+                                <label for="title-task-view" class="form-label">Tiêu đề</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="title-task-view" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mt-2">
+                                <label for="title-task-create" class="form-label">Hạn chót</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="title-task-create" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view-task-message my-3">
+
+                        <div>
+                            <div class="d-flex flex-row justify-content-start mb-2">
+                                <div class="p-3 receiver-message">
+                                    <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, fuga
+                                        asperiores? Id, earum nemo dolores nam adipisci, labore, dolor atque vero
+                                        numquam a et maxime. Dolor repellendus quo totam iure?</span>
+                                    <a href="/"><i class="fas fa-download btn-action"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="d-flex flex-row justify-content-end mb-2">
+                                <div class="p-3 border sender-message">
+                                    <span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Animi voluptatem,
+                                        similique adipisci natus, nesciunt quasi necessitatibus qui debitis voluptate
+                                        beatae saepe. Nulla quia sint vero eum laudantium veritatis velit porro.</span>
+                                    <a href="/"><i class="fas fa-download btn-action"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form class="p-3 border" style="box-shadow: 0 0 3px black;">
+                            <div class="mb-2">
+                                <textarea class="form-control" name="message" id="message-view-task"></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-1">
+                                    <button type="button" class="btn btn-outline-secondary"
+                                        data-bs-dismiss="modal">Gửi</button>
+                                </div>
+                                <div class="col-lg-11">
+                                    <input type="file" name="files" id="files-view-task" class="form-control">
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary w-90" data-bs-dismiss="modal">Thoát</button>
+                    <button class="btn btn-outline-secondary w-90" form="form-task-create" id="btn-send-vacation"
+                        onclick="reply()">Tạo</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <main class="vh-100 d-none" id="vacation-staff">
         <!-- manage product -->

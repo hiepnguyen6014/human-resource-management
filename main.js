@@ -28,6 +28,10 @@ const API = {
     'search-vacation-manager': '/api/search-vacation-manager.php',
     'get-vacations-send': '/api/get-vacations-send.php',
     'view-vacation-send': '/api/view-vacation-send.php',
+    'GET_TASKS_STAFF': '/api/staff/get-tasks-staff.php',
+    'FILTER_TASKS_STAFF': '/api/staff/filter-tasks-staff.php',
+    'SEARCH_TASKS_STAFF': '/api/staff/search-tasks-staff.php',
+    'VIEW_TASK_STAFF': '/api/staff/view-task-staff.php',
 
     //manager
     'search-vacation-send': '/api/search-vacation-send.php',
@@ -37,10 +41,15 @@ const API = {
     'VIEW_PROFILE': '/api/view-profile.php',
     'UPDATE_PROFILE': '/api/update-profile.php',
     'CHANGE_PASSWORD': '/api/change-password.php',
+    'GET_TASKS_MANAGER': '/api/manager/get-tasks-manager.php',
+    'SEARCH_TASKS_MANAGER': '/api/manager/search-task-manager.php',
+    'FILTER_TASKS_MANAGER': '/api/manager/filter-tasks-manager.php',
+    'CREATE_TASK': '/api/manager/create-task.php',
+    'GET_STAFFS_MANAGER': '/api/manager/get-staffs-manager.php',
 }
 
 window.onload = () => {
-    switchPage('task-manager');
+    switchPage('task-staff');
 };
 
 //check current href
@@ -242,6 +251,63 @@ function createPaginationVacationSend(paginationElement, numberEachPage, number,
     pagination.innerHTML = html;
 }
 
+function createPaginationTaskStaff(paginationElement, numberEachPage, number, list) {
+    const pagination = document.getElementById(paginationElement);
+    const pageNumber = Math.ceil(number / numberEachPage);
+    let html = `
+    <li class="page-item">
+        <a class="page-link" onclick="prePag('${paginationElement}', '${list}')" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+        </a>
+    </li>`;
+
+    for (let i = 1; i <= pageNumber; i++) {
+        html += `
+        <li class="page-item">
+            <a class="page-link" onclick="loadDataForTaskTableStaff(${i}, '${paginationElement}', '${list}')">${i}</a>
+        </li>
+        `;
+    }
+    html += `
+    <li class="page-item">
+        <a class="page-link" onclick="nextPag('${paginationElement}', '${list}')" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+        </a>
+    </li>
+    `;
+    pagination.innerHTML = html;
+}
+
+function createPaginationTaskManager(paginationElement, numberEachPage, number, list) {
+    const pagination = document.getElementById(paginationElement);
+    const pageNumber = Math.ceil(number / numberEachPage);
+    let html = `
+    <li class="page-item">
+        <a class="page-link" onclick="prePag('${paginationElement}', '${list}')" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+        </a>
+    </li>`;
+
+    for (let i = 1; i <= pageNumber; i++) {
+        html += `
+        <li class="page-item">
+            <a class="page-link" onclick="loadDataForTaskTableManager(${i}, '${paginationElement}', '${list}')">${i}</a>
+        </li>
+        `;
+    }
+    html += `
+    <li class="page-item">
+        <a class="page-link" onclick="nextPag('${paginationElement}', '${list}')" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+        </a>
+    </li>
+    `;
+    pagination.innerHTML = html;
+}
 
 function dataForPagination(data) {
     let result = [];
@@ -293,9 +359,68 @@ function loadDataForStaffTable(page, paginationId, tableList) {
     });
 }
 
+function loadDataForTaskTableManager(page, paginationId, tableList) {
+    const table = document.getElementById(tableList);
+    paginationColor(paginationId, page);
+    table.innerHTML = '';
+    dataPagination[page - 1].forEach(e => {
+
+        const tr = document.createElement('tr');
+        tr.setAttribute('onclick', `showDetailTaskManager('${e.id}')`);
+        if (e.position == 1) {
+            tr.classList.add('bg-info');
+            tr.classList.add('bg-gradient');
+        }
+        tr.dataset.id = e.id;
+        tr.innerHTML = `
+                <td>${e.task_name}</td>
+                <td>${e.username}</td>
+                <td>${e.deadline}</td>
+                <td>${e.status}</td>
+                `;
+        table.appendChild(tr);
+    });
+}
+
+function loadDataForTaskTableStaff(page, paginationId, tableList) {
+    const table = document.getElementById(tableList);
+    paginationColor(paginationId, page);
+    table.innerHTML = '';
+    dataPagination[page - 1].forEach(e => {
+
+        const tr = document.createElement('tr');
+        tr.setAttribute('onclick', `showDetailTaskStaff('${e.id}')`);
+        if (e.position == 1) {
+            tr.classList.add('bg-info');
+            tr.classList.add('bg-gradient');
+        }
+        tr.dataset.id = e.id;
+        tr.innerHTML = `
+                <td>${e.start_date}</td>
+                <td>${e.task_name}</td>
+                <td>${e.deadline}</td>
+                <td>${e.status}</td>
+                `;
+        table.appendChild(tr);
+    });
+}
+
+function showDetailTaskStaff(id) {
+    const detailModal = document.getElementById('view-task-staff');
+    const modal = new bootstrap.Modal(detailModal)
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', API.VIEW_TASK_STAFF + '?search=' + id, false);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            modal.show();
+        }
+    }
+    xhr.send();
+}
+
 
 function prePag(pagination, list) {
-    console.log(typeof pagination);
     let currentPage;
     const paginationList = document.querySelectorAll('#' + pagination + ' li');
     Array.from(paginationList).forEach((value, index) => {
@@ -305,8 +430,11 @@ function prePag(pagination, list) {
     })
 
     if (currentPage == 1) {
-        console.log(pagination);
-        if (pagination.includes('vacation-send')) {
+        if (pagination.includes('task-staff-pagination')) {
+            loadDataForTaskTableStaff(paginationList.length - 2, pagination, list);
+        } else if (pagination.includes('task-manager-pagination')) {
+            loadDataForTaskTableManager(paginationList.length - 2, pagination, list);
+        } else if (pagination.includes('vacation-send')) {
             loadDataForVacationTableSend(paginationList.length - 2, pagination, list);
         } else if (pagination.includes('vacation-manager')) {
             loadDataForVacationTableManager(paginationList.length - 2, pagination, list);
@@ -320,7 +448,11 @@ function prePag(pagination, list) {
             loadDataForVacationTable(paginationList.length - 2, pagination, list);
         }
     } else {
-        if (pagination.includes('vacation-send')) {
+        if (pagination.includes('task-staff-pagination')) {
+            loadDataForTaskTableStaff(currentPage - 1, pagination, list);
+        } else if (pagination.includes('task-manager-pagination')) {
+            loadDataForTaskTableManager(currentPage - 1, pagination, list);
+        } else if (pagination.includes('vacation-send')) {
             loadDataForVacationTableSend(currentPage - 1, pagination, list);
         } else if (pagination.includes('vacation-manager')) {
             loadDataForVacationTableManager(currentPage - 1, pagination, list);
@@ -338,7 +470,7 @@ function prePag(pagination, list) {
 
 function nextPag(pagination, list) {
     let currentPage;
-    console.log(pagination);
+
     const paginationList = document.querySelectorAll('#' + pagination + ' li');
     Array.from(paginationList).forEach((value, index) => {
         if (value.classList.contains('active')) {
@@ -347,7 +479,11 @@ function nextPag(pagination, list) {
     })
 
     if (currentPage == paginationList.length - 2) {
-        if (pagination.includes('vacation-send')) {
+        if (pagination.includes('task-staff-pagination')) {
+            loadDataForTaskTableStaff(1, pagination, list);
+        } else if (pagination.includes('task-manager-pagination')) {
+            loadDataForTaskTableManager(1, pagination, list);
+        } else if (pagination.includes('vacation-send')) {
             loadDataForVacationTableSend(1, pagination, list);
         } else if (pagination.includes('vacation-manager')) {
             loadDataForVacationTableManager(1, pagination, list);
@@ -361,7 +497,12 @@ function nextPag(pagination, list) {
             loadDataForStaffTable(1, pagination, list);
         }
     } else {
-        if (pagination.includes('vacation-send')) {
+
+        if (pagination.includes('task-staff-pagination')) {
+            loadDataForTaskTableStaff(currentPage + 1, pagination, list);
+        } else if (pagination.includes('task-manager-pagination')) {
+            loadDataForTaskTableManager(currentPage + 1, pagination, list);
+        } else if (pagination.includes('vacation-send')) {
             loadDataForVacationTableSend(currentPage + 1, pagination, list);
         } else if (pagination.includes('vacation-manager')) {
             loadDataForVacationTableManager(currentPage + 1, pagination, list);
@@ -439,7 +580,9 @@ function showDetailStaff(username) {
                 document.getElementById('view-staff-modal-address').value = staff.data.address;
                 document.getElementById('view-staff-modal-birthday').value = staff.data.birthday;
                 document.getElementById('view-staff-modal-join').value = staff.data.join;
-                document.getElementById('reset-password').setAttribute('onclick', `resetPassword('${staff.data.username}')`);
+                document.getElementById('reset-password').setAttribute('onclick', `
+            resetPassword('${staff.data.username}')
+            `);
                 modal.show()
             }
         }
@@ -479,14 +622,16 @@ function loadDataForOfficeTable(page, paginationId, tableList) {
     dataPagination[page - 1].forEach(e => {
 
         const tr = document.createElement('tr');
-        tr.setAttribute('onclick', `showDetailOffice('${e.id}')`);
+        tr.setAttribute('onclick', `
+            showDetailOffice('${e.id}')
+            `);
         tr.dataset.id = e.id;
-        tr.innerHTML = `
-                <td>${e.name}</td>
-                <td>${e.room}</td>
-                <td>${e.captain}</td>
-                <td>${e.phone}</td>
-        `;
+        tr.innerHTML = ` <
+            td > $ { e.name } < /td> <
+                td > $ { e.room } < /td> <
+                td > $ { e.captain } < /td> <
+                td > $ { e.phone } < /td>
+            `;
         table.appendChild(tr);
     });
 }
@@ -597,18 +742,20 @@ function loadDataForVacationTable(page, paginationId, tableList) {
     dataPagination[page - 1].forEach(e => {
 
         const tr = document.createElement('tr');
-        tr.setAttribute('onclick', `showDetailVacation('${e.id}')`);
+        tr.setAttribute('onclick', `
+            showDetailVacation('${e.id}')
+            `);
         if (e.seen) {
             tr.className = 'non-seen';
         }
         tr.dataset.id = e.id;
-        tr.innerHTML = `
-                <td>${e.send_at}</td> 
-                <td>${e.username}</td> 
-                <td>${e.office}</td>
-                <td>${e.date_off}</td>
-                <td>${e.status}</td>
-        `;
+        tr.innerHTML = ` <
+            td > $ { e.send_at } < /td>  <
+                td > $ { e.username } < /td>  <
+                td > $ { e.office } < /td> <
+                td > $ { e.date_off } < /td> <
+                td > $ { e.status } < /td>
+            `;
         table.appendChild(tr);
     });
     for (let i = 0; i < dataPagination.length; i++) {
@@ -630,17 +777,19 @@ function loadDataForVacationTableSend(page, paginationId, tableList) {
     dataPagination[page - 1].forEach(e => {
 
         const tr = document.createElement('tr');
-        tr.setAttribute('onclick', `showDetailVacationSend('${e.id}')`);
+        tr.setAttribute('onclick', `
+            showDetailVacationSend('${e.id}')
+            `);
         if (e.seen) {
             tr.className = 'non-seen';
         }
         tr.dataset.id = e.id;
-        tr.innerHTML = `
-                <td>${e.send_at}</td> 
-                <td>${e.date_off}</td> 
-                <td>${e.number_off}</td>
-                <td>${e.status}</td>
-        `;
+        tr.innerHTML = ` <
+            td > $ { e.send_at } < /td>  <
+                td > $ { e.date_off } < /td>  <
+                td > $ { e.number_off } < /td> <
+                td > $ { e.status } < /td>
+            `;
         table.appendChild(tr);
     });
     for (let i = 0; i < dataPagination.length; i++) {
@@ -660,14 +809,16 @@ function loadDataForStaffTableManager(page, paginationId, tableList) {
     dataPagination[page - 1].forEach(e => {
 
         const tr = document.createElement('tr');
-        tr.setAttribute('onclick', `showDetailStaffManager('${e.username}')`);
+        tr.setAttribute('onclick', `
+            showDetailStaffManager('${e.username}')
+            `);
         tr.dataset.id = e.id;
-        tr.innerHTML = `
-                <td>${e.name}</td> 
-                <td>${e.username}</td> 
-                <td>${e.phone}</td>
-                <td>${e.email}</td>
-        `;
+        tr.innerHTML = ` <
+            td > $ { e.name } < /td>  <
+                td > $ { e.username } < /td>  <
+                td > $ { e.phone } < /td> <
+                td > $ { e.email } < /td>
+            `;
         table.appendChild(tr);
     });
 
@@ -681,17 +832,19 @@ function loadDataForVacationTableManager(page, paginationId, tableList) {
     dataPagination[page - 1].forEach(e => {
 
         const tr = document.createElement('tr');
-        tr.setAttribute('onclick', `showDetailVacationManager('${e.id}')`);
+        tr.setAttribute('onclick', `
+            showDetailVacationManager('${e.id}')
+            `);
         if (e.seen) {
             tr.className = 'non-seen';
         }
         tr.dataset.id = e.id;
-        tr.innerHTML = `
-                <td>${e.send_at}</td> 
-                <td>${e.username}</td> 
-                <td>${e.date_off}</td>
-                <td>${e.status}</td>
-        `;
+        tr.innerHTML = ` <
+            td > $ { e.send_at } < /td>  <
+                td > $ { e.username } < /td>  <
+                td > $ { e.date_off } < /td> <
+                td > $ { e.status } < /td>
+            `;
         table.appendChild(tr);
     });
     for (let i = 0; i < dataPagination.length; i++) {
@@ -1037,6 +1190,27 @@ function changePassword() {
     xhr.send(new FormData(document.getElementById('form-change-password')));
 }
 
+function createTask() {
+
+    const form = document.getElementById('form-task-create');
+    const formData = new FormData(form);
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', API.CREATE_TASK, false);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            console.log(this.responseText);
+        }
+    }
+    xhr.send(formData);
+
+}
+
+function showDetailTaskManager(id) {
+    const modal = new bootstrap.Modal(document.getElementById('view-task-manager'));
+    modal.show();
+
+}
+
 // js admin
 if (currentHref.includes('admin/')) {
     // STAFF
@@ -1069,7 +1243,7 @@ if (currentHref.includes('admin/')) {
                             loadDataForStaffTable(1, staffPaginationId, staffList);
                         } else {
                             const table = document.getElementById(staffList);
-                            table.innerHTML = `<tr><td colspan="4">No data</td></tr>`;
+                            table.innerHTML = ` < tr > < td colspan = "4" > No data < /td></tr > `;
                         }
 
                     }
@@ -1099,7 +1273,7 @@ if (currentHref.includes('admin/')) {
                                 loadDataForStaffTable(1, staffPaginationId, staffList);
                             } else {
                                 const table = document.getElementById(staffList);
-                                table.innerHTML = `<tr><td colspan="4">No data</td></tr>`;
+                                table.innerHTML = ` < tr > < td colspan = "4" > No data < /td></tr > `;
                             }
                         }
                     }
@@ -1317,7 +1491,9 @@ if (currentHref.includes('admin/')) {
                     document.getElementById('username-error-add-staff').innerText = '';
                 } else {
                     const xhr = new XMLHttpRequest();
-                    xhr.open('GET', `${API["check-username"]}?username=${username.value}`, false);
+                    xhr.open('GET', `
+                $ { API["check-username"] } ? username = $ { username.value }
+                `, false);
                     xhr.onload = function() {
                         if (this.status == 200) {
                             const response = JSON.parse(this.responseText);
@@ -1328,7 +1504,7 @@ if (currentHref.includes('admin/')) {
                                 icon.children[0].classList.remove('d-none');
                                 icon.children[1].classList.add('d-none');
 
-                                message.innerHTML = `<small class="text-success">${response.data}</small>`;
+                                message.innerHTML = ` < small class = "text-success" > $ { response.data } < /small>`;
                             } else {
                                 icon.children[1].classList.remove('d-none');
                                 icon.children[0].classList.add('d-none');
@@ -1530,7 +1706,8 @@ if (currentHref.includes('admin/')) {
                 xhr.send();
             })
 
-        } else if (page === 'vacation-send') {
+        } else
+        if (page === 'vacation-send') {
             const vacationPaginationId = 'vacation-send-pagination';
             const vacationList = 'vacation-send-list';
 
@@ -1641,24 +1818,45 @@ if (currentHref.includes('admin/')) {
             const vacationPaginationId = 'task-manager-pagination';
             const vacationList = 'task-manager-list';
 
+            const select = document.getElementById('staff-task-create');
+
+            const xhr2 = new XMLHttpRequest();
+            xhr2.open('GET', API.GET_STAFFS_MANAGER, false);
+            xhr2.onload = function() {
+                if (this.status == 200) {
+                    const response = JSON.parse(this.responseText);
+                    if (response.status === 'success') {
+                        if (response.data.length > 0) {
+                            select.innerHTML = '';
+                            response.data.forEach(element => {
+                                select.innerHTML += `<option value="${element.username}">${element.username}</option>`;
+                            });
+
+                        }
+                    }
+                }
+
+            }
+            xhr2.send();
+
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', API["get-vacations-send"], false);
+            xhr.open('GET', API.GET_TASKS_MANAGER, false);
             xhr.onload = function() {
                 if (this.status == 200) {
 
-                    const vacations = JSON.parse(this.responseText);
-                    if (vacations.status === 'success') {
+                    const tasks = JSON.parse(this.responseText);
+                    if (tasks.status === 'success') {
 
-                        console.log(vacations.data.length);
-                        if (vacations.data.length > 0) {
+                        console.log(tasks.data.length);
+                        if (tasks.data.length > 0) {
                             // cerate pagination
-                            createPaginationVacationSend(vacationPaginationId, numberEachPage, vacations.data.length, vacationList);
+                            createPaginationTaskManager(vacationPaginationId, numberEachPage, tasks.data.length, vacationList);
 
-                            //create vacations array
-                            dataPagination = dataForPagination(vacations.data);
+                            //create tasks array
+                            dataPagination = dataForPagination(tasks.data);
 
-                            //load vacations to table
-                            loadDataForVacationTableSend(1, vacationPaginationId, vacationList);
+                            //load tasks to table
+                            loadDataForTaskTableManager(1, vacationPaginationId, vacationList);
                         } else {
                             const table = document.getElementById(vacationList);
                             table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
@@ -1669,33 +1867,30 @@ if (currentHref.includes('admin/')) {
             }
             xhr.send();
 
-            let search = document.getElementById('search-vacation-send-input');
-            const btnSearch = document.getElementById('search-vacation-send');
+            let search = document.getElementById('search-task-manager-input');
+            const btnSearch = document.getElementById('search-task-manager');
             btnSearch.addEventListener('click', function() {
-
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API["search-vacation-send"] + '?search=' + search.value, false);
+                xhr.open('GET', API.SEARCH_TASKS_MANAGER + '?search=' + search.value, false);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
-                        const vacations = JSON.parse(this.responseText);
-                        if (vacations.status === 'success') {
+                        const tasks = JSON.parse(this.responseText);
+                        if (tasks.status === 'success') {
 
-                            console.log(vacations.data.length);
-                            if (vacations.data.length > 0) {
+                            if (tasks.data.length > 0) {
                                 // cerate pagination
-                                createPaginationVacationSend(vacationPaginationId, numberEachPage, vacations.data.length, vacationList);
+                                createPaginationTaskManager(vacationPaginationId, numberEachPage, tasks.data.length, vacationList);
 
-                                //create vacations array
-                                dataPagination = dataForPagination(vacations.data);
+                                //create tasks array
+                                dataPagination = dataForPagination(tasks.data);
 
-                                //load vacations to table
-                                loadDataForVacationTableSend(1, vacationPaginationId, vacationList);
+                                //load tasks to table
+                                loadDataForTaskTableManager(1, vacationPaginationId, vacationList);
                             } else {
                                 const table = document.getElementById(vacationList);
                                 table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
                             }
-
                         }
                     }
                 }
@@ -1714,30 +1909,29 @@ if (currentHref.includes('admin/')) {
                 this.select();
             })
 
-            const selectInput = document.getElementById('type-vacation-send');
+            const selectInput = document.getElementById('type-task-manager');
             selectInput.addEventListener('change', function() {
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API["filter-vacations-send"] + '?type=' + selectInput.value, false);
+                xhr.open('GET', API.FILTER_TASKS_MANAGER + '?type=' + selectInput.value, false);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
-                        const vacations = JSON.parse(this.responseText);
-                        if (vacations.status === 'success') {
+                        const tasks = JSON.parse(this.responseText);
+                        if (tasks.status === 'success') {
 
-                            if (vacations.data.length > 0) {
+                            if (tasks.data.length > 0) {
                                 // cerate pagination
-                                createPaginationVacationSend(vacationPaginationId, numberEachPage, vacations.data.length, vacationList);
+                                createPaginationTaskManager(vacationPaginationId, numberEachPage, tasks.data.length, vacationList);
 
-                                //create vacations array
-                                dataPagination = dataForPagination(vacations.data);
+                                //create tasks array
+                                dataPagination = dataForPagination(tasks.data);
 
-                                //load vacations to table
-                                loadDataForVacationTableSend(1, vacationPaginationId, vacationList);
+                                //load tasks to table
+                                loadDataForTaskTableManager(1, vacationPaginationId, vacationList);
                             } else {
                                 const table = document.getElementById(vacationList);
                                 table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
                             }
-
                         }
                     }
                 }
@@ -1750,6 +1944,111 @@ if (currentHref.includes('admin/')) {
     function loadData(page) {
         if (page === 'task-staff') {
             document.title = 'Nhiệm vụ';
+
+            const taskPaginationId = 'task-staff-pagination';
+            const taskList = 'task-staff-list';
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', API.GET_TASKS_STAFF, false);
+            xhr.onload = function() {
+                if (this.status == 200) {
+
+                    const tasks = JSON.parse(this.responseText);
+                    if (tasks.status === 'success') {
+
+                        console.log(tasks.data.length);
+                        if (tasks.data.length > 0) {
+                            // cerate pagination
+                            createPaginationTaskStaff(taskPaginationId, numberEachPage, tasks.data.length, taskList);
+
+                            //create tasks array
+                            dataPagination = dataForPagination(tasks.data);
+
+                            //load tasks to table
+                            loadDataForTaskTableStaff(1, taskPaginationId, taskList);
+                        } else {
+                            const table = document.getElementById(taskList);
+                            table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                        }
+
+                    }
+                }
+            }
+            xhr.send();
+
+
+            let search = document.getElementById('search-task-staff-input');
+            const btnSearch = document.getElementById('search-task-staff');
+            btnSearch.addEventListener('click', function() {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', API.SEARCH_TASKS_STAFF + '?search=' + search.value, false);
+                xhr.onload = function() {
+                    if (this.status == 200) {
+
+                        const tasks = JSON.parse(this.responseText);
+                        if (tasks.status === 'success') {
+
+                            if (tasks.data.length > 0) {
+                                // cerate pagination
+                                createPaginationTaskStaff(taskPaginationId, numberEachPage, tasks.data.length, taskList);
+
+                                //create tasks array
+                                dataPagination = dataForPagination(tasks.data);
+
+                                //load tasks to table
+                                loadDataForTaskTableStaff(1, taskPaginationId, taskList);
+                            } else {
+                                const table = document.getElementById(taskList);
+                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                            }
+                        }
+                    }
+                }
+                xhr.send();
+            })
+
+            //pointer input and press enter
+            search.addEventListener('keyup', function(event) {
+                if (event.keyCode === 13) {
+                    btnSearch.click();
+                }
+            })
+
+            //active input
+            search.addEventListener('focus', function() {
+                this.select();
+            })
+
+            const selectInput = document.getElementById('type-task-staff');
+            selectInput.addEventListener('change', function() {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', API.FILTER_TASKS_STAFF + '?type=' + selectInput.value, false);
+                xhr.onload = function() {
+                    if (this.status == 200) {
+
+                        const tasks = JSON.parse(this.responseText);
+                        if (tasks.status === 'success') {
+
+                            if (tasks.data.length > 0) {
+                                // cerate pagination
+                                createPaginationTaskStaff(taskPaginationId, numberEachPage, tasks.data.length, taskList);
+
+                                //create tasks array
+                                dataPagination = dataForPagination(tasks.data);
+
+                                //load tasks to table
+                                loadDataForTaskTableStaff(1, taskPaginationId, taskList);
+                            } else {
+                                const table = document.getElementById(taskList);
+                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                            }
+                        }
+                    }
+                }
+                xhr.send();
+            })
+
+
         } else if (page === 'vacation-staff') {
             document.title = 'Nghỉ phép';
             const vacationPaginationId = 'vacation-send-pagination';

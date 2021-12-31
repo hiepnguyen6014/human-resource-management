@@ -73,9 +73,9 @@
                     </li>
                 </div>
 
-                <li class="mb-2">
+                <div>
                     <hr class="dropdown-divider" />
-                </li>
+                </div>
             </ul>
             <div id="logout">
                 <i class="fas fa-sign-out-alt"></i>

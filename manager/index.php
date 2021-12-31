@@ -63,7 +63,8 @@
                             </div>
 
                             <div class="btn-group">
-                                <button class="btn btn-outline-primary" onclick="createTask()">
+                                <button class="btn btn-outline-primary" data-bs-toggle="modal"
+                                    data-bs-target="#create-task">
                                     <i class="fas fa-plus"></i>
                                     <span>More</span>
                                 </button>
@@ -97,6 +98,197 @@
             </div>
         </div>
     </main>
+
+    <div class="modal fade mt-5" id="create-task">
+        <div class="modal-dialog modal-lg mt-5">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tạo nhiệm vụ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="return false" method="post" id="form-task-create" class="row">
+                        <div class="col-lg-6">
+                            <div class="mt-2">
+                                <label for="title-task-create" class="form-label">Tiêu đề</label>
+                                <div class="input-group">
+                                    <input type="text" name="title" class="form-control" id="title-task-create">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mt-2">
+                                <label for="deadline-task-create" class="form-label">Hạn chót</label>
+                                <div class="input-group">
+                                    <input type="date" id="deadline-task-create" name="deadline" class="form-control">
+                                    <span class="input-group-text" id="icon-check-date">
+                                        <i class="far fa-check-circle d-none text-success fz-24"></i>
+                                        <i class="far fa-times-circle text-danger fz-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="mt-2">
+                                <label for="staff-task-create" class="form-label">Giao cho</label>
+                                <select name="staff" id="staff-task-create" class="form-control">
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mt-2">
+                                <label for="files-vacation-send" class="form-label">File đính kèm</label>
+                                <div class="input-group">
+                                    <input type="file" name="files[]" id="files-vacation-send" class="form-control"
+                                        multiple>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <label for="description-task-create" class="form-label">Mô tả</label>
+                            <div class="input-group">
+                                <textarea id="description-task-create" name="description"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <!-- <input type="hidden" id="id-add-vacation-send">
+                        <input type="hidden" id="lastest-add-vacation-send">
+                        <input type="hidden" id="available-add-vacation-send"> -->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary w-90" data-bs-dismiss="modal">Thoát</button>
+                    <button class="btn btn-outline-secondary w-90" form="form-task-create" id="btn-send-vacation"
+                        onclick="createTask()">Tạo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade mt-5" id="rate-task">
+        <div class="modal-dialog mt-5">
+            <div class="modal-content">
+                <div class="flex justify-content-center">
+                    <div class="row">
+                        <div class="col text-center">
+                            <h5 class="font-weight-bold">How'd stream go?</h5>
+                            <p class="text-muted ">Tell us about stream watching experience</p>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-auto example-block text-center">
+                            <label class="radio-inline">
+                                <input type="radio" name="emotion" id="sad" class="input-hidden" />
+                                <img src="https://img.icons8.com/color/100/000000/boring.png" width="84" height="84">
+                            </label>
+                        </div>
+                        <div class="col-auto example-block text-center">
+                            <label class="radio-inline"> <input type="radio" name="emotion" id="happy"
+                                    class="input-hidden" />
+                                <img src="https://img.icons8.com/color/100/000000/bored.png" width="84" height="84">
+                            </label>
+                        </div>
+                        <div class="col-auto example-block text-center">
+                            <label class="radio-inline"> <input type="radio" name="emotion" id="exicetd"
+                                    class="input-hidden" />
+                                <img src="https://img.icons8.com/color/100/000000/smiling.png " width="84" height="84">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade mt-5" id="view-task-manager">
+        <div class="modal-dialog modal-lg mt-5">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-center">
+                    <h5 class="modal-title">Chi tiết nhiệm vụ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-0">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="mt-2">
+                                <label for="title-task-view" class="form-label">Tiêu đề</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="title-task-view" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="mt-2">
+                                <label for="staff-view-task-manager" class="form-label">Người nhận</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="staff-view-task-manager" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="mt-2">
+                                <label for="title-task-create" class="form-label">Hạn chót</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="title-task-create" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view-task-message my-3">
+
+                        <div>
+                            <div class="d-flex flex-row justify-content-start mb-2">
+                                <div class="p-3 receiver-message">
+                                    <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, fuga
+                                        asperiores? Id, earum nemo dolores nam adipisci, labore, dolor atque vero
+                                        numquam a et maxime. Dolor repellendus quo totam iure?</span>
+                                    <a href="/"><i class="fas fa-download btn-action"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="d-flex flex-row justify-content-end mb-2">
+                                <div class="p-3 border sender-message">
+                                    <span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Animi voluptatem,
+                                        similique adipisci natus, nesciunt quasi necessitatibus qui debitis voluptate
+                                        beatae saepe. Nulla quia sint vero eum laudantium veritatis velit porro.</span>
+                                    <a href="/"><i class="fas fa-download btn-action"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form class="p-3 border" style="box-shadow: 0 0 3px black;">
+                            <div class="mb-2">
+                                <textarea class="form-control" name="message" id="message-view-task"></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <button type="button" class="btn btn-outline-secondary w-90"
+                                        data-bs-dismiss="modal">Gửi</button>
+                                </div>
+                                <div class="col-lg-5">
+                                    <input type="date" name="deadline" class="form-control">
+                                </div>
+                                <div class="col-lg-5">
+                                    <input type="file" name="files" id="files-view-task" class="form-control">
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary w-90" data-bs-dismiss="modal">Thoát</button>
+                    <button class="btn btn-outline-secondary w-90" form="form-task-create" id="btn-send-vacation"
+                        onclick="reply()">Tạo</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <main class="vh-100 d-none" id="staff-manager">
         <!-- manage product -->
