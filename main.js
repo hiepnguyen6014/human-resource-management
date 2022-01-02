@@ -1,53 +1,64 @@
 const API = {
-    //admin
-    'GET_OFFICES_LIST': '/api/admin/get-offices-list.php',
-    'ADD_OFFICE': '/api/admin/add-office.php',
-    'GET_STAFFS': '/api/admin/get-staffs.php',
-    'get-offices': '/api/get-offices.php',
-    'add-staff': '/api/add-staff.php',
-    'check-username': '/api/check-username.php',
-    'get-staff-detail': '/api/get-staff-detail.php',
-    'reset-password': '/api/reset-password.php',
-    'get-offices-list': '/api/get-offices-list.php',
-    'search-office': '/api/search-office.php',
-    'view-office': '/api/view-office.php',
-    'change-captain': '/api/change-captain.php',
-    'delete-office': '/api/delete-office.php',
-    'update-office': '/api/update-office.php',
-    'get-vacations': '/api/get-vacations.php',
-    'view-vacation': '/api/view-vacation.php',
 
-    //staff
-    'disagree-vacation': '/api/disagree-vacation.php',
-    'agree-vacation': '/api/agree-vacation.php',
-    'seen-vacation': '/api/seen-vacation.php',
-    'search-vacation': '/api/search-vacation.php',
-    'get-staffs-manager': '/api/get-staffs-manager.php',
-    'search-staffs-manager': '/api/search-staffs-manager.php',
-    'get-staff-detail-manager': '/api/get-staff-detail-manager.php',
-    'get-vacations-manager': '/api/get-vacations-manager.php',
-    'view-vacation-manager': '/api/view-vacation-manager.php',
-    'search-vacation-manager': '/api/search-vacation-manager.php',
-    'get-vacations-send': '/api/get-vacations-send.php',
-    'view-vacation-send': '/api/view-vacation-send.php',
-    'GET_TASKS_STAFF': '/api/staff/get-tasks-staff.php',
+    //Admin
+    'ADD_OFFICE': '/api/admin/add-office.php',
+    'ADD_STAFF': '/api/admin/add-staff.php',
+    'CHANGE_CAPTAIN': '/api/admin/change-captain.php',
+    'CHANGE_PASSWORD': '/api/admin/change-password.php',
+    'CHECK_USERNAME': '/api/admin/check-username.php',
+    'DELETE_OFFICE': '/api/admin/delete-office.php',
+    'GET_OFFICES_LIST': '/api/admin/get-offices-list.php',
+    'GET_OFFICES': '/api/admin/get-offices.php',
+    'GET_STAFF_DETAIL': '/api/admin/get-staff-detail.php',
+    'GET_STAFFS': '/api/admin/get-staffs.php',
+    'RESET_PASSWORD': '/api/admin/reset-password.php',
+    'SEARCH_OFFICE': '/api/admin/search-office.php',
+    'UPDATE_OFFICE': '/api/admin/update-office.php',
+    'VIEW_OFFICE': '/api/admin/view-office.php',
+
+    //Manager
+    'ACCEPT_TASK': '/api/manager/accept-task.php',
+    'CANCEL_TASK_MANAGER': '/api/manager/cancel-task-manager.php',
+    'CREATE_TASK': '/api/manager/create-task.php',
+    'FILTER_TASKS_MANAGER': '/api/manager/filter-tasks-manager.php',
+    'FILTER_VACATIONS_MANAGER': '/api/manager/filter-vacations-manager.php',
+    'GET_STAFF_DETAIL_MANAGER': '/api/manager/get-staff-detail-manager.php',
+    'GET_STAFFS_MANAGER': '/api/manager/get-staffs-manager.php',
+    'GET_TASKS_MANAGER': '/api/manager/get-tasks-manager.php',
+    'GET_VACATIONS_MANAGER': '/api/manager/get-vacations-manager.php',
+    'REJECT_TASK': '/api/manager/reject-task.php',
+    'SEARCH_STAFFS_MANAGER': '/api/manager/search-staffs-manager.php',
+    'SEARCH_TASK_MANAGER': '/api/manager/search-task-manager.php',
+    'SEARCH_VACATION_MANAGER': '/api/manager/search-vacation-manager.php',
+    'VIEW_DETAIL_TASK_MANAGER': '/api/manager/view-detail-task-manager.php',
+    'VIEW_VACATION_MANAGER': '/api/manager/view-vacation-manager.php',
+
+    //Staff
     'FILTER_TASKS_STAFF': '/api/staff/filter-tasks-staff.php',
+    'GET_TASKS_STAFF': '/api/staff/get-tasks-staff.php',
     'SEARCH_TASKS_STAFF': '/api/staff/search-tasks-staff.php',
+    'START_TASK': '/api/staff/start-task.php',
+    'SUBMIT_TASK': '/api/staff/submit-task.php',
+    'VIEW_DETAIL_TASK_STAFF': '/api/staff/view-detail-task-staff.php',
     'VIEW_TASK_STAFF': '/api/staff/view-task-staff.php',
 
-    //manager
-    'search-vacation-send': '/api/search-vacation-send.php',
-    'filter-vacations-send': '/api/filter-vacations-send.php',
-    'filter-vacations-manager': '/api/filter-vacations-manager.php',
-    'CHECK_BEFORE_VACATION': '/api/check-before-vacation.php',
-    'VIEW_PROFILE': '/api/view-profile.php',
-    'UPDATE_PROFILE': '/api/update-profile.php',
-    'CHANGE_PASSWORD': '/api/change-password.php',
-    'GET_TASKS_MANAGER': '/api/manager/get-tasks-manager.php',
-    'SEARCH_TASKS_MANAGER': '/api/manager/search-task-manager.php',
-    'FILTER_TASKS_MANAGER': '/api/manager/filter-tasks-manager.php',
-    'CREATE_TASK': '/api/manager/create-task.php',
-    'GET_STAFFS_MANAGER': '/api/manager/get-staffs-manager.php',
+    //Other
+    'AGREE_VACATION_ALL': '/api/agree-vacation.php',
+    'CHECK_BEFORE_VACATION_ALL': '/api/check-before-vacation.php',
+    'DISAGREE_VACATION_ALL': '/api/disagree-vacation.php',
+    'FILTER_VACATIONS_SEND_ALL': '/api/filter-vacations-send.php',
+    'GET_STAFFS_MANAGER_ALL': '/api/get-staffs-manager.php',
+    'GET_TASKS_STAFF_ALL': '/api/get-tasks-staff.php',
+    'GET_VACATIONS_SEND_ALL': '/api/get-vacations-send.php',
+    'GET_VACATIONS_ALL': '/api/get-vacations.php',
+    'SEARCH_VACATIONS_SEND_ALL': '/api/search-vacations-send.php',
+    'SEARCH_VACATION_ALL': '/api/search-vacation.php',
+    'SEEN_VACATION_ALL': '/api/seen-vacation.php',
+    'UPDATE_PROFILE_ALL': '/api/update-profile.php',
+    'VIEW_DETAIL_TASK_MANAGER_ALL': '/api/view-detail-task-manager.php',
+    'VIEW_PROFILE_ALL': '/api/view-profile.php',
+    'VIEW_VACATION_SEND_ALL': '/api/view-vacation-send.php',
+    'VIEW_VACATION_ALL': '/api/view-vacation.php',
 }
 
 window.onload = () => {
@@ -514,7 +525,7 @@ function nextPag(pagination, list) {
 
 function officeSelect(id) {
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API["get-offices"], false);
+    xhr.open('GET', API.GET_OFFICES, false);
     xhr.onload = function() {
         if (this.status == 200) {
             const offices = JSON.parse(this.responseText);
@@ -538,7 +549,7 @@ function resetPassword(username) {
     const comfirm = confirm('Are you sure to reset password?');
     if (comfirm) {
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', API["reset-password"], false);
+        xhr.open('POST', API.RESET_PASSWORD, false);
         xhr.onload = function() {
             if (this.status == 200) {
                 console.log(this.responseText);
@@ -556,7 +567,7 @@ function showDetailStaff(username) {
     const modal = new bootstrap.Modal(detailModal)
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API["get-staff-detail"] + '?username=' + username, false);
+    xhr.open('GET', API.GET_STAFF_DETAIL + '?username=' + username, false);
     xhr.onload = function() {
         if (this.status == 200) {
             const staff = JSON.parse(this.responseText);
@@ -589,7 +600,7 @@ function showDetailStaffManager(username) {
     const modal = new bootstrap.Modal(detailModal)
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API["get-staff-detail-manager"] + '?username=' + username, false);
+    xhr.open('GET', API.GET_STAFF_DETAIL_MANAGER + '?username=' + username, false);
     xhr.onload = function() {
         if (this.status == 200) {
             const response = JSON.parse(this.responseText);
@@ -634,7 +645,7 @@ function showDetailOffice(id) {
     const modal = new bootstrap.Modal(detailModal)
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API["view-office"] + '?id=' + id, false);
+    xhr.open('GET', API.VIEW_OFFICE + '?id=' + id, false);
     xhr.onload = function() {
         if (this.status == 200) {
             const office = JSON.parse(this.responseText);
@@ -661,7 +672,7 @@ function changeCaptain() {
     const officeId = document.getElementById('change-office-id').value;
     const captainId = document.getElementById('captain-view-office').value;
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', API["change-captain"], false);
+    xhr.open('POST', API.CHANGE_CAPTAIN, false);
     xhr.onload = function() {
         if (this.status == 200) {
             document.getElementById('captain-view-office').value = captainId;
@@ -679,7 +690,7 @@ function deleteOffice() {
     const comfirm = confirm('Are you sure to delete this office?');
     if (comfirm) {
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', API["delete-office"], false);
+        xhr.open('POST', API.DELETE_OFFICE, false);
         xhr.onload = function() {
             if (this.status == 200) {
                 console.log(this.responseText);
@@ -708,7 +719,7 @@ function updateOffice() {
     // compare old and new data
     if (phone != newPhone || name != newName || description != newDescription || room != newRoom) {
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', API["update-office"], false);
+        xhr.open('POST', API.UPDATE_OFFICE, false);
         xhr.onload = function() {
             if (this.status == 200) {
                 console.log(this.responseText);
@@ -741,12 +752,12 @@ function loadDataForVacationTable(page, paginationId, tableList) {
             tr.className = 'non-seen';
         }
         tr.dataset.id = e.id;
-        tr.innerHTML = ` <
-            td > $ { e.send_at } < /td>  <
-                td > $ { e.username } < /td>  <
-                td > $ { e.office } < /td> <
-                td > $ { e.date_off } < /td> <
-                td > $ { e.status } < /td>
+        tr.innerHTML = ` 
+        <td> ${ e.send_at } </td>  
+        <td> ${ e.username } </td>  
+        <td> ${ e.office } </td> 
+        <td> ${ e.date_off } </td> 
+        <td> ${ e.status } </td>
             `;
         table.appendChild(tr);
     });
@@ -776,11 +787,11 @@ function loadDataForVacationTableSend(page, paginationId, tableList) {
             tr.className = 'non-seen';
         }
         tr.dataset.id = e.id;
-        tr.innerHTML = ` <
-            td > $ { e.send_at } < /td>  <
-                td > $ { e.date_off } < /td>  <
-                td > $ { e.number_off } < /td> <
-                td > $ { e.status } < /td>
+        tr.innerHTML = ` 
+        <td> ${ e.send_at } </td>  
+        <td> ${ e.date_off } </td>  
+        <td> ${ e.number_off } </td> 
+        <td> ${ e.status } </td>
             `;
         table.appendChild(tr);
     });
@@ -805,11 +816,11 @@ function loadDataForStaffTableManager(page, paginationId, tableList) {
             showDetailStaffManager('${e.username}')
             `);
         tr.dataset.id = e.id;
-        tr.innerHTML = ` <
-            td > $ { e.name } < /td>  <
-                td > $ { e.username } < /td>  <
-                td > $ { e.phone } < /td> <
-                td > $ { e.email } < /td>
+        tr.innerHTML = ` 
+        <td> ${ e.name } </td>  
+        <td> ${ e.username } </td>  
+        <td> ${ e.phone } </td> 
+        <td> ${ e.email } </td>
             `;
         table.appendChild(tr);
     });
@@ -856,7 +867,7 @@ function showDetailVacation(id) {
 
     // seen vacation
     const xml = new XMLHttpRequest();
-    xml.open('POST', API["seen-vacation"], false);
+    xml.open('POST', API.SEEN_VACATION_ALL, false);
     xml.onload = function() {
         if (this.status == 200) {
             console.log(this.responseText, 'see this vacation');
@@ -867,7 +878,7 @@ function showDetailVacation(id) {
     xml.send(formData);
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API["view-vacation"] + '?id=' + id, false);
+    xhr.open('GET', API.VIEW_VACATION_ALL + '?id=' + id, false);
     xhr.onload = function() {
         if (this.status == 200) {
             const vacation = JSON.parse(this.responseText);
@@ -895,7 +906,7 @@ function showDetailVacationManager(id) {
 
     // seen vacation-manager
     const xml = new XMLHttpRequest();
-    xml.open('POST', API["seen-vacation"], false);
+    xml.open('POST', API.SEEN_VACATION_ALL, false);
     xml.onload = function() {
         if (this.status == 200) {
             console.log(this.responseText, 'see this vacation-manager');
@@ -906,7 +917,7 @@ function showDetailVacationManager(id) {
     xml.send(formData);
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API["view-vacation-manager"] + '?id=' + id, false);
+    xhr.open('GET', API.VIEW_VACATION_MANAGER + '?id=' + id, false);
     xhr.onload = function() {
         if (this.status == 200) {
             const vacation = JSON.parse(this.responseText);
@@ -931,7 +942,7 @@ function disagreeVacation() {
     if (reason.length > 0) {
         const id = document.getElementById('id-view-vacation').value;
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', API["disagree-vacation"], false);
+        xhr.open('POST', API.DISAGREE_VACATION_ALL, false);
         xhr.onload = function() {
             if (this.status == 200) {
                 console.log(this.responseText);
@@ -947,7 +958,7 @@ function disagreeVacation() {
 function agreeVacation() {
     const id = document.getElementById('id-view-vacation').value;
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', API["agree-vacation"], false);
+    xhr.open('POST', API.AGREE_VACATION_ALL, false);
     xhr.onload = function() {
         if (this.status == 200) {
             console.log(this.responseText);
@@ -963,7 +974,7 @@ function disagreeVacationManager() {
     if (reason.length > 0) {
         const id = document.getElementById('id-view-vacation-manager').value;
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', API["disagree-vacation"], false);
+        xhr.open('POST', API.DISAGREE_VACATION_ALL, false);
         xhr.onload = function() {
             if (this.status == 200) {
                 console.log(this.responseText);
@@ -979,7 +990,7 @@ function disagreeVacationManager() {
 function agreeVacationManager() {
     const id = document.getElementById('id-view-vacation-manager').value;
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', API["agree-vacation"], false);
+    xhr.open('POST', API.AGREE_VACATION_ALL, false);
     xhr.onload = function() {
         if (this.status == 200) {
             console.log(this.responseText);
@@ -997,7 +1008,7 @@ function showDetailVacationSend(id) {
 
     // seen vacation-send
     const xml = new XMLHttpRequest();
-    xml.open('POST', API["seen-vacation"], false);
+    xml.open('POST', API.SEEN_VACATION_ALL, false);
     xml.onload = function() {
         if (this.status == 200) {
             console.log(this.responseText, 'see this vacation-send');
@@ -1008,7 +1019,7 @@ function showDetailVacationSend(id) {
     xml.send(formData);
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API["view-vacation-send"] + '?id=' + id, false);
+    xhr.open('GET', API.VIEW_VACATION_SEND_ALL + '?id=' + id, false);
     xhr.onload = function() {
         if (this.status == 200) {
             const vacation = JSON.parse(this.responseText);
@@ -1032,7 +1043,7 @@ function offRequest() {
     const modal = new bootstrap.Modal(document.getElementById('add-vacation-send'));
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API.CHECK_BEFORE_VACATION, false);
+    xhr.open('GET', API.CHECK_BEFORE_VACATION_ALL, false);
     xhr.onload = function() {
         if (this.status == 200) {
             const vacation = JSON.parse(this.responseText);
@@ -1102,7 +1113,7 @@ function offRequest() {
 function viewProfile() {
     const modal = new bootstrap.Modal(document.getElementById('view-profile'));
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API.VIEW_PROFILE, false);
+    xhr.open('GET', API.VIEW_PROFILE_ALL, false);
     xhr.onload = function() {
         if (this.status == 200) {
             const profile = JSON.parse(this.responseText);
@@ -1161,7 +1172,7 @@ function viewProfile() {
 
 function updateProfile() {
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', API.UPDATE_PROFILE, false);
+    xhr.open('POST', API.UPDATE_PROFILE_ALL, false);
     xhr.onload = function() {
         if (this.status == 200) {
             console.log(this.responseText);
@@ -1299,7 +1310,7 @@ if (currentHref.includes('admin/')) {
             officeSelect(select);
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', API["get-staffs"] + '?office=1', false);
+            xhr.open('GET', API.GET_STAFFS + '?office=1', false);
             xhr.onload = function() {
                 if (this.status == 200) {
 
@@ -1329,7 +1340,7 @@ if (currentHref.includes('admin/')) {
             selectInput.addEventListener('change', function() {
                 const number = this.value;
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API["get-staffs"] + '?office=' + number, false);
+                xhr.open('GET', API.GET_STAFFS + '?office=' + number, false);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
@@ -1360,7 +1371,7 @@ if (currentHref.includes('admin/')) {
             btnSearch.addEventListener('click', function() {
 
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API["get-staffs"] + '?search=' + search.value + '&office=' + selectInput.value, false);
+                xhr.open('GET', API.GET_STAFFS + '?search=' + search.value + '&office=' + selectInput.value, false);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
@@ -1433,7 +1444,7 @@ if (currentHref.includes('admin/')) {
             btnSearch.addEventListener('click', function() {
 
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API["search-office"] + '?search=' + search.value, false);
+                xhr.open('GET', API.SEARCH_OFFICE + '?search=' + search.value, false);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
@@ -1478,7 +1489,7 @@ if (currentHref.includes('admin/')) {
             const vacationList = 'vacation-list';
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', API["get-vacations"], false);
+            xhr.open('GET', API.GET_VACATIONS_ALL, false);
             xhr.onload = function() {
                 if (this.status == 200) {
 
@@ -1510,7 +1521,7 @@ if (currentHref.includes('admin/')) {
             btnSearch.addEventListener('click', function() {
 
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API["search-vacation"] + '?search=' + search.value, false);
+                xhr.open('GET', API.SEARCH_VACATION_ALL + '?search=' + search.value, false);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
@@ -1566,7 +1577,7 @@ if (currentHref.includes('admin/')) {
                     document.getElementById('username-error-add-staff').innerText = '';
                 } else {
                     const xhr = new XMLHttpRequest();
-                    xhr.open('GET', `${API["check-username"]} ? username=${ username.value }`, false);
+                    xhr.open('GET', `${API.CHECK_USERNAME} ? username=${ username.value }`, false);
                     xhr.onload = function() {
                         if (this.status == 200) {
                             const response = JSON.parse(this.responseText);
@@ -1604,7 +1615,7 @@ if (currentHref.includes('admin/')) {
             const staffList = 'staff-manager-list';
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', API["get-staffs-manager"], false);
+            xhr.open('GET', API.GET_STAFFS_MANAGER, false);
             xhr.onload = function() {
                 if (this.status == 200) {
 
@@ -1635,7 +1646,7 @@ if (currentHref.includes('admin/')) {
             btnSearch.addEventListener('click', function() {
 
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API["search-staffs-manager"] + '?search=' + search.value, false);
+                xhr.open('GET', API.SEARCH_STAFFS_MANAGER + '?search=' + search.value, false);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
@@ -1678,7 +1689,7 @@ if (currentHref.includes('admin/')) {
             const vacationList = 'vacation-manager-list';
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', API["get-vacations-manager"], false);
+            xhr.open('GET', API.GET_VACATIONS_MANAGER, false);
             xhr.onload = function() {
                 if (this.status == 200) {
 
@@ -1710,7 +1721,7 @@ if (currentHref.includes('admin/')) {
             btnSearch.addEventListener('click', function() {
 
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API["search-vacation-manager"] + '?search=' + search.value, false);
+                xhr.open('GET', API.SEARCH_VACATION_MANAGER + '?search=' + search.value, false);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
@@ -1753,7 +1764,7 @@ if (currentHref.includes('admin/')) {
             const selectInput = document.getElementById('type-vacation-manager');
             selectInput.addEventListener('change', function() {
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API["filter-vacations-manager"] + '?type=' + selectInput.value, false);
+                xhr.open('GET', API.FILTER_VACATIONS_MANAGER + '?type=' + selectInput.value, false);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
@@ -1786,7 +1797,7 @@ if (currentHref.includes('admin/')) {
             const vacationList = 'vacation-send-list';
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', API["get-vacations-send"], false);
+            xhr.open('GET', API.GET_VACATIONS_SEND_ALL, false);
             xhr.onload = function() {
                 if (this.status == 200) {
 
@@ -1818,7 +1829,7 @@ if (currentHref.includes('admin/')) {
             btnSearch.addEventListener('click', function() {
 
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API["search-vacation-send"] + '?search=' + search.value, false);
+                xhr.open('GET', API.SEARCH_VACATIONS_SEND_ALL + '?search=' + search.value, false);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
@@ -1861,7 +1872,7 @@ if (currentHref.includes('admin/')) {
             const selectInput = document.getElementById('type-vacation-send');
             selectInput.addEventListener('change', function() {
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API["filter-vacations-send"] + '?type=' + selectInput.value, false);
+                xhr.open('GET', API.FILTER_VACATIONS_SEND_ALL + '?type=' + selectInput.value, false);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
@@ -1945,7 +1956,7 @@ if (currentHref.includes('admin/')) {
             const btnSearch = document.getElementById('search-task-manager');
             btnSearch.addEventListener('click', function() {
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API.SEARCH_TASKS_MANAGER + '?search=' + search.value, false);
+                xhr.open('GET', API.SEARCH_TASK_MANAGER + '?search=' + search.value, false);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
@@ -2131,7 +2142,7 @@ if (currentHref.includes('admin/')) {
             const vacationList = 'vacation-send-list';
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', API["get-vacations-send"], false);
+            xhr.open('GET', API.GET_VACATIONS_SEND_ALL, false);
             xhr.onload = function() {
                 if (this.status == 200) {
 
@@ -2163,7 +2174,7 @@ if (currentHref.includes('admin/')) {
             btnSearch.addEventListener('click', function() {
 
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API["search-vacation-send"] + '?search=' + search.value, false);
+                xhr.open('GET', API.SEARCH_VACATIONS_SEND_ALL + '?search=' + search.value, false);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
@@ -2206,7 +2217,7 @@ if (currentHref.includes('admin/')) {
             const selectInput = document.getElementById('type-vacation-send');
             selectInput.addEventListener('change', function() {
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API["filter-vacations-send"] + '?type=' + selectInput.value, false);
+                xhr.open('GET', API.FILTER_VACATIONS_SEND_ALL + '?type=' + selectInput.value, false);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
