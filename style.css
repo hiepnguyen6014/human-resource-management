@@ -556,7 +556,7 @@ main {
     border: none;
 }
 
-#alert {
+#alert-full {
     position: absolute;
     right: 12px;
     top: 12px;
@@ -564,6 +564,7 @@ main {
     border-radius: 0.2rem;
     animation: alert 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
+    z-index: 99999999;
 }
 
 @keyframes alert {

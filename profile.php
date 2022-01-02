@@ -167,9 +167,10 @@
     </div>
 </div>
 
-<div class="alert d-flex align-items-center p-3 mb-0 text-white bg-primary d-none" role="alert" id="alert-manager">
+<div class="alert d-flex align-items-center p-3 mb-0 text-white bg-primary d-none" role="alert" id="alert-full">
     <div id="alert-icon">
-        <i class="far fa-check-circle" style="font-size: 30px;"></i>
+        <i class="far fa-check-circle d-none text-white fz-24"></i>
+        <i class="far fa-times-circle text-white fz-24"></i>
     </div>
     <div id="alert-content" class="text-center" style="margin-left: 0.7rem; font-weight: 600;">
         Đã thêm sinh viên thành công

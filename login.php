@@ -1,5 +1,6 @@
 <?php
     session_start();
+    //check logged in
     if(isset($_SESSION['username'])){
         $type = $_SESSION['type'];
         $active = $_SESSION['active'];

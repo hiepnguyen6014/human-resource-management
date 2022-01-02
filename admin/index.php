@@ -151,13 +151,15 @@
                             <div class="col-lg-6">
                                 <label for="firstname-add-staff" class="form-label">Tên</label>
                                 <div class="input-group">
-                                    <input type="text" name="firstname" id="firstname-add-staff" class="form-control" required>
+                                    <input type="text" name="firstname" id="firstname-add-staff" class="form-control"
+                                        required>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <label for="lastname-add-staff" class="form-label">Họ</label>
                                 <div class="input-group">
-                                    <input type="text" name="lastname" id="lastname-add-staff" class="form-control" required>
+                                    <input type="text" name="lastname" id="lastname-add-staff" class="form-control"
+                                        required>
                                 </div>
                             </div>
                         </div>
@@ -338,9 +340,9 @@
                             <thead class="align-middle bg-secondary text-white font-weight-bold"
                                 style="letter-spacing: 1px;">
                                 <tr>
+                                    <th>Mã phòng</th>
                                     <th>Tên phòng</th>
-                                    <th>Phòng</th>
-                                    <th>Trưởng phòng</th>
+                                    <th>Số phòng</th>
                                     <th>Số điện thoại</th>
                                 </tr>
                             </thead>
@@ -392,19 +394,28 @@
 
     <!-- modal office -->
     <div class="modal fade mt-5" id="add-office">
-        <div class="modal-dialog modal-md mt-5">
+        <div class="modal-dialog modal-lg mt-5">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Thêm phòng ban</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/api/add-office.php" method="POST" id="add-office-form">
-                        <div class="mt-3">
-                            <label for="name-add-office" class="form-label">Tên phòng ban</label>
-                            <div class="input-group">
-                                <input type="text" name="name" id="name-add-office" class="form-control" required>
+                    <form onsubmit="return addOffice(event)" method="POST" id="add-office-form">
+                        <div class="mt-3 row">
+                            <div class="col-lg-6">
+                                <label for="name-add-office" class="form-label">Tên phòng ban</label>
+                                <div class="input-group">
+                                    <input type="text" name="name" id="name-add-office" class="form-control" required>
+                                </div>
                             </div>
+                            <div class="col-lg-6">
+                                <label for="code-add-office" class="form-label">Mã phòng ban</label>
+                                <div class="input-group">
+                                    <input type="text" name="code" id="code-add-office" class="form-control" required>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="mt-3 row">
                             <div class="col-lg-6">
@@ -642,7 +653,8 @@
                         <div class="mt-2">
                             <label for="file-view-vacation" class="form-label">Tệp đính kèm</label>
                             <div class="input-group">
-                                <a href="/" target="_blank" class="btn btn-outline-primary" id="file-view-vacation">Xem</a>
+                                <a href="/" target="_blank" class="btn btn-outline-primary"
+                                    id="file-view-vacation">Xem</a>
                             </div>
                         </div>
                         <input type="hidden" id="id-view-vacation">
@@ -655,15 +667,7 @@
             </div>
         </div>
     </div>
-
-    <div class="alert d-flex align-items-center p-3 mb-0 text-white bg-primary d-none" role="alert" id="alert">
-        <div id="alert-icon">
-            <i class="far fa-check-circle" style="font-size: 30px;"></i>
-        </div>
-        <div id="alert-content" class="text-center" style="margin-left: 0.7rem; font-weight: 600;">
-            Đã thêm sinh viên thành công
-        </div>
-    </div>
+    
 
     <?php
         require '../profile.php';

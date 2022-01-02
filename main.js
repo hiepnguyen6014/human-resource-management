@@ -1,5 +1,7 @@
 const API = {
     //admin
+    'GET_OFFICES_LIST': '/api/admin/get-offices-list.php',
+    'ADD_OFFICE': '/api/admin/add-office.php',
     'GET_STAFFS': '/api/admin/get-staffs.php',
     'get-offices': '/api/get-offices.php',
     'add-staff': '/api/add-staff.php',
@@ -49,7 +51,7 @@ const API = {
 }
 
 window.onload = () => {
-    switchPage('task-staff');
+    switchPage('office');
 };
 
 //check current href
@@ -614,16 +616,14 @@ function loadDataForOfficeTable(page, paginationId, tableList) {
     dataPagination[page - 1].forEach(e => {
 
         const tr = document.createElement('tr');
-        tr.setAttribute('onclick', `
-            showDetailOffice('${e.id}')
-            `);
+        tr.setAttribute('onclick', `showDetailOffice('${e.id}')`);
         tr.dataset.id = e.id;
-        tr.innerHTML = ` <
-            td > $ { e.name } < /td> <
-                td > $ { e.room } < /td> <
-                td > $ { e.captain } < /td> <
-                td > $ { e.phone } < /td>
-            `;
+        tr.innerHTML = `
+            <td> ${e.code} </td>
+            <td> ${e.name} </td>
+            <td> ${e.room} </td>
+            <td> ${e.phone} </td>
+        `;
         table.appendChild(tr);
     });
 }
@@ -831,12 +831,12 @@ function loadDataForVacationTableManager(page, paginationId, tableList) {
             tr.className = 'non-seen';
         }
         tr.dataset.id = e.id;
-        tr.innerHTML = ` <
-            td > $ { e.send_at } < /td>  <
-                td > $ { e.username } < /td>  <
-                td > $ { e.date_off } < /td> <
-                td > $ { e.status } < /td>
-            `;
+        tr.innerHTML = `
+        <td> ${e.send_at} </td>
+        <td> ${e.username} </td>
+        <td> ${e.date_off} </td>
+        <td> ${e.status} </td>
+        `;
         table.appendChild(tr);
     });
     for (let i = 0; i < dataPagination.length; i++) {
@@ -1211,6 +1211,48 @@ function logout() {
     })
 }
 
+function addOffice(e) {
+    e.preventDefault();
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', API.ADD_OFFICE, false);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            const data = JSON.parse(this.responseText);
+            if (data.status === 'success') {
+                const message = data.message;
+                console.log(message);
+                const alert = document.getElementById('alert-full');
+                // show alert 3s
+                alert.classList.remove('d-none');
+                document.getElementById('alert-content').innerText = message;
+                setTimeout(function() {
+                    alert.classList.add('d-none');
+                }, 2000);
+
+                const alertIcon = document.getElementById('alert-icon');
+                alertIcon.children[0].classList.remove('d-none');
+                alertIcon.children[1].classList.add('d-none');
+            } else {
+                const message = data.message;
+                console.log(message);
+                const alert = document.getElementById('alert-full');
+                // show alert 3s
+                alert.classList.remove('d-none');
+                document.getElementById('alert-content').innerText = message;
+                setTimeout(function() {
+                    alert.classList.add('d-none');
+                }, 2000);
+
+                const alertIcon = document.getElementById('alert-icon');
+                alertIcon.children[1].classList.remove('d-none');
+                alertIcon.children[0].classList.add('d-none');
+            }
+        }
+    }
+    xhr.send(new FormData(document.getElementById('add-office-form')));
+}
+
 if (currentHref.includes('change')) {
     const btn = document.getElementById('change-password__button');
 
@@ -1357,10 +1399,9 @@ if (currentHref.includes('admin/')) {
             document.title = "Quản lý phòng ban";
             const officePaginationId = 'office-pagination';
             const officeList = 'office-list';
-            const select = 'office-office';
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', API["get-offices-list"], false);
+            xhr.open('GET', API.GET_OFFICES_LIST, false);
             xhr.onload = function() {
                 if (this.status == 200) {
 
@@ -1525,9 +1566,7 @@ if (currentHref.includes('admin/')) {
                     document.getElementById('username-error-add-staff').innerText = '';
                 } else {
                     const xhr = new XMLHttpRequest();
-                    xhr.open('GET', `
-                $ { API["check-username"] } ? username = $ { username.value }
-                `, false);
+                    xhr.open('GET', `${API["check-username"]} ? username=${ username.value }`, false);
                     xhr.onload = function() {
                         if (this.status == 200) {
                             const response = JSON.parse(this.responseText);
