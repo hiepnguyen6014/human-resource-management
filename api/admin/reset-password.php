@@ -24,14 +24,3 @@
         echo json_encode(array('status' => 'error', 'message' => 'Bạn không có quyền truy cập trang này'));
     }
 ?>
-<?php
-    session_start();
-    header('Content-Type: application/json; charset=utf-8');
-
-    if (isset($_SESSION['type']) && $_SESSION['type'] == 0) {
-        
-    }
-    else {
-        echo json_encode(array('status' => 'error', 'message' => 'Bạn không có quyền truy cập trang này'));
-    }
-?>
