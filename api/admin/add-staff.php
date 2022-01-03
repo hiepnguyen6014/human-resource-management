@@ -25,7 +25,11 @@
             $stmt->execute();
 
             if ($stmt->affected_rows > 0) {
-                die(json_encode(array("status" => "success", "message" => "Thêm nhân viên thành công.")));
+                $sql = "insert into `available_vacation_day` (`username`) values (?)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param('s', $username);
+                $stmt->execute();
+                die(json_encode(array("status" => "success", "message" => "Thêm nhân viên thành công."))) ;
             } else {
                 die(json_encode(array("status" => "error", "message" => "Thêm nhân viên thất bại.")));
             }
