@@ -1,14 +1,12 @@
 <?php
     session_start();
     header('Content-Type: application/json; charset=utf-8');
-
+    require_once '../../conn.php';
+    $conn = get_connection();
     if (isset($_SESSION['type']) && $_SESSION['type'] == 0) {
         if (!isset($_GET['office']) && !isset($_GET['search'])) {
             die(json_encode(array('status' => 'failed', 'data' => 'Office is required.')));
         }else {
-            require_once '../../conn.php';
-            $conn = get_connection();
-            
             if (!isset($_GET['search'])) {
                 $office = $_GET['office'];
                 $sql = "select `user_id` as id, `fname`, `lname`, `position`, `username` from `Profiles` where `office_code` = ?";
