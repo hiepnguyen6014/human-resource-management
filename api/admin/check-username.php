@@ -1,10 +1,11 @@
 <?php
     session_start();
-    $username = $_GET['username'];
+    header('Content-Type: application/json; charset=utf-8');
 
-    require_once '../../conn.php';
+    if (isset($_SESSION['type']) && $_SESSION['type'] == 0) {
+        require_once '../../conn.php';
     $conn = get_connection();
-
+    $username = $_GET['username'];
     $sql = "select `username` from `Accounts`";
     $result = $conn->query($sql);
     $warehouse_username = array();
@@ -15,8 +16,12 @@
     }
     //check username in warehouse
     if (in_array($username, $warehouse_username)) {
-        echo json_encode(array('status' => 'failed', 'data' => 'Username is exist.'));
+        echo json_encode(array('status' => 'failed', 'data' => 'Tài khoản này đã tồn tại.'));
     } else {
-        echo json_encode(array('status' => 'success', 'data' => 'Username is available.'));
+        echo json_encode(array('status' => 'success', 'data' => 'Tài khoản này có thể đăng ký.'));
+    }
+    }
+    else {
+        echo json_encode(array('status' => 'error', 'message' => 'Bạn không có quyền truy cập trang này'));
     }
 ?>
