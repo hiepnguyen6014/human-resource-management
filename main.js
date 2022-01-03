@@ -610,7 +610,13 @@ function resetPassword(username) {
         xhr.open('POST', API.RESET_PASSWORD, false);
         xhr.onload = function() {
             if (this.status == 200) {
-                console.log(this.responseText);
+                const response = JSON.parse(this.responseText);
+                if (response.status === 'success') {
+                    showSuccessMessage(response.message);
+                }
+                else{
+                    showErrorMessage(response.message);
+                }
             }
         }
         const formData = new FormData();
