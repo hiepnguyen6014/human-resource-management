@@ -203,7 +203,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Thông tin nhân viên</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button id="delete-staff-btn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-0">
                     <div class="row">
@@ -305,6 +305,12 @@
                             </div>
                         </div>
                     </div>
+                    <form onsubmit="return deleteStaff(event)" method="post" id="delete-staff">
+                        <input id="user-id" type="hidden" name="id">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button form="delete-staff" class="btn btn-outline-primary w-90">Xóa</button>
                 </div>
             </div>
         </div>

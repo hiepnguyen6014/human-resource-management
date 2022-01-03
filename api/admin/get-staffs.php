@@ -9,11 +9,16 @@
         }else {
             if (!isset($_GET['search'])) {
                 $office = $_GET['office'];
-                $sql = "select `user_id` as id, `fname`, `lname`, `position`, `username` from `Profiles` where `office_code` = ?";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param('s', $office);
+                if($office == 'ALL'){
+                    $sql = "select `user_id` as id, `fname`, `lname`, `position`, `username`,`office_code` from `Profiles`";
+                    $stmt = $conn->prepare($sql);
+                }
+                else{
+                    $sql = "select `user_id` as id, `fname`, `lname`, `position`, `username` from `Profiles` where `office_code` = ?";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param('s', $office);
+                } 
                 $stmt->execute();
-    
                 $result = $stmt->get_result();
     
                 $staffs = array();
@@ -23,7 +28,7 @@
                             "id" => $row['id'],
                             "name" => $row['fname'] . ' ' . $row['lname'],
                             "username" => $row['username'],
-                            "office" => $office,
+                            "office" => $row['office_code'],
                             "position" => $row['position']
                         );
                     }

@@ -16,6 +16,7 @@ const API = {
     'UPDATE_OFFICE': '/api/admin/update-office.php',
     'VIEW_OFFICE': '/api/admin/view-office.php',
     'GET_STAFFS_OFFICE': '/api/admin/get-staffs-office.php',
+    'DELETE_STAFF': '/api/admin/delete-staff.php',
 
     //Manager
     'ACCEPT_TASK': '/api/manager/accept-task.php',
@@ -81,6 +82,31 @@ function switchPage(page) {
             e.classList.add('d-none');
         }
     })
+}
+
+function deleteStaff(event){
+    event.preventDefault();
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', API.DELETE_STAFF, true);
+    xhr.onload = () => {
+        if (xhr.status === 200) {
+            const data = JSON.parse(xhr.responseText);
+            if(data.status === 'success'){
+                showSuccessMessage(data.message);
+                switchPage('staff');
+
+                // close modal
+                document.getElementById('delete-staff-btn').click();
+            }
+            else{
+                showErrorMessage(data.message);
+            }
+        } else {
+            showErrorMessage(data.message);
+        }
+    }
+    xhr.send(new FormData(document.getElementById('delete-staff')));
 }
 
 function createPaginationStaff(paginationElement, numberEachPage, number, list) {
@@ -602,6 +628,27 @@ function officeSelect(id) {
     xhr.send();
 }
 
+function officeSelect1(id) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', API.GET_OFFICES, false);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            const offices = JSON.parse(this.responseText);
+            if (offices.status === 'success') {
+                const select = document.getElementById(id);
+                select.innerHTML = '<option value="ALL">Tất Cả</option>';
+                offices.data.forEach(office => {
+                    const option = document.createElement('option');
+                    option.value = office.id;
+                    option.innerText = office.name;
+                    select.appendChild(option);
+                });
+            }
+        }
+    }
+    xhr.send();
+}
+
 function resetPassword(username) {
     // comfirm
     const comfirm = confirm('Are you sure to reset password?');
@@ -649,9 +696,9 @@ function showDetailStaff(username) {
                 document.getElementById('view-staff-modal-address').value = staff.data.address;
                 document.getElementById('view-staff-modal-birthday').value = staff.data.birthday;
                 document.getElementById('view-staff-modal-join').value = staff.data.join;
-                document.getElementById('reset-password').setAttribute('onclick', `
-            resetPassword('${staff.data.username}')
-            `);
+                document.getElementById('user-id').value = staff.data.username;
+                document.getElementById('reset-password').setAttribute('onclick', `resetPassword('${staff.data.username}')`);
+                
                 modal.show()
             }
         }
@@ -1427,10 +1474,10 @@ if (currentHref.includes('admin/')) {
             const staffList = 'staff-list';
             const select = 'office-staff';
 
-            officeSelect(select);
+            officeSelect1(select);
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', API.GET_STAFFS + '?office=ttc', false);
+            xhr.open('GET', API.GET_STAFFS + '?office=ALL', false);
             xhr.onload = function() {
                 if (this.status == 200) {
 
