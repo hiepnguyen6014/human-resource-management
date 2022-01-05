@@ -139,7 +139,7 @@
                             <div class="mt-2">
                                 <label for="deadline-task-create" class="form-label">Hạn chót</label>
                                 <div class="input-group">
-                                    <input type="date" id="deadline-task-create" name="deadline" class="form-control" required>
+                                    <input type="datetime-local" id="deadline-task-create" name="deadline" class="form-control" required>
                                     <span class="input-group-text" id="icon-check-date">
                                         <i class="far fa-check-circle d-none text-success fz-24"></i>
                                         <i class="far fa-times-circle text-danger fz-24"></i>
@@ -160,7 +160,7 @@
                             <div class="mt-2">
                                 <label for="files-vacation-send" class="form-label">File đính kèm</label>
                                 <div class="input-group">
-                                    <input type="file" name="files[]" id="files-vacation-send" class="form-control"
+                                    <input type="file" name="files[]" id="files-create-task" class="form-control"
                                         multiple required>
                                 </div>
                             </div>

@@ -44,7 +44,7 @@
                     <div class="card" style="position: relative;">
                         <div class="card-header d-flex justify-content-between mobile-hide">
                             <div class="d-flex">
-                                <input type="text" class="search-input w-250" placeholder="Tìm kiếm..."
+                                <input type="text" class="search-input w-250" placeholder="Tìm kiếm theo tên..."
                                     id="search-task-staff-input">
                                 <button type="button" class="btn btn-outline-primary px-3 btn-search"
                                     id="search-task-staff">
@@ -55,14 +55,14 @@
                             <div>
                                 <div class="input-group w-300">
                                     <select class="form-select" name="status" id="type-task-staff">
-                                        <option value="0">Tất cả</option>
-                                        <option value="1">Mới</option>
-                                        <option value="2">Đang làm</option>
-                                        <option value="3">Chờ duyệt</option>
-                                        <option value="4">Trả về</option>
-                                        <option value="5">Trung Bình</option>
-                                        <option value="6">Khá</option>
-                                        <option value="7">Tốt</option>
+                                        <option value="-1">Tất cả</option>
+                                        <option value="0">Mới</option>
+                                        <option value="1">Đang làm</option>
+                                        <option value="2">Chờ duyệt</option>
+                                        <option value="3">Trả về</option>
+                                        <option value="4">Trung Bình</option>
+                                        <option value="5">Khá</option>
+                                        <option value="6">Tốt</option>
                                     </select>
                                 </div>
                             </div>
@@ -133,28 +133,9 @@
                     <h5 class="modal-title">Chi tiết nhiệm vụ</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body py-0">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="mt-2">
-                                <label for="title-task-view" class="form-label">Tiêu đề</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="title-task-view" disabled>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="mt-2">
-                                <label for="title-task-create" class="form-label">Hạn chót</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="title-task-create" disabled>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="view-task-message my-3">
-
-                        <div>
+                <div class="modal-body py-0" style="min-height: 400px;">
+                    <div class="view-task-message my-3" id="task-dm-staff">
+                        <!-- <div>
                             <div class="d-flex flex-row justify-content-start mb-2">
                                 <div class="p-3 receiver-message">
                                     <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, fuga
@@ -174,29 +155,30 @@
                                     <a href="/"><i class="fas fa-download btn-action"></i></a>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <form class="p-3 border" style="box-shadow: 0 0 3px black;">
-                            <div class="mb-2">
-                                <textarea class="form-control" name="message" id="message-view-task"></textarea>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-1">
-                                    <button type="button" class="btn btn-outline-secondary"
-                                        data-bs-dismiss="modal">Gửi</button>
-                                </div>
-                                <div class="col-lg-11">
-                                    <input type="file" name="files" id="files-view-task" class="form-control">
-                                </div>
-
-                            </div>
-                        </form>
                     </div>
+                    <form class="p-3 border d-none" style="box-shadow: 0 0 3px black;" id="form-reply-task-staff">
+                        <div class="mb-2">
+                            <textarea class="form-control" name="message" id="message-view-task"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-1">
+                                <button type="button" class="btn btn-outline-secondary"
+                                    data-bs-dismiss="modal">Gửi</button>
+                            </div>
+                            <div class="col-lg-11">
+                                <input type="file" name="files" id="files-view-task" class="form-control">
+                            </div>
+
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary w-90" data-bs-dismiss="modal">Thoát</button>
-                    <button class="btn btn-outline-secondary w-90" form="form-task-create" id="btn-send-vacation"
-                        onclick="reply()">Tạo</button>
+                    <form onsubmit="return startTask(event)" class="d-none" method="post" id="start-task-form">
+                        <input type="hidden" name="task_id" id="task_id-start-task">
+                    </form>
+                    <button class="btn btn-outline-secondary w-90" form="start-task-form" id="btn-send-vacation">Bắt đầu</button>
                 </div>
             </div>
         </div>

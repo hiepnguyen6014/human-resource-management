@@ -426,9 +426,9 @@ function loadDataForTaskTableStaff(page, paginationId, tableList) {
 
         const tr = document.createElement('tr');
         tr.setAttribute('onclick', `showDetailTaskStaff('${e.id}')`);
-        if (e.position == 1) {
-            tr.classList.add('bg-info');
-            tr.classList.add('bg-gradient');
+
+        if (e.status == 0) {
+            tr.className = 'non-seen';
         }
         tr.dataset.id = e.id;
         tr.innerHTML = `
@@ -441,18 +441,79 @@ function loadDataForTaskTableStaff(page, paginationId, tableList) {
     });
 }
 
+function downloadFiles(files, id) {
+    const iconDownload = '<i class="fas fa-download btn-action"></i>';
+
+    let html = '';
+    // split files
+    const filesSplit = files.split(',');
+    filesSplit.forEach(e => {
+        const buttonDownload = document.createElement('a');
+        buttonDownload.className = 'mx-1';
+        buttonDownload.href = '/tasks/' + id + '/' + e;
+        buttonDownload.target = '_blank';
+        buttonDownload.innerHTML = iconDownload;
+        html += buttonDownload.outerHTML;
+    });
+
+    // convert to text
+    return html;
+}
+
 function showDetailTaskStaff(id) {
     const detailModal = document.getElementById('view-task-staff');
     const modal = new bootstrap.Modal(detailModal)
 
+    document.getElementById('task_id-start-task').value = id;
+
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API.VIEW_TASK_STAFF + '?search=' + id);
+    xhr.open('GET', API.VIEW_TASK_STAFF + '?id=' + id);
     xhr.onload = function() {
         if (this.status == 200) {
-            modal.show();
+            const response = JSON.parse(this.responseText);
+            console.log(response);
+            if (response.status == 'success') {
+                modal.show();
+                const taskDirectMessage = document.getElementById('task-dm-staff');
+                if (response.data.length > 1) {;
+                } else {
+                    const data = response.data[0];
+                    taskDirectMessage.innerHTML = '';
+                    let div = document.createElement('div');
+                    div.innerHTML = '';
+                    let html =
+                        `
+                        <div class="d-flex flex-row justify-content-start mb-2">
+                            <div class="p-3 receiver-message">
+                                <span>${data.message}</span>` +
+                        downloadFiles(data.file, data.task_id) + "</div></div>";
+
+                    div.innerHTML = html;
+                    taskDirectMessage.appendChild(div);
+                }
+            }
         }
     }
     xhr.send();
+}
+
+
+function startTask(e) {
+    e.preventDefault();
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', API.START_TASK);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            const response = JSON.parse(this.responseText);
+            if (response.status == 'success') {
+                showSuccessMessage(response.message);
+                switchPage('task-staff');
+            }
+        }
+    }
+
+    xhr.send(new FormData(e.target));
 }
 
 
@@ -1364,9 +1425,12 @@ function createTask(e) {
     xhr.onload = function() {
         if (this.status == 200) {
             const response = JSON.parse(this.responseText);
+
             if (response.status === 'success') {
                 showSuccessMessage(response.message);
                 form.reset();
+                document.getElementById('icon-check-date').children[0].classList.add('d-none');
+                document.getElementById('icon-check-date').children[1].classList.remove('d-none');
             } else {
                 showErrorMessage(response.message);
             }
@@ -1488,6 +1552,7 @@ function changeSalary() {
         xhr.send(data);
     }
 }
+
 
 if (!currentHref.includes('change') && !currentHref.includes('login')) {
     (function() {
@@ -1894,8 +1959,56 @@ if (currentHref.includes('admin/')) {
 
     }
 } else if (currentHref.includes('manager/')) {
-    logout()
-        // staff
+    logout();
+
+    (function() {
+        const files = document.getElementById('files-create-task');
+        files.addEventListener('change', function() {
+            // get sum size
+            let sumSize = 0;
+            Array.from(this.files).forEach(file => {
+                sumSize += file.size;
+                //check file type not exe
+                if (file.type.includes('exe') || file.type.includes('dat')) {
+                    this.value = null;
+                    showErrorMessage('Chứa tệp tin không hợp lệ');
+                    return;
+                }
+            });
+
+            const MAX_SIZE_FILE = 100000000; // 100MB
+            //check size
+            if (sumSize > MAX_SIZE_FILE || check == 0) {
+                this.value = null;
+                showErrorMessage('Vui lòng chọn gói tệp tin nhỏ hơn 100MB');
+                return;
+            }
+        })
+    })();
+
+    (function() {
+        const input = document.getElementById('deadline-task-create');
+        input.addEventListener('change', function() {
+            //compare deadline with today
+            const today = new Date();
+            const deadline = new Date(this.value);
+
+            const icon = document.getElementById('icon-check-date');
+
+            if (deadline < today) {
+                this.value = null;
+                showErrorMessage('Ngày hết hạn không hợp lệ');
+                icon.children[1].classList.remove('d-none');
+                icon.children[0].classList.add('d-none');
+                return;
+            }
+
+            icon.children[0].classList.remove('d-none');
+            icon.children[1].classList.add('d-none');
+
+        })
+    })()
+    // staff
     function loadData(page) {
 
 
@@ -2354,12 +2467,14 @@ if (currentHref.includes('admin/')) {
 
 
             let search = document.getElementById('search-task-staff-input');
+            const status = document.getElementById('type-task-staff');
             const btnSearch = document.getElementById('search-task-staff');
             btnSearch.addEventListener('click', function() {
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API.SEARCH_TASKS_STAFF + '?search=' + search.value);
+                xhr.open('GET', API.SEARCH_TASKS_STAFF + '?search=' + search.value + '&status=' + status.value);
                 xhr.onload = function() {
                     if (this.status == 200) {
+                        console.log(this.responseText);
 
                         const tasks = JSON.parse(this.responseText);
                         if (tasks.status === 'success') {
@@ -2401,7 +2516,7 @@ if (currentHref.includes('admin/')) {
                 xhr.open('GET', API.FILTER_TASKS_STAFF + '?type=' + selectInput.value);
                 xhr.onload = function() {
                     if (this.status == 200) {
-
+                        console.log(this.responseText);
                         const tasks = JSON.parse(this.responseText);
                         if (tasks.status === 'success') {
 

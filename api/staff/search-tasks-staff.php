@@ -1,17 +1,43 @@
 <?php
-    $task = array();
+    session_start();
+    header('Content-Type: application/json; charset=utf-8');
 
-    $search = $_GET['search'];
-
-    for ($i = 0; $i < 100; $i++) {
-        $task[] = array(
-            'id' => $i,
-            'task_name' => 'Task ' . $search,
-            'start_date' => '2017-01-01',
-            'deadline' => '2017-01-01',
-            'status' => '1',
-        );
+    if (isset($_SESSION['type']) && $_SESSION['type'] == 2) {
+            // type or search
+    if (!isset($_GET['search'])) {
+        die(json_encode(array('status' => 'error', 'data' => 'Không có tham số')));
     }
 
-    echo json_encode(array('status' => 'success', 'data' => $task));
+
+    $search = $_GET['search'];
+    $status = $_GET['status'];
+    $username = $_SESSION['username'];
+    
+    $task = array();
+
+    require_once '../../conn.php';
+        $conn = get_connection();
+        $search = '%'.$search.'%';
+        if ($status == -1) {
+            $sql = "SELECT `task_id` as `id`, `title` as `task_name`, `deadline`, `status`, `date_begin` as `start_date` FROM `task`";
+            $sql .= "WHERE `username` = ? AND `title` LIKE ? ORDER BY `date_begin` DESC";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('ss', $username, $search);
+        }else {
+            $sql = "SELECT `task_id` as `id`, `title` as `task_name`, `deadline`, `status`, `date_begin` as `start_date` FROM `task`";
+            $sql .= "WHERE `username` = ? AND `status` = ? AND `title` LIKE ? ORDER BY `date_begin` DESC";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('sss', $username, $status, $search);
+        }
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $tasks = array();
+        while ($row = $result->fetch_assoc()) {
+            $tasks[] = $row;
+        }
+        echo json_encode(array("status" => "success", "data" => $tasks));
+    }
+    else {
+        echo json_encode(array('status' => 'error', 'message' => 'Bạn không có quyền truy cập trang này'));
+    }
 ?>
