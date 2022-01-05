@@ -96,16 +96,16 @@
                 <div class="login__container__inputs">
                     <div class="login__container__input">
                         <input class="input__container__text" type="text" required name="username" id="username"
-                            placeholder="Username">
+                            placeholder="Tên đăng nhập">
                     </div>
                     <div class="login__container__input">
                         <input class="input__container__text" type="password" required name="password" id="password"
-                            placeholder="Password">
+                            placeholder="Mật khẩu">
                     </div>
                 </div>
                 <p class="login__container__failed"><?= $error ?>
                 </p>
-                <button class="login__container__button">CONTINUE</button>
+                <button class="login__container__button">ĐĂNG NHẬP</button>
             </form>
         </div>
     </div>

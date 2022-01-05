@@ -1,65 +1,36 @@
 <?php
-    if (!isset($_GET['search'])) {
-        die(json_encode(array("status" => "error", "data" => "data request")));
-    }
+    session_start();
+    header('Content-Type: application/json; charset=utf-8');
 
-    $search = $_GET['search'];
-    // lowercase search
-    $search = strtolower($search);
-    $offices = [
-        array(
-            "id" => 1,
-            "name" => "Marketing",
-            "room" => "Marketing Room",
-            "captain" => "Nguyen Marketing",
-            "phone" => "0987654321"
-        ),
-        array(
-            "id" => 2,
-            "name" => "Finance",
-            "room" => "Finance Room",
-            "captain" => "Nguyen Finance",
-            "phone" => "0987654321"
-        ),
-        array(
-            "id" => 3,
-            "name" => "Human Resources",
-            "room" => "HR Room",
-            "captain" => "Nguyen HR",
-            "phone" => "0987654321"
-        ),
-        array(
-            "id" => 4,
-            "name" => "Sales",
-            "room" => "Sales Room",
-            "captain" => "Nguyen Sales",
-            "phone" => "0987654321"
-        ),
-        array(
-            "id" => 5,
-            "name" => "IT",
-            "room" => "IT Room",
-            "captain" => "Nguyen IT",
-            "phone" => "0987654321"
-        ),
-        array(
-            "id" => 6,
-            "name" => "Support",
-            "room" => "Support Room",
-            "captain" => "Nguyen Support",
-            "phone" => "0987654321"
-        )
-    ];
-    // check search in office
-    $offices_search = [];
-    foreach ($offices as $office) {
-        if ((strpos(strtolower($office['name']), $search) !== false) || 
-            (strpos(strtolower($office['room']), $search) !== false) ||
-            (strpos(strtolower($office['captain']), $search) !== false) ||
-            (strpos(strtolower($office['phone']), $search) !== false)) {
-            array_push($offices_search, $office);
+    if (isset($_SESSION['type']) && $_SESSION['type'] == 0) {
+        if (isset($_GET['search'])) {
+            require_once '../../conn.php';
+
+            $conn = get_connection();
+            $search = $_GET['search'];
+            // lowercase search
+            $search = strtolower($search);
+            // check search in office
+            $sql = "SELECT `office_id`, `code`, `name`, `room_number` as room, `phone` FROM `offices` WHERE `code` LIKE ? OR `name` LIKE ? OR `room_number` LIKE ? OR `phone` LIKE ?";
+            $stmt = $conn->prepare($sql);
+            $search = "%$search%";
+            $stmt->bind_param("ssss", $search, $search, $search, $search);
+            $stmt->execute();
+            
+            $offices = array();
+            $result = $stmt->get_result();
+            while ($row = $result->fetch_assoc()) {
+                $offices[] = $row;
+            }
+            echo json_encode(array("status" => "success", "data" => $offices));
+            
         }
+        else {
+            echo json_encode(array('status' => 'error', 'message' => 'Dữ liệu không hợp lệ'));
+        }
+        
     }
-
-    echo json_encode(array("status" => "success", "data" => $offices_search));
+    else {
+        echo json_encode(array('status' => 'error', 'message' => 'Bạn không có quyền truy cập trang này'));
+    }
 ?>

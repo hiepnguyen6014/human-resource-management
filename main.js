@@ -4,7 +4,6 @@ const API = {
     'ADD_OFFICE': '/api/admin/add-office.php',
     'ADD_STAFF': '/api/admin/add-staff.php',
     'CHANGE_CAPTAIN': '/api/admin/change-captain.php',
-    'CHANGE_PASSWORD': '/api/admin/change-password.php',
     'CHECK_USERNAME': '/api/admin/check-username.php',
     'DELETE_OFFICE': '/api/admin/delete-office.php',
     'GET_OFFICES_LIST': '/api/admin/get-offices-list.php',
@@ -16,7 +15,9 @@ const API = {
     'UPDATE_OFFICE': '/api/admin/update-office.php',
     'VIEW_OFFICE': '/api/admin/view-office.php',
     'GET_STAFFS_OFFICE': '/api/admin/get-staffs-office.php',
+    'CHANGE_SALARY': '/api/admin/change-salary.php',
     'DELETE_STAFF': '/api/admin/delete-staff.php',
+    'VIEW_VACATION': '/api/admin/view-vacation.php',
 
     //Manager
     'ACCEPT_TASK': '/api/manager/accept-task.php',
@@ -60,11 +61,13 @@ const API = {
     'VIEW_DETAIL_TASK_MANAGER_ALL': '/api/view-detail-task-manager.php',
     'VIEW_PROFILE_ALL': '/api/view-profile.php',
     'VIEW_VACATION_SEND_ALL': '/api/view-vacation-send.php',
-    'VIEW_VACATION_ALL': '/api/view-vacation.php',
+    'CHANGE_AVATAR_ALL': '/api/change-avatar.php',
+    'GET_AVATAR_ALL': '/api/get-avatar.php',
+    'CHANGE_PASSWORD_ALL': '/api/change-password.php',
 }
 
 window.onload = () => {
-    switchPage('staff');
+    switchPage('task-staff');
 };
 
 //check current href
@@ -75,7 +78,6 @@ let dataPagination = [];
 function switchPage(page) {
     Array.from(document.querySelectorAll('main')).forEach(e => {
         if (e.id == page) {
-            /* console.log(e.id); */
             loadData(e.id);
             document.getElementById(e.id).classList.remove('d-none');
         } else {
@@ -84,29 +86,33 @@ function switchPage(page) {
     })
 }
 
-function deleteStaff(event){
+function deleteStaff(event) {
     event.preventDefault();
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', API.DELETE_STAFF, true);
-    xhr.onload = () => {
-        if (xhr.status === 200) {
-            const data = JSON.parse(xhr.responseText);
-            if(data.status === 'success'){
-                showSuccessMessage(data.message);
-                switchPage('staff');
+    const id = document.getElementById('user-id').value;
 
-                // close modal
-                document.getElementById('delete-staff-btn').click();
-            }
-            else{
+    const verify = confirm(`Bạn có chắc chắn muốn xóa nhân viên ${id}?`);
+    if (verify) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', API.DELETE_STAFF, true);
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                const data = JSON.parse(xhr.responseText);
+                if (data.status === 'success') {
+                    showSuccessMessage(data.message);
+                    switchPage('staff');
+
+                    // close modal
+                    document.getElementById('delete-staff-btn').click();
+                } else {
+                    showErrorMessage(data.message);
+                }
+            } else {
                 showErrorMessage(data.message);
             }
-        } else {
-            showErrorMessage(data.message);
         }
+        xhr.send(new FormData(document.getElementById('delete-staff')));
     }
-    xhr.send(new FormData(document.getElementById('delete-staff')));
 }
 
 function createPaginationStaff(paginationElement, numberEachPage, number, list) {
@@ -283,63 +289,6 @@ function createPaginationVacationSend(paginationElement, numberEachPage, number,
     pagination.innerHTML = html;
 }
 
-function showErrorMessage(content) {
-    const alert = document.getElementById('alert-full');
-    // show alert 3s
-    alert.classList.remove('d-none');
-    document.getElementById('alert-content').innerText = content;
-    setTimeout(function() {
-        alert.classList.add('d-none');
-    }, 2000);
-
-    const alertIcon = document.getElementById('alert-icon');
-    alertIcon.children[1].classList.remove('d-none');
-    alertIcon.children[0].classList.add('d-none');
-}
-
-function showSuccessMessage(content) {
-
-    const alert = document.getElementById('alert-full');
-    // show alert 3s
-    alert.classList.remove('d-none');
-    document.getElementById('alert-content').innerText = content;
-    setTimeout(function() {
-        alert.classList.add('d-none');
-    }, 2000);
-
-    const alertIcon = document.getElementById('alert-icon');
-    alertIcon.children[0].classList.remove('d-none');
-    alertIcon.children[1].classList.add('d-none');
-}
-
-function addStaff(e){
-    e.preventDefault();
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', API.ADD_STAFF, false);
-    xhr.onload = function() {
-        if (this.status == 200) {
-            console.log(this.responseText);
-            const data = JSON.parse(this.responseText);
-            console.log(data);
-            if (data.status === 'success') {
-                showSuccessMessage(data.message);
-
-                //reset form
-                document.getElementById('add-staff-form').reset();
-
-                //reload table
-                switchPage('staff');
-
-                // reload check user
-                document.getElementById('username-error-add-staff').innerText = '';
-            } else {
-                showErrorMessage(data.message);
-            }
-        }
-    }
-    xhr.send(new FormData(document.getElementById('add-staff-form')));
-}
-
 function createPaginationTaskStaff(paginationElement, numberEachPage, number, list) {
     const pagination = document.getElementById(paginationElement);
     const pageNumber = Math.ceil(number / numberEachPage);
@@ -418,11 +367,9 @@ function dataForPagination(data) {
 
 function paginationColor(pagination, page) {
     Array.from(document.querySelectorAll('#' + pagination + ' li')).forEach(e => {
-            e.classList.remove('active');
-        })
-        /* console.log(`#${pagination} li:nth-child(${page + 1})`); */
+        e.classList.remove('active');
+    })
     document.querySelector(`#${pagination} li:nth-child(${page + 1})`).classList.add('active');
-    /* console.log(currentPage); */
 }
 
 function loadDataForStaffTable(page, paginationId, tableList) {
@@ -441,7 +388,7 @@ function loadDataForStaffTable(page, paginationId, tableList) {
         tr.innerHTML = `
                 <td>${e.name}</td>
                 <td>${e.office}</td>
-                <td>${(e.position == 1) ? 'Captain' : 'Employee'}</td>
+                <td>${(e.position == 1) ? 'Trưởng phòng' : 'Nhân viên'}</td>
                 <td>${e.username}</td>
                 `;
         table.appendChild(tr);
@@ -499,7 +446,7 @@ function showDetailTaskStaff(id) {
     const modal = new bootstrap.Modal(detailModal)
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API.VIEW_TASK_STAFF + '?search=' + id, false);
+    xhr.open('GET', API.VIEW_TASK_STAFF + '?search=' + id);
     xhr.onload = function() {
         if (this.status == 200) {
             modal.show();
@@ -609,7 +556,7 @@ function nextPag(pagination, list) {
 
 function officeSelect(id) {
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API.GET_OFFICES, false);
+    xhr.open('GET', API.GET_OFFICES);
     xhr.onload = function() {
         if (this.status == 200) {
             const offices = JSON.parse(this.responseText);
@@ -628,40 +575,18 @@ function officeSelect(id) {
     xhr.send();
 }
 
-function officeSelect1(id) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', API.GET_OFFICES, false);
-    xhr.onload = function() {
-        if (this.status == 200) {
-            const offices = JSON.parse(this.responseText);
-            if (offices.status === 'success') {
-                const select = document.getElementById(id);
-                select.innerHTML = '<option value="ALL">Tất Cả</option>';
-                offices.data.forEach(office => {
-                    const option = document.createElement('option');
-                    option.value = office.id;
-                    option.innerText = office.name;
-                    select.appendChild(option);
-                });
-            }
-        }
-    }
-    xhr.send();
-}
-
 function resetPassword(username) {
     // comfirm
-    const comfirm = confirm('Are you sure to reset password?');
+    const comfirm = confirm(`Khởi tạo lại mật khẩu cho tài khoản ${username}?`);
     if (comfirm) {
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', API.RESET_PASSWORD, false);
+        xhr.open('POST', API.RESET_PASSWORD);
         xhr.onload = function() {
             if (this.status == 200) {
                 const response = JSON.parse(this.responseText);
                 if (response.status === 'success') {
                     showSuccessMessage(response.message);
-                }
-                else{
+                } else {
                     showErrorMessage(response.message);
                 }
             }
@@ -678,18 +603,18 @@ function showDetailStaff(username) {
     const modal = new bootstrap.Modal(detailModal)
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API.GET_STAFF_DETAIL + '?username=' + username, false);
+    xhr.open('GET', API.GET_STAFF_DETAIL + '?username=' + username);
     xhr.onload = function() {
         if (this.status == 200) {
             const staff = JSON.parse(this.responseText);
             if (staff.status === 'success') {
-                document.getElementById('view-staff-modal-image').src = '/images/' + staff.data.image;
+                document.getElementById('view-staff-modal-image').src = '/images/avatars/' + staff.data.image;
                 document.getElementById('view-staff-modal-fullname').innerText = staff.data.first_name + ' ' + staff.data.last_name;
                 document.getElementById('view-staff-modal-email').innerText = staff.data.email;
                 document.getElementById('view-staff-modal-firstname').value = staff.data.first_name;
                 document.getElementById('view-staff-modal-lastname').value = staff.data.last_name;
                 document.getElementById('view-staff-modal-office').value = staff.data.office;
-                document.getElementById('view-staff-modal-position').value = (staff.data.position == 1) ? 'Captain' : 'Employee';
+                document.getElementById('view-staff-modal-position').value = (staff.data.position == 1) ? 'Trưởng phòng' : 'Nhân viên';
                 document.getElementById('view-staff-modal-username').value = staff.data.username;
                 document.getElementById('view-staff-modal-salary').value = staff.data.salary;
                 document.getElementById('view-staff-modal-phone').value = staff.data.phone;
@@ -698,7 +623,6 @@ function showDetailStaff(username) {
                 document.getElementById('view-staff-modal-join').value = staff.data.join;
                 document.getElementById('user-id').value = staff.data.username;
                 document.getElementById('reset-password').setAttribute('onclick', `resetPassword('${staff.data.username}')`);
-                
                 modal.show()
             }
         }
@@ -711,12 +635,12 @@ function showDetailStaffManager(username) {
     const modal = new bootstrap.Modal(detailModal)
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API.GET_STAFF_DETAIL_MANAGER + '?username=' + username, false);
+    xhr.open('GET', API.GET_STAFF_DETAIL_MANAGER + '?username=' + username);
     xhr.onload = function() {
         if (this.status == 200) {
             const response = JSON.parse(this.responseText);
             if (response.status === 'success') {
-                document.getElementById('view-staff-manager-modal-image').src = '/images/' + response.data.image;
+                document.getElementById('view-staff-manager-modal-image').src = '/images/avatars/' + response.data.image;
                 document.getElementById('view-staff-manager-modal-fullname').innerText = response.data.first_name + ' ' + response.data.last_name;
                 document.getElementById('view-staff-manager-modal-email').innerText = response.data.email;
                 document.getElementById('view-staff-manager-modal-username').value = response.data.username;
@@ -754,34 +678,50 @@ function showDetailOffice(id) {
     // open modal by js
     const detailModal = document.getElementById('view-office');
     const modal = new bootstrap.Modal(detailModal)
+    let selectIndex = 0;
 
+    const btnDelete = document.getElementById('btn-delete-office');
+    btnDelete.setAttribute('onclick', `deleteOffice('${id}')`);
 
     const xml = new XMLHttpRequest();
-    xml.open('GET', API.GET_STAFFS_OFFICE + '?id=' + id, false);
+    xml.open('GET', API.GET_STAFFS_OFFICE + '?id=' + id);
     xml.onload = function() {
         if (this.status == 200) {
             const response = JSON.parse(this.responseText);
             if (response.status === 'success') {
                 const select = document.getElementById('captain-view-office');
                 select.innerHTML = '';
-                response.data.forEach(e => {
-                    const option = document.createElement('option');
-                    option.value = e.username;
-                    option.innerText = e.username;
-                    if (e.position == 1) {
-                        console.log(e.username);
-                        option.setAttribute('selected', '');
-                    }
 
-                    select.appendChild(option);
-                });
+                if (response.data.length > 0) {
+                    select.disabled = false;
+                    response.data.forEach((e, i) => {
+                        const option = document.createElement('option');
+                        option.value = e.username;
+                        option.innerText = e.username;
+                        if (e.position == 1) {
+                            selectIndex = i;
+                        }
+
+                        select.appendChild(option);
+                    });
+                } else {
+                    //disable select
+                    select.disabled = true;
+                }
+
+                select.onchange = () => {
+                    const changeBtn = document.getElementById('icon-swap-captain');
+                    changeBtn.setAttribute('onclick', `changeCaptain('${select.value}')`);
+                }
+
+
             }
         }
     }
     xml.send();
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API.VIEW_OFFICE + '?id=' + id, false);
+    xhr.open('GET', API.VIEW_OFFICE + '?id=' + id);
     xhr.onload = function() {
         if (this.status == 200) {
             const office = JSON.parse(this.responseText);
@@ -799,67 +739,64 @@ function showDetailOffice(id) {
                 document.getElementById('change-description-id').value = office.data.description;
                 document.getElementById('change-room-id').value = office.data.room_number;
                 modal.show()
+                const select = document.getElementById('captain-view-office');
+                select.selectedIndex = selectIndex;
+                const changeBtn = document.getElementById('icon-swap-captain');
+                changeBtn.setAttribute('onclick', `changeCaptain('${select.value}')`);
             }
         }
     }
     xhr.send();
 }
 
-function changeCaptain() {
-    const officeId = document.getElementById('change-office-id').value;
-    const captainId = document.getElementById('captain-view-office').value;
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', API.CHANGE_CAPTAIN, false);
-    xhr.onload = function() {
-        if (this.status == 200) {
-            document.getElementById('captain-view-office').value = captainId;
-            const data = JSON.parse(this.responseText);
-            if (data.status === 'success') {
-                const message = data.message;
-                console.log(message);
-                const alert = document.getElementById('alert-full');
-                // show alert 3s
-                alert.classList.remove('d-none');
-                document.getElementById('alert-content').innerText = message;
-                setTimeout(function() {
-                    alert.classList.add('d-none');
-                }, 2000);
-
-                const alertIcon = document.getElementById('alert-icon');
-                alertIcon.children[0].classList.remove('d-none');
-                alertIcon.children[1].classList.add('d-none');
-            } else {
-                const message = data.message;
-                console.log(message);
-                const alert = document.getElementById('alert-full');
-                // show alert 3s
-                alert.classList.remove('d-none');
-                document.getElementById('alert-content').innerText = message;
-                setTimeout(function() {
-                    alert.classList.add('d-none');
-                }, 2000);
-
-                const alertIcon = document.getElementById('alert-icon');
-                alertIcon.children[1].classList.remove('d-none');
-                alertIcon.children[0].classList.add('d-none');
-            }
-        }
+function changeCaptain(name) {
+    if (name === '') {
+        return
     }
-    const formData = new FormData();
-    formData.append('office', officeId);
-    formData.append('new', captainId);
-    xhr.send(formData);
-}
-
-function deleteOffice() {
-    const room = document.getElementById('change-captain-id').value;
-    const comfirm = confirm('Are you sure to delete this office?');
-    if (comfirm) {
+    const modal = confirm(`Bạn có chắc chắn muốn chọn "${name}" làm trường phòng?`);
+    if (modal) {
+        const officeId = document.getElementById('change-office-id').value;
+        const captainId = document.getElementById('captain-view-office').value;
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', API.DELETE_OFFICE, false);
+        xhr.open('POST', API.CHANGE_CAPTAIN);
         xhr.onload = function() {
             if (this.status == 200) {
-                console.log(this.responseText);
+                document.getElementById('captain-view-office').value = captainId;
+
+                const data = JSON.parse(this.responseText);
+                if (data.status === 'success') {
+                    showSuccessMessage(data.message);
+                } else {
+                    showErrorMessage(data.message);
+                }
+            }
+        }
+        const formData = new FormData();
+        formData.append('office', officeId);
+        formData.append('new', captainId);
+        xhr.send(formData);
+    }
+}
+
+function deleteOffice(name) {
+    const room = document.getElementById('change-office-id').value;
+    const comfirm = confirm(`Bạn có chắn chắn xoá phòng ${name}?`);
+    if (comfirm) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', API.DELETE_OFFICE);
+        xhr.onload = function() {
+            if (this.status == 200) {
+                const data = JSON.parse(this.responseText);
+                if (data.status === 'success') {
+                    showSuccessMessage(data.message);
+                    switchPage('office');
+                    //close modal in bootstrap 5 by js
+                    const btn = document.getElementById('view-office-close');
+                    btn.click();
+
+                } else {
+                    showErrorMessage(data.message);
+                }
             }
         }
         const formData = new FormData();
@@ -868,7 +805,8 @@ function deleteOffice() {
     }
 }
 
-function updateOffice() {
+function updateOffice(e) {
+    e.preventDefault();
     //old data
     const officeId = document.getElementById('change-office-id').value;
     const phone = document.getElementById('change-phone-id').value;
@@ -885,22 +823,54 @@ function updateOffice() {
     // compare old and new data
     if (phone != newPhone || name != newName || description != newDescription || room != newRoom) {
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', API.UPDATE_OFFICE, false);
+        xhr.open('POST', API.UPDATE_OFFICE);
         xhr.onload = function() {
             if (this.status == 200) {
-                console.log(this.responseText);
+                const response = JSON.parse(this.responseText);
+                if (response.status === 'success') {
+                    showSuccessMessage(response.message);
+                    switchPage('office')
+                } else {
+                    showErrorMessage(response.message);
+                }
             }
         }
-        const formData = new FormData();
-        formData.append('id', officeId);
-        formData.append('phone', newPhone);
-        formData.append('name', newName);
-        formData.append('description', newDescription);
-        formData.append('room', newRoom);
+        const formData = new FormData(document.getElementById('view-office-form'));
+        const id = document.getElementById('change-office-id').value;
+        formData.append('id', id);
         xhr.send(formData);
     } else {
-        console.log('No change');
+        showErrorMessage('Không có thay đổi nào');
     }
+}
+
+function showErrorMessage(content) {
+    const alert = document.getElementById('alert-full');
+    // show alert 3s
+    alert.classList.remove('d-none');
+    document.getElementById('alert-content').innerText = content;
+    setTimeout(function() {
+        alert.classList.add('d-none');
+    }, 2000);
+
+    const alertIcon = document.getElementById('alert-icon');
+    alertIcon.children[1].classList.remove('d-none');
+    alertIcon.children[0].classList.add('d-none');
+}
+
+function showSuccessMessage(content) {
+
+    const alert = document.getElementById('alert-full');
+    // show alert 3s
+    alert.classList.remove('d-none');
+    document.getElementById('alert-content').innerText = content;
+    setTimeout(function() {
+        alert.classList.add('d-none');
+    }, 2000);
+
+    const alertIcon = document.getElementById('alert-icon');
+    alertIcon.children[0].classList.remove('d-none');
+    alertIcon.children[1].classList.add('d-none');
 }
 
 function loadDataForVacationTable(page, paginationId, tableList) {
@@ -1033,10 +1003,11 @@ function showDetailVacation(id) {
 
     // seen vacation
     const xml = new XMLHttpRequest();
-    xml.open('POST', API.SEEN_VACATION_ALL, false);
+    xml.open('POST', API.SEEN_VACATION_ALL);
     xml.onload = function() {
         if (this.status == 200) {
             console.log(this.responseText, 'see this vacation');
+            switchPage('vacation');
         }
     }
     const formData = new FormData();
@@ -1044,12 +1015,11 @@ function showDetailVacation(id) {
     xml.send(formData);
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API.VIEW_VACATION_ALL + '?id=' + id, false);
+    xhr.open('GET', API.VIEW_VACATION + '?id=' + id);
     xhr.onload = function() {
         if (this.status == 200) {
             const vacation = JSON.parse(this.responseText);
             if (vacation.status === 'success') {
-                /* console.log(vacation.data); */
                 document.getElementById('seen-at-view-vacation').innerHTML = vacation.data.send_at;
                 document.getElementById('name-view-vacation').value = vacation.data.username;
                 document.getElementById('office-view-vacation').value = vacation.data.office;
@@ -1072,10 +1042,11 @@ function showDetailVacationManager(id) {
 
     // seen vacation-manager
     const xml = new XMLHttpRequest();
-    xml.open('POST', API.SEEN_VACATION_ALL, false);
+    xml.open('POST', API.SEEN_VACATION_ALL);
     xml.onload = function() {
         if (this.status == 200) {
             console.log(this.responseText, 'see this vacation-manager');
+            switchPage('vacation-request');
         }
     }
     const formData = new FormData();
@@ -1083,12 +1054,11 @@ function showDetailVacationManager(id) {
     xml.send(formData);
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API.VIEW_VACATION_MANAGER + '?id=' + id, false);
+    xhr.open('GET', API.VIEW_VACATION_MANAGER + '?id=' + id);
     xhr.onload = function() {
         if (this.status == 200) {
             const vacation = JSON.parse(this.responseText);
             if (vacation.status === 'success') {
-                /* console.log(vacation.data); */
                 document.getElementById('seen-at-view-vacation-manager').innerHTML = vacation.data.send_at;
                 document.getElementById('name-view-vacation-manager').value = vacation.data.username;
                 document.getElementById('date-view-vacation-manager').value = vacation.data.date_off;
@@ -1108,10 +1078,11 @@ function disagreeVacation() {
     if (reason.length > 0) {
         const id = document.getElementById('id-view-vacation').value;
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', API.DISAGREE_VACATION_ALL, false);
+        xhr.open('POST', API.DISAGREE_VACATION_ALL);
         xhr.onload = function() {
             if (this.status == 200) {
                 console.log(this.responseText);
+                switchPage('vacation');
             }
         }
         const formData = new FormData();
@@ -1124,10 +1095,11 @@ function disagreeVacation() {
 function agreeVacation() {
     const id = document.getElementById('id-view-vacation').value;
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', API.AGREE_VACATION_ALL, false);
+    xhr.open('POST', API.AGREE_VACATION_ALL);
     xhr.onload = function() {
         if (this.status == 200) {
             console.log(this.responseText);
+            switchPage('vacation');
         }
     }
     const formData = new FormData();
@@ -1140,10 +1112,11 @@ function disagreeVacationManager() {
     if (reason.length > 0) {
         const id = document.getElementById('id-view-vacation-manager').value;
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', API.DISAGREE_VACATION_ALL, false);
+        xhr.open('POST', API.DISAGREE_VACATION_ALL);
         xhr.onload = function() {
             if (this.status == 200) {
                 console.log(this.responseText);
+                switchPage('vacation-request');
             }
         }
         const formData = new FormData();
@@ -1156,10 +1129,11 @@ function disagreeVacationManager() {
 function agreeVacationManager() {
     const id = document.getElementById('id-view-vacation-manager').value;
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', API.AGREE_VACATION_ALL, false);
+    xhr.open('POST', API.AGREE_VACATION_ALL);
     xhr.onload = function() {
         if (this.status == 200) {
             console.log(this.responseText);
+            switchPage('vacation-request');
         }
     }
     const formData = new FormData();
@@ -1174,7 +1148,7 @@ function showDetailVacationSend(id) {
 
     // seen vacation-send
     const xml = new XMLHttpRequest();
-    xml.open('POST', API.SEEN_VACATION_ALL, false);
+    xml.open('POST', API.SEEN_VACATION_ALL);
     xml.onload = function() {
         if (this.status == 200) {
             console.log(this.responseText, 'see this vacation-send');
@@ -1185,12 +1159,11 @@ function showDetailVacationSend(id) {
     xml.send(formData);
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API.VIEW_VACATION_SEND_ALL + '?id=' + id, false);
+    xhr.open('GET', API.VIEW_VACATION_SEND_ALL + '?id=' + id);
     xhr.onload = function() {
         if (this.status == 200) {
             const vacation = JSON.parse(this.responseText);
             if (vacation.status === 'success') {
-                /* console.log(vacation.data); */
                 document.getElementById('send-view-vacation-send').innerHTML = vacation.data.send_at;
                 document.getElementById('date-view-vacation-send').value = vacation.data.date_off;
                 document.getElementById('number-view-vacation-send').value = vacation.data.number_off;
@@ -1209,9 +1182,10 @@ function offRequest() {
     const modal = new bootstrap.Modal(document.getElementById('add-vacation-send'));
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API.CHECK_BEFORE_VACATION_ALL, false);
+    xhr.open('GET', API.CHECK_BEFORE_VACATION_ALL);
     xhr.onload = function() {
         if (this.status == 200) {
+            console.log(this.responseText);
             const vacation = JSON.parse(this.responseText);
             if (vacation.status === 'success') {
                 if (localStorage.getItem('status-button') === 0 || localStorage.getItem('status-button') === null) {
@@ -1250,7 +1224,6 @@ function offRequest() {
 
                     const icon = document.getElementById('icon-check-date');
 
-                    console.log(days1, days2);
                     if (days1 > 6 && days2 > 1) {
                         //get first child of icon
                         icon.children[0].classList.remove('d-none');
@@ -1279,12 +1252,13 @@ function offRequest() {
 function viewProfile() {
     const modal = new bootstrap.Modal(document.getElementById('view-profile'));
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API.VIEW_PROFILE_ALL, false);
+    xhr.open('GET', API.VIEW_PROFILE_ALL);
     xhr.onload = function() {
         if (this.status == 200) {
             const profile = JSON.parse(this.responseText);
+
             if (profile.status === 'success') {
-                document.getElementById('view-profile-modal-image').src = '/images/' + profile.data.image;
+                document.getElementById('view-profile-modal-image').src = '/images/avatars/' + profile.data.image;
                 document.getElementById('view-profile-modal-fullname').innerText = profile.data.first_name + ' ' + profile.data.last_name;
                 document.getElementById('view-profile-modal-username').innerText = profile.data.username;
                 document.getElementById('view-profile-modal-email').value = profile.data.email;
@@ -1294,9 +1268,16 @@ function viewProfile() {
                 document.getElementById('view-profile-modal-salary').value = profile.data.salary;
                 document.getElementById('view-profile-modal-phone').value = profile.data.phone;
                 document.getElementById('view-profile-modal-address').value = profile.data.address;
+                // convert to yyyy-MM-dd
+                const date = new Date(profile.data.join);
+                const year = date.getFullYear();
+                //add 0 if month < 10
+                const month = (date.getMonth() + 1 < 10) ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+                // add 0 if day < 10
+                const day = (date.getDate() < 10) ? '0' + date.getDate() : date.getDate();
+
+                document.getElementById('view-profile-modal-join').value = year + '-' + month + '-' + day;
                 document.getElementById('view-profile-modal-birthday').value = profile.data.birthday;
-                document.getElementById('view-profile-modal-join').value = profile.data.join;
-                // document.getElementById('reset-password').setAttribute('onclick', `resetPassword('${profile.data.username}')`);
                 modal.show()
 
                 const buttonChangePassword = document.getElementById('btn-change-password');
@@ -1336,38 +1317,59 @@ function viewProfile() {
     xhr.send();
 }
 
-function updateProfile() {
+function updateProfile(e) {
+    e.preventDefault();
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', API.UPDATE_PROFILE_ALL, false);
+    xhr.open('POST', API.UPDATE_PROFILE_ALL);
     xhr.onload = function() {
         if (this.status == 200) {
-            console.log(this.responseText);
+            const response = JSON.parse(this.responseText);
+            if (response.status === 'success') {
+                showSuccessMessage(response.message);
+            } else {
+                showErrorMessage(response.message);
+            }
         }
     }
     xhr.send(new FormData(document.getElementById('update-profile')));
 }
 
-function changePassword() {
+function changePassword(e) {
+    e.preventDefault();
+
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', API.CHANGE_PASSWORD, false);
+    xhr.open('POST', API.CHANGE_PASSWORD_ALL);
     xhr.onload = function() {
         if (this.status == 200) {
-            console.log(this.responseText);
+            const response = JSON.parse(this.responseText);
+            if (response.status === 'success') {
+                showSuccessMessage(response.message);
+                document.getElementById('form-change-password').reset();
+            } else {
+                showErrorMessage(response.message);
+                document.getElementById('form-change-password').reset();
+            }
         }
     }
 
     xhr.send(new FormData(document.getElementById('form-change-password')));
 }
 
-function createTask() {
-
+function createTask(e) {
+    e.preventDefault();
     const form = document.getElementById('form-task-create');
     const formData = new FormData(form);
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', API.CREATE_TASK, false);
+    xhr.open('POST', API.CREATE_TASK);
     xhr.onload = function() {
         if (this.status == 200) {
-            console.log(this.responseText);
+            const response = JSON.parse(this.responseText);
+            if (response.status === 'success') {
+                showSuccessMessage(response.message);
+                form.reset();
+            } else {
+                showErrorMessage(response.message);
+            }
         }
     }
     xhr.send(formData);
@@ -1392,43 +1394,162 @@ function addOffice(e) {
     e.preventDefault();
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', API.ADD_OFFICE, false);
+    xhr.open('POST', API.ADD_OFFICE);
     xhr.onload = function() {
         if (this.status == 200) {
             const data = JSON.parse(this.responseText);
-            console.log(data);
             if (data.status === 'success') {
-                const message = data.message;
-                console.log(message);
-                const alert = document.getElementById('alert-full');
-                // show alert 3s
-                alert.classList.remove('d-none');
-                document.getElementById('alert-content').innerText = message;
-                setTimeout(function() {
-                    alert.classList.add('d-none');
-                }, 2000);
+                showSuccessMessage(data.message);
 
-                const alertIcon = document.getElementById('alert-icon');
-                alertIcon.children[0].classList.remove('d-none');
-                alertIcon.children[1].classList.add('d-none');
+                //reset form
+                document.getElementById('add-office-form').reset();
+
+                //reload table
+                switchPage('office');
             } else {
-                const message = data.message;
-                console.log(message);
-                const alert = document.getElementById('alert-full');
-                // show alert 3s
-                alert.classList.remove('d-none');
-                document.getElementById('alert-content').innerText = message;
-                setTimeout(function() {
-                    alert.classList.add('d-none');
-                }, 2000);
-
-                const alertIcon = document.getElementById('alert-icon');
-                alertIcon.children[1].classList.remove('d-none');
-                alertIcon.children[0].classList.add('d-none');
+                showErrorMessage(data.message);
             }
         }
     }
     xhr.send(new FormData(document.getElementById('add-office-form')));
+}
+
+function officeSelect1(id) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', API.GET_OFFICES);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            const offices = JSON.parse(this.responseText);
+            if (offices.status === 'success') {
+                const select = document.getElementById(id);
+                select.innerHTML = '<option value="ALL">Tất Cả</option>';
+                offices.data.forEach(office => {
+                    const option = document.createElement('option');
+                    option.value = office.id;
+                    option.innerText = office.name;
+                    select.appendChild(option);
+                });
+            }
+        }
+    }
+    xhr.send();
+}
+
+function addStaff(e) {
+    e.preventDefault();
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', API.ADD_STAFF);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            console.log(this.responseText);
+            const data = JSON.parse(this.responseText);
+            console.log(data);
+            if (data.status === 'success') {
+                showSuccessMessage(data.message);
+
+                //reset form
+                document.getElementById('add-staff-form').reset();
+
+                //reload table
+                switchPage('staff');
+
+                // reload check user
+                document.getElementById('username-error-add-staff').innerText = '';
+            } else {
+                showErrorMessage(data.message);
+            }
+        }
+    }
+    xhr.send(new FormData(document.getElementById('add-staff-form')));
+}
+
+function changeSalary() {
+    const modal = confirm('Bạn có chắc chắn muốn thay đổi lương cho nhân viên này?');
+    if (modal) {
+        const salary = document.getElementById('view-staff-modal-salary').value;
+        const username = document.getElementById('view-staff-modal-username').value;
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', API.CHANGE_SALARY);
+        xhr.onload = function() {
+            if (this.status == 200) {
+                console.log(this.responseText);
+                const data = JSON.parse(this.responseText);
+                if (data.status === 'success') {
+                    showSuccessMessage(data.message);
+                } else {
+                    showErrorMessage(data.message);
+                }
+            }
+        }
+        const data = new FormData();
+        data.append('salary', salary);
+        data.append('username', username);
+        xhr.send(data);
+    }
+}
+
+if (!currentHref.includes('change') && !currentHref.includes('login')) {
+    (function() {
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', API.GET_AVATAR_ALL);
+        xhr.onload = function() {
+            if (this.status == 200) {
+                const data = JSON.parse(this.responseText);
+                if (data.status === 'success') {
+                    const avatar = document.getElementById('avatar');
+                    avatar.src = '/images/avatars/' + data.avatar;
+                }
+            }
+        }
+        xhr.send();
+
+        const input = document.getElementById('change-avatar');
+        input.addEventListener('change', function(evt) {
+            const tgt = evt.target;
+            const files = tgt.files;
+
+            // check file size and type
+            if (files.length > 0) {
+                const file = files[0];
+                if (file.size > 5000000) {
+                    showErrorMessage('Kích thước file lớn hơn 5MB');
+                    return;
+                }
+                if (file.type !== 'image/jpeg' && file.type !== 'image/png' && file.type !== 'image/webp') {
+                    showErrorMessage('Chỉ hỗ trợ file ảnh jpg, png, webp');
+                    return;
+                }
+            }
+
+            // FileReader support
+            if (FileReader && files && files.length) {
+                let fr = new FileReader();
+                fr.onload = () => {
+                        const xhr = new XMLHttpRequest();
+                        xhr.open('POST', API.CHANGE_AVATAR_ALL);
+                        xhr.onload = function() {
+                            if (this.status == 200) {
+                                console.log(this.responseText);
+                                const response = JSON.parse(this.responseText);
+                                if (response.status === 'success') {
+                                    showSuccessMessage(response.message);
+                                    //reload page
+                                    document.getElementById('view-profile-modal-image').src = fr.result;
+                                    document.getElementById('avatar').src = fr.result;
+                                } else {
+                                    showErrorMessage(response.message);
+                                }
+                            }
+                        }
+                        xhr.send(new FormData(document.getElementById('change-avt-form')));
+                    }
+                    // read image obj
+                fr.readAsDataURL(files[0]);
+            }
+        })
+    })()
 }
 
 if (currentHref.includes('change')) {
@@ -1477,12 +1598,11 @@ if (currentHref.includes('admin/')) {
             officeSelect1(select);
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', API.GET_STAFFS + '?office=ALL', false);
+            xhr.open('GET', API.GET_STAFFS + '?office=ALL');
             xhr.onload = function() {
                 if (this.status == 200) {
-
+                    console.log(this.responseText);
                     const staffs = JSON.parse(this.responseText);
-                    console.log(staffs);
                     if (staffs.status === 'success') {
 
                         if (staffs.data.length > 0) {
@@ -1496,7 +1616,7 @@ if (currentHref.includes('admin/')) {
                             loadDataForStaffTable(1, staffPaginationId, staffList);
                         } else {
                             const table = document.getElementById(staffList);
-                            table.innerHTML = ` <tr> <td colspan = "4"> No data </td></tr> `;
+                            table.innerHTML = `<tr><td colspan="4"> Không có dữ liệu </td></tr>`;
                         }
 
                     }
@@ -1508,10 +1628,10 @@ if (currentHref.includes('admin/')) {
             selectInput.addEventListener('change', function() {
                 const number = this.value;
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API.GET_STAFFS + '?office=' + number, false);
+                xhr.open('GET', API.GET_STAFFS + '?office=' + number);
                 xhr.onload = function() {
                     if (this.status == 200) {
-
+                        console.log(this.responseText);
                         const staffs = JSON.parse(this.responseText);
                         if (staffs.status === 'success') {
 
@@ -1526,7 +1646,7 @@ if (currentHref.includes('admin/')) {
                                 loadDataForStaffTable(1, staffPaginationId, staffList);
                             } else {
                                 const table = document.getElementById(staffList);
-                                table.innerHTML = ` <tr> <td colspan = "4"> No data </td></tr> `;
+                                table.innerHTML = `<tr><td colspan="4"> Không có dữ liệu </td></tr>`;
                             }
                         }
                     }
@@ -1539,10 +1659,11 @@ if (currentHref.includes('admin/')) {
             btnSearch.addEventListener('click', function() {
 
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API.GET_STAFFS + '?search=' + search.value + '&office=' + selectInput.value, false);
+                const searchValue = (search.value) ? search.value : '[[';
+                xhr.open('GET', API.GET_STAFFS + '?search=' + searchValue + '&office=' + selectInput.value);
                 xhr.onload = function() {
                     if (this.status == 200) {
-
+                        console.log(this.responseText);
                         const staffs = JSON.parse(this.responseText);
                         if (staffs.status === 'success') {
 
@@ -1580,15 +1701,14 @@ if (currentHref.includes('admin/')) {
             const officeList = 'office-list';
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', API.GET_OFFICES_LIST, false);
+            xhr.open('GET', API.GET_OFFICES_LIST, true);
             xhr.onload = function() {
                 if (this.status == 200) {
 
                     const offices = JSON.parse(this.responseText);
-                    console.log(offices);
+
                     if (offices.status === 'success') {
 
-                        console.log(offices.data.length);
                         if (offices.data.length > 0) {
                             // cerate pagination
                             createPaginationOffice(officePaginationId, numberEachPage, offices.data.length, officeList);
@@ -1600,7 +1720,7 @@ if (currentHref.includes('admin/')) {
                             loadDataForOfficeTable(1, officePaginationId, officeList);
                         } else {
                             const table = document.getElementById(officeList);
-                            table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                            table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                         }
 
                     }
@@ -1613,14 +1733,13 @@ if (currentHref.includes('admin/')) {
             btnSearch.addEventListener('click', function() {
 
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API.SEARCH_OFFICE + '?search=' + search.value, false);
+                xhr.open('GET', API.SEARCH_OFFICE + '?search=' + search.value);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
                         const offices = JSON.parse(this.responseText);
                         if (offices.status === 'success') {
 
-                            console.log(offices.data.length);
                             if (offices.data.length > 0) {
                                 // cerate pagination
                                 createPaginationOffice(officePaginationId, numberEachPage, offices.data.length, officeList);
@@ -1632,7 +1751,7 @@ if (currentHref.includes('admin/')) {
                                 loadDataForOfficeTable(1, officePaginationId, officeList);
                             } else {
                                 const table = document.getElementById(officeList);
-                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                                table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                             }
 
                         }
@@ -1658,14 +1777,13 @@ if (currentHref.includes('admin/')) {
             const vacationList = 'vacation-list';
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', API.GET_VACATIONS_ALL, false);
+            xhr.open('GET', API.GET_VACATIONS_ALL);
             xhr.onload = function() {
                 if (this.status == 200) {
 
                     const vacations = JSON.parse(this.responseText);
                     if (vacations.status === 'success') {
 
-                        console.log(vacations.data.length);
                         if (vacations.data.length > 0) {
                             // cerate pagination
                             createPaginationVacation(vacationPaginationId, numberEachPage, vacations.data.length, vacationList);
@@ -1677,7 +1795,7 @@ if (currentHref.includes('admin/')) {
                             loadDataForVacationTable(1, vacationPaginationId, vacationList);
                         } else {
                             const table = document.getElementById(vacationList);
-                            table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                            table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                         }
 
                     }
@@ -1690,14 +1808,14 @@ if (currentHref.includes('admin/')) {
             btnSearch.addEventListener('click', function() {
 
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API.SEARCH_VACATION_ALL + '?search=' + search.value, false);
+                xhr.open('GET', API.SEARCH_VACATION_ALL + '?search=' + search.value);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
                         const vacations = JSON.parse(this.responseText);
                         if (vacations.status === 'success') {
 
-                            console.log(vacations.data.length);
+
                             if (vacations.data.length > 0) {
                                 // cerate pagination
                                 createPaginationVacation(vacationPaginationId, numberEachPage, vacations.data.length, vacationList);
@@ -1709,7 +1827,7 @@ if (currentHref.includes('admin/')) {
                                 loadDataForVacationTable(1, vacationPaginationId, vacationList);
                             } else {
                                 const table = document.getElementById(vacationList);
-                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                                table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                             }
 
                         }
@@ -1746,9 +1864,10 @@ if (currentHref.includes('admin/')) {
                     document.getElementById('username-error-add-staff').innerText = '';
                 } else {
                     const xhr = new XMLHttpRequest();
-                    xhr.open('GET', `${API.CHECK_USERNAME}?username=${ username.value }`, false);
+                    xhr.open('GET', API.CHECK_USERNAME + '?username=' + username.value);
                     xhr.onload = function() {
                         if (this.status == 200) {
+                            console.log(this.responseText);
                             const response = JSON.parse(this.responseText);
                             const icon = document.getElementById('icon-check-username');
                             const message = document.getElementById('username-error-add-staff');
@@ -1757,7 +1876,7 @@ if (currentHref.includes('admin/')) {
                                 icon.children[0].classList.remove('d-none');
                                 icon.children[1].classList.add('d-none');
 
-                                message.innerHTML = ` <small class = "text-success"> ${ response.data } </small>`;
+                                message.innerHTML = `<small class="text-success"> ${ response.data } </small>`;
                             } else {
                                 icon.children[1].classList.remove('d-none');
                                 icon.children[0].classList.add('d-none');
@@ -1778,13 +1897,15 @@ if (currentHref.includes('admin/')) {
     logout()
         // staff
     function loadData(page) {
-        console.log(page);
+
+
         if (page === 'staff-manager') {
+            document.title = "Quản lý nhân viên";
             const staffPaginationId = 'staff-manager-pagination';
             const staffList = 'staff-manager-list';
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', API.GET_STAFFS_MANAGER, false);
+            xhr.open('GET', API.GET_STAFFS_MANAGER);
             xhr.onload = function() {
                 if (this.status == 200) {
 
@@ -1802,7 +1923,7 @@ if (currentHref.includes('admin/')) {
                             loadDataForStaffTableManager(1, staffPaginationId, staffList);
                         } else {
                             const table = document.getElementById(staffList);
-                            table.innerHTML = `<tr><td colspan="4">No data</td></tr>`;
+                            table.innerHTML = `<tr><td colspan="4">Không có dữ liệu</td></tr>`;
                         }
 
                     }
@@ -1815,7 +1936,7 @@ if (currentHref.includes('admin/')) {
             btnSearch.addEventListener('click', function() {
 
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API.SEARCH_STAFFS_MANAGER + '?search=' + search.value, false);
+                xhr.open('GET', API.SEARCH_STAFFS_MANAGER + '?search=' + search.value);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
@@ -1833,9 +1954,12 @@ if (currentHref.includes('admin/')) {
                                 loadDataForStaffTableManager(1, staffPaginationId, staffList);
                             } else {
                                 const table = document.getElementById(staffList);
-                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                                table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                             }
 
+                        } else {
+                            const table = document.getElementById(staffList);
+                            table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                         }
                     }
                 }
@@ -1854,18 +1978,18 @@ if (currentHref.includes('admin/')) {
                 this.select();
             })
         } else if (page === 'vacation-request') {
+            document.title = "Duyệt đơn nghỉ phép";
             const vacationPaginationId = 'vacation-manager-pagination';
             const vacationList = 'vacation-manager-list';
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', API.GET_VACATIONS_MANAGER, false);
+            xhr.open('GET', API.GET_VACATIONS_MANAGER);
             xhr.onload = function() {
                 if (this.status == 200) {
 
                     const vacations = JSON.parse(this.responseText);
                     if (vacations.status === 'success') {
 
-                        console.log(vacations.data.length);
                         if (vacations.data.length > 0) {
                             // cerate pagination
                             createPaginationVacationManager(vacationPaginationId, numberEachPage, vacations.data.length, vacationList);
@@ -1877,7 +2001,7 @@ if (currentHref.includes('admin/')) {
                             loadDataForVacationTableManager(1, vacationPaginationId, vacationList);
                         } else {
                             const table = document.getElementById(vacationList);
-                            table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                            table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                         }
 
                     }
@@ -1890,14 +2014,13 @@ if (currentHref.includes('admin/')) {
             btnSearch.addEventListener('click', function() {
 
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API.SEARCH_VACATION_MANAGER + '?search=' + search.value, false);
+                xhr.open('GET', API.SEARCH_VACATION_MANAGER + '?search=' + search.value + '&type=' + selectInput.value, false);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
                         const vacations = JSON.parse(this.responseText);
                         if (vacations.status === 'success') {
 
-                            console.log(vacations.data.length);
                             if (vacations.data.length > 0) {
                                 // cerate pagination
                                 createPaginationVacationManager(vacationPaginationId, numberEachPage, vacations.data.length, vacationList);
@@ -1909,7 +2032,7 @@ if (currentHref.includes('admin/')) {
                                 loadDataForVacationTableManager(1, vacationPaginationId, vacationList);
                             } else {
                                 const table = document.getElementById(vacationList);
-                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                                table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                             }
 
                         }
@@ -1933,7 +2056,7 @@ if (currentHref.includes('admin/')) {
             const selectInput = document.getElementById('type-vacation-manager');
             selectInput.addEventListener('change', function() {
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API.FILTER_VACATIONS_MANAGER + '?type=' + selectInput.value, false);
+                xhr.open('GET', API.FILTER_VACATIONS_MANAGER + '?type=' + selectInput.value + '&search=' + search.value, false);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
@@ -1951,7 +2074,7 @@ if (currentHref.includes('admin/')) {
                                 loadDataForVacationTableManager(1, vacationPaginationId, vacationList);
                             } else {
                                 const table = document.getElementById(vacationList);
-                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                                table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                             }
 
                         }
@@ -1960,20 +2083,19 @@ if (currentHref.includes('admin/')) {
                 xhr.send();
             })
 
-        } else
-        if (page === 'vacation-send') {
+        } else if (page === 'vacation-send') {
+            document.title = "Nghỉ phép";
             const vacationPaginationId = 'vacation-send-pagination';
             const vacationList = 'vacation-send-list';
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', API.GET_VACATIONS_SEND_ALL, false);
+            xhr.open('GET', API.GET_VACATIONS_SEND_ALL);
             xhr.onload = function() {
                 if (this.status == 200) {
 
                     const vacations = JSON.parse(this.responseText);
                     if (vacations.status === 'success') {
 
-                        console.log(vacations.data.length);
                         if (vacations.data.length > 0) {
                             // cerate pagination
                             createPaginationVacationSend(vacationPaginationId, numberEachPage, vacations.data.length, vacationList);
@@ -1985,7 +2107,7 @@ if (currentHref.includes('admin/')) {
                             loadDataForVacationTableSend(1, vacationPaginationId, vacationList);
                         } else {
                             const table = document.getElementById(vacationList);
-                            table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                            table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                         }
 
                     }
@@ -2005,7 +2127,6 @@ if (currentHref.includes('admin/')) {
                         const vacations = JSON.parse(this.responseText);
                         if (vacations.status === 'success') {
 
-                            console.log(vacations.data.length);
                             if (vacations.data.length > 0) {
                                 // cerate pagination
                                 createPaginationVacationSend(vacationPaginationId, numberEachPage, vacations.data.length, vacationList);
@@ -2017,7 +2138,7 @@ if (currentHref.includes('admin/')) {
                                 loadDataForVacationTableSend(1, vacationPaginationId, vacationList);
                             } else {
                                 const table = document.getElementById(vacationList);
-                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                                table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                             }
 
                         }
@@ -2041,7 +2162,7 @@ if (currentHref.includes('admin/')) {
             const selectInput = document.getElementById('type-vacation-send');
             selectInput.addEventListener('change', function() {
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API.FILTER_VACATIONS_SEND_ALL + '?type=' + selectInput.value, false);
+                xhr.open('GET', API.FILTER_VACATIONS_SEND_ALL + '?type=' + selectInput.value);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
@@ -2059,7 +2180,7 @@ if (currentHref.includes('admin/')) {
                                 loadDataForVacationTableSend(1, vacationPaginationId, vacationList);
                             } else {
                                 const table = document.getElementById(vacationList);
-                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                                table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                             }
 
                         }
@@ -2075,7 +2196,7 @@ if (currentHref.includes('admin/')) {
             const select = document.getElementById('staff-task-create');
 
             const xhr2 = new XMLHttpRequest();
-            xhr2.open('GET', API.GET_STAFFS_MANAGER, false);
+            xhr2.open('GET', API.GET_STAFFS_MANAGER);
             xhr2.onload = function() {
                 if (this.status == 200) {
                     const response = JSON.parse(this.responseText);
@@ -2094,14 +2215,13 @@ if (currentHref.includes('admin/')) {
             xhr2.send();
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', API.GET_TASKS_MANAGER, false);
+            xhr.open('GET', API.GET_TASKS_MANAGER);
             xhr.onload = function() {
                 if (this.status == 200) {
 
                     const tasks = JSON.parse(this.responseText);
                     if (tasks.status === 'success') {
 
-                        console.log(tasks.data.length);
                         if (tasks.data.length > 0) {
                             // cerate pagination
                             createPaginationTaskManager(vacationPaginationId, numberEachPage, tasks.data.length, vacationList);
@@ -2113,7 +2233,7 @@ if (currentHref.includes('admin/')) {
                             loadDataForTaskTableManager(1, vacationPaginationId, vacationList);
                         } else {
                             const table = document.getElementById(vacationList);
-                            table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                            table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                         }
 
                     }
@@ -2121,14 +2241,15 @@ if (currentHref.includes('admin/')) {
             }
             xhr.send();
 
+            const status = document.getElementById('type-task-manager');
             let search = document.getElementById('search-task-manager-input');
             const btnSearch = document.getElementById('search-task-manager');
             btnSearch.addEventListener('click', function() {
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API.SEARCH_TASK_MANAGER + '?search=' + search.value, false);
+                xhr.open('GET', API.SEARCH_TASK_MANAGER + '?search=' + search.value + '&status=' + status.value);
                 xhr.onload = function() {
                     if (this.status == 200) {
-
+                        console.log(this.responseText);
                         const tasks = JSON.parse(this.responseText);
                         if (tasks.status === 'success') {
 
@@ -2143,7 +2264,7 @@ if (currentHref.includes('admin/')) {
                                 loadDataForTaskTableManager(1, vacationPaginationId, vacationList);
                             } else {
                                 const table = document.getElementById(vacationList);
-                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                                table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                             }
                         }
                     }
@@ -2166,7 +2287,7 @@ if (currentHref.includes('admin/')) {
             const selectInput = document.getElementById('type-task-manager');
             selectInput.addEventListener('change', function() {
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API.FILTER_TASKS_MANAGER + '?type=' + selectInput.value, false);
+                xhr.open('GET', API.FILTER_TASKS_MANAGER + '?type=' + selectInput.value);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
@@ -2184,7 +2305,7 @@ if (currentHref.includes('admin/')) {
                                 loadDataForTaskTableManager(1, vacationPaginationId, vacationList);
                             } else {
                                 const table = document.getElementById(vacationList);
-                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                                table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                             }
                         }
                     }
@@ -2205,14 +2326,13 @@ if (currentHref.includes('admin/')) {
             const taskList = 'task-staff-list';
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', API.GET_TASKS_STAFF, false);
+            xhr.open('GET', API.GET_TASKS_STAFF);
             xhr.onload = function() {
                 if (this.status == 200) {
 
                     const tasks = JSON.parse(this.responseText);
                     if (tasks.status === 'success') {
 
-                        console.log(tasks.data.length);
                         if (tasks.data.length > 0) {
                             // cerate pagination
                             createPaginationTaskStaff(taskPaginationId, numberEachPage, tasks.data.length, taskList);
@@ -2224,7 +2344,7 @@ if (currentHref.includes('admin/')) {
                             loadDataForTaskTableStaff(1, taskPaginationId, taskList);
                         } else {
                             const table = document.getElementById(taskList);
-                            table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                            table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                         }
 
                     }
@@ -2237,7 +2357,7 @@ if (currentHref.includes('admin/')) {
             const btnSearch = document.getElementById('search-task-staff');
             btnSearch.addEventListener('click', function() {
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API.SEARCH_TASKS_STAFF + '?search=' + search.value, false);
+                xhr.open('GET', API.SEARCH_TASKS_STAFF + '?search=' + search.value);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
@@ -2255,7 +2375,7 @@ if (currentHref.includes('admin/')) {
                                 loadDataForTaskTableStaff(1, taskPaginationId, taskList);
                             } else {
                                 const table = document.getElementById(taskList);
-                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                                table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                             }
                         }
                     }
@@ -2278,7 +2398,7 @@ if (currentHref.includes('admin/')) {
             const selectInput = document.getElementById('type-task-staff');
             selectInput.addEventListener('change', function() {
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API.FILTER_TASKS_STAFF + '?type=' + selectInput.value, false);
+                xhr.open('GET', API.FILTER_TASKS_STAFF + '?type=' + selectInput.value);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
@@ -2296,7 +2416,7 @@ if (currentHref.includes('admin/')) {
                                 loadDataForTaskTableStaff(1, taskPaginationId, taskList);
                             } else {
                                 const table = document.getElementById(taskList);
-                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                                table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                             }
                         }
                     }
@@ -2311,14 +2431,13 @@ if (currentHref.includes('admin/')) {
             const vacationList = 'vacation-send-list';
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', API.GET_VACATIONS_SEND_ALL, false);
+            xhr.open('GET', API.GET_VACATIONS_SEND_ALL);
             xhr.onload = function() {
                 if (this.status == 200) {
 
                     const vacations = JSON.parse(this.responseText);
                     if (vacations.status === 'success') {
 
-                        console.log(vacations.data.length);
                         if (vacations.data.length > 0) {
                             // cerate pagination
                             createPaginationVacationSend(vacationPaginationId, numberEachPage, vacations.data.length, vacationList);
@@ -2330,7 +2449,7 @@ if (currentHref.includes('admin/')) {
                             loadDataForVacationTableSend(1, vacationPaginationId, vacationList);
                         } else {
                             const table = document.getElementById(vacationList);
-                            table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                            table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                         }
 
                     }
@@ -2343,14 +2462,13 @@ if (currentHref.includes('admin/')) {
             btnSearch.addEventListener('click', function() {
 
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API.SEARCH_VACATIONS_SEND_ALL + '?search=' + search.value, false);
+                xhr.open('GET', API.SEARCH_VACATIONS_SEND_ALL + '?search=' + search.value);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
                         const vacations = JSON.parse(this.responseText);
                         if (vacations.status === 'success') {
 
-                            console.log(vacations.data.length);
                             if (vacations.data.length > 0) {
                                 // cerate pagination
                                 createPaginationVacationSend(vacationPaginationId, numberEachPage, vacations.data.length, vacationList);
@@ -2362,7 +2480,7 @@ if (currentHref.includes('admin/')) {
                                 loadDataForVacationTableSend(1, vacationPaginationId, vacationList);
                             } else {
                                 const table = document.getElementById(vacationList);
-                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                                table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                             }
 
                         }
@@ -2386,7 +2504,7 @@ if (currentHref.includes('admin/')) {
             const selectInput = document.getElementById('type-vacation-send');
             selectInput.addEventListener('change', function() {
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', API.FILTER_VACATIONS_SEND_ALL + '?type=' + selectInput.value, false);
+                xhr.open('GET', API.FILTER_VACATIONS_SEND_ALL + '?type=' + selectInput.value);
                 xhr.onload = function() {
                     if (this.status == 200) {
 
@@ -2404,7 +2522,7 @@ if (currentHref.includes('admin/')) {
                                 loadDataForVacationTableSend(1, vacationPaginationId, vacationList);
                             } else {
                                 const table = document.getElementById(vacationList);
-                                table.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+                                table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                             }
 
                         }

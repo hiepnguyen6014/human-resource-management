@@ -15,7 +15,7 @@
         $row = $result->fetch_assoc();
         $office_code = $row['office_code'];
         
-        $sql = "SELECT `user_id`, `username`, `fname`, `lname`, `gmail`, `phone_number` FROM `profiles` WHERE office_code = ?";
+        $sql = "SELECT `user_id`, `username`, `fname`, `lname`, `gmail`, `phone_number` FROM `profiles` WHERE office_code = ? and position = 2";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('s', $office_code);
         $stmt->execute();

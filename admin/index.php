@@ -24,11 +24,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
         integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="stylesheet" href="/style.css" />
     <title>Trang chủ</title>
     <link rel="shortcut icon" href="/favi.ico" type="image/x-icon">
@@ -163,18 +165,28 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-3">
-                            <label for="username-add-staff" class="form-label">Tên đăng nhập</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="username" id="username-add-staff"
-                                    placeholder="username" required>
-                                <span class="input-group-text" id="icon-check-username">
-                                    <i class="far fa-check-circle text-success fz-24"></i>
-                                    <i class="far fa-times-circle d-none text-danger fz-24"></i>
-                                </span>
-                            </div>
-                            <div id="username-error-add-staff">
+                        <div class="mt-3 row">
 
+                            <div class="col-lg-6">
+                                <label for="username-add-staff" class="form-label">Tên đăng nhập</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="username" id="username-add-staff"
+                                        placeholder="Tên đăng nhập" required pattern="[a-zA-Z0-9-]+">
+                                    <span class="input-group-text" id="icon-check-username">
+                                        <i class="far fa-check-circle text-success fz-24"></i>
+                                        <i class="far fa-times-circle d-none text-danger fz-24"></i>
+                                    </span>
+                                </div>
+                                <div id="username-error-add-staff">
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="birthday-add-staff" class="form-label">Ngày sinh</label>
+                                <div class="input-group">
+                                    <input type="date" name="birthday" id="birthday-add-staff" class="form-control"
+                                        required>
+                                </div>
                             </div>
                         </div>
                         <div class="mt-3">
@@ -198,6 +210,7 @@
         </div>
     </div>
 
+
     <div class="modal fade mt-5" id="view-staff">
         <div class="modal-dialog modal-lg mt-5">
             <div class="modal-content">
@@ -209,7 +222,7 @@
                     <div class="row">
                         <div class="col-lg-4 col-12 border-end">
                             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                                <img class="rounded-circle border" width="160px" src="/" id="view-staff-modal-image">
+                                <img class="rounded-circle border" height="160px" width="160px" src="/" id="view-staff-modal-image">
                                 <span class="font-weight-bold fz-24" id="view-staff-modal-fullname"></span>
                                 <span class="text-black-50" id="view-staff-modal-email"></span>
                             </div>
@@ -242,11 +255,10 @@
                                     <div class="pt-3">
                                         <label>Lương</label>
                                         <div class="input-group">
-                                            <span class="input-group-text">
+                                            <span class="input-group-text btn btn-outline-success" onclick="changeSalary()">
                                                 <i class="fas fa-dollar-sign" style="font-size: 18px;"></i>
                                             </span>
-                                            <input type="text" class="form-control" id="view-staff-modal-salary"
-                                                disabled>
+                                                <input type="number" class="form-control" id="view-staff-modal-salary">
                                         </div>
                                     </div>
                                     <div class="pt-3">
@@ -460,10 +472,11 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Thông tin phòng ban</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        id="view-office-close"></button>
                 </div>
                 <div class="modal-body py-0">
-                    <form onsubmit="return false" method="post" id="view-office-form" class="w-100">
+                    <form onsubmit="return updateOffice(event)" method="post" id="view-office-form" class="w-100">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="mt-2">
@@ -496,7 +509,7 @@
                                 <div class="mt-2">
                                     <label for="create-view-office" class="form-label">Ngày tạo</label>
                                     <div class="input-group">
-                                        <input type="text" id="create-view-office" class="form-control">
+                                        <input type="text" id="create-view-office" class="form-control" disabled>
                                     </div>
                                 </div>
                                 <div class="mt-2">
@@ -505,7 +518,8 @@
                                         <select id="captain-view-office" class="form-control">
 
                                         </select>
-                                        <span onclick="changeCaptain()" class="input-group-text" id="icon-swap-captain">
+                                        <span onclick="changeCaptain()" class="btn btn-outline-success input-group-text"
+                                            id="icon-swap-captain">
                                             <i class="fas fa-sync-alt text-success fz-24"></i>
                                         </span>
                                     </div>
@@ -528,9 +542,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="deleteOffice()" class="btn btn-outline-secondary w-90">Xoá</button>
-                    <button type="button" class="btn btn-outline-secondary w-90" data-bs-dismiss="modal">Thoát</button>
-                    <button onclick="updateOffice()" class="btn btn-outline-secondary w-90">Mới</button>
+                    <button id="btn-delete-office" class="btn btn-outline-secondary w-90">Xoá</button>
+                    <button form="view-office-form" class="btn btn-outline-secondary w-90">Mới</button>
                 </div>
             </div>
         </div>
@@ -671,7 +684,7 @@
             </div>
         </div>
     </div>
-    
+
 
     <?php
         require '../profile.php';

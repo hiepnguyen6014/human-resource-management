@@ -10,11 +10,11 @@
             if (!isset($_GET['search'])) {
                 $office = $_GET['office'];
                 if($office == 'ALL'){
-                    $sql = "select `user_id` as id, `fname`, `lname`, `position`, `username`,`office_code` from `Profiles`";
+                    $sql = "select `user_id` as id, `fname`, `lname`, `position`, `username`,`office_code` from `Profiles` where `position` != 0";
                     $stmt = $conn->prepare($sql);
                 }
                 else{
-                    $sql = "select `user_id` as id, `fname`, `lname`, `position`, `username` from `Profiles` where `office_code` = ?";
+                    $sql = "select `user_id` as id, `fname`, `lname`, `position`, `username`,`office_code` from `Profiles` where `office_code` = ?";
                     $stmt = $conn->prepare($sql);
                     $stmt->bind_param('s', $office);
                 } 
@@ -31,24 +31,31 @@
                             "office" => $row['office_code'],
                             "position" => $row['position']
                         );
-                    }
-    
+                    }            
                 }
-            
                 die(json_encode(array("status" => "success", "data" => $staffs)));
             }
             else {
                 $search = $_GET['search'];
                 $office = $_GET['office'];
-    
                 $search_tmp = '%' . $search . '%';
-                $sql = "select `user_id` as id, `fname`, `lname`, `position`, `username` from `Profiles` where `office_code` = ? and (`fname` like ? or `lname` like ?)";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param('sss', $office, $search_tmp, $search_tmp);
+                
+                if($office == 'ALL'){
+                    $sql = "select `user_id` as id, `fname`, `lname`, `position`, `username`,`office_code` from `Profiles` where `fname` like ? or `lname` like ?";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param('ss',$search_tmp, $search_tmp);
+                }
+                else{
+                    $sql = "select `user_id` as id, `fname`, `lname`, `position`, `username`,`office_code` from `Profiles` where `office_code` = ? and (`fname` like ? or `lname` like ?)";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param('sss', $office, $search_tmp, $search_tmp);
+                }
+
+                
                 $stmt->execute();
     
                 $result = $stmt->get_result();
-    
+                
                 $staffs = array();
     
                 if($result->num_rows > 0){
@@ -57,17 +64,17 @@
                             "id" => $row['id'],
                             "name" => $row['fname'] . ' ' . $row['lname'],
                             "username" => $row['username'],
-                            "office" => $office,
+                            "office" => $row['office_code'],
                             "position" => $row['position']
                         );
                     }
-                    die(json_encode(array("status" => "success", "data" => $staffs)));
                 }
-                die(json_encode(array("status" => "error", "message" => "Không tìm thấy nhân viên")));
+                die(json_encode(array("status" => "success", "data" => $staffs)));
+                
             }
         }
     }
     else {
-        echo json_encode(array('status' => 'error', 'message' => 'Bạn không có quyền truy cập trang này'));
+        die(json_encode(array('status' => 'error', 'message' => 'Bạn không có quyền truy cập trang này')));
     }
 ?>

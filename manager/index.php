@@ -30,7 +30,7 @@
         integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/style.css" />
-    <title>Admin Dashboard</title>
+    <title>Trang chủ</title>
     <link rel="shortcut icon" href="/favi.ico" type="image/x-icon">
 </head>
 
@@ -59,7 +59,7 @@
                     <div class="card" style="position: relative;">
                         <div class="card-header d-flex justify-content-between mobile-hide">
                             <div class="d-flex">
-                                <input type="text" class="search-input w-250" placeholder="Search..."
+                                <input type="text" class="search-input w-250" placeholder="Tìm kiếm..."
                                     id="search-task-manager-input">
                                 <button type="button" class="btn btn-outline-primary px-3 btn-search"
                                     id="search-task-manager">
@@ -69,14 +69,14 @@
                             <div>
                                 <div class="input-group w-300">
                                     <select class="form-select" name="status" id="type-task-manager">
-                                        <option value="0">Tất cả</option>
-                                        <option value="1">Mới</option>
-                                        <option value="2">Đang làm</option>
-                                        <option value="3">Chờ duyệt</option>
-                                        <option value="4">Trả về</option>
-                                        <option value="5">Trung Bình</option>
-                                        <option value="6">Khá</option>
-                                        <option value="7">Tốt</option>
+                                        <option value="-1">Tất cả</option>
+                                        <option value="0">Mới</option>
+                                        <option value="1">Đang làm</option>
+                                        <option value="2">Chờ duyệt</option>
+                                        <option value="3">Trả về</option>
+                                        <option value="4">Trung Bình</option>
+                                        <option value="5">Khá</option>
+                                        <option value="6">Tốt</option>
                                     </select>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
                                 <button class="btn btn-outline-primary" data-bs-toggle="modal"
                                     data-bs-target="#create-task">
                                     <i class="fas fa-plus"></i>
-                                    <span>More</span>
+                                    <span>Thêm</span>
                                 </button>
                             </div>
                         </div>
@@ -98,7 +98,7 @@
                                 <tr>
                                     <th>Tên nhiệm vụ</th>
                                     <th>Người phụ trách</th>
-                                    <th>Hạn chót</th>
+                                    <th>Ngày giao</th>
                                     <th>Trạng thái</th>
                                 </tr>
                             </thead>
@@ -126,12 +126,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form onsubmit="return false" method="post" id="form-task-create" class="row">
+                    <form onsubmit="return createTask(event)" method="post" id="form-task-create" class="row" enctype="multipart/form-data">
                         <div class="col-lg-6">
                             <div class="mt-2">
                                 <label for="title-task-create" class="form-label">Tiêu đề</label>
                                 <div class="input-group">
-                                    <input type="text" name="title" class="form-control" id="title-task-create">
+                                    <input type="text" name="title" class="form-control" id="title-task-create" required>
                                 </div>
                             </div>
                         </div>
@@ -139,7 +139,7 @@
                             <div class="mt-2">
                                 <label for="deadline-task-create" class="form-label">Hạn chót</label>
                                 <div class="input-group">
-                                    <input type="date" id="deadline-task-create" name="deadline" class="form-control">
+                                    <input type="date" id="deadline-task-create" name="deadline" class="form-control" required>
                                     <span class="input-group-text" id="icon-check-date">
                                         <i class="far fa-check-circle d-none text-success fz-24"></i>
                                         <i class="far fa-times-circle text-danger fz-24"></i>
@@ -161,7 +161,7 @@
                                 <label for="files-vacation-send" class="form-label">File đính kèm</label>
                                 <div class="input-group">
                                     <input type="file" name="files[]" id="files-vacation-send" class="form-control"
-                                        multiple>
+                                        multiple required>
                                 </div>
                             </div>
                         </div>
@@ -169,7 +169,7 @@
                             <label for="description-task-create" class="form-label">Mô tả</label>
                             <div class="input-group">
                                 <textarea id="description-task-create" name="description"
-                                    class="form-control"></textarea>
+                                    class="form-control" required></textarea>
                             </div>
                         </div>
                         <!-- <input type="hidden" id="id-add-vacation-send">
@@ -179,8 +179,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary w-90" data-bs-dismiss="modal">Thoát</button>
-                    <button class="btn btn-outline-secondary w-90" form="form-task-create" id="btn-send-vacation"
-                        onclick="createTask()">Tạo</button>
+                    <button class="btn btn-outline-secondary w-90" form="form-task-create" id="btn-send-vacation">Tạo</button>
                 </div>
             </div>
         </div>
@@ -249,9 +248,9 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="mt-2">
-                                <label for="title-task-create" class="form-label">Hạn chót</label>
+                                <label for="deadline-task-view" class="form-label">Hạn chót</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="title-task-create" disabled>
+                                    <input type="text" class="form-control" id="deadline-task-view" disabled>
                                 </div>
                             </div>
                         </div>
@@ -317,7 +316,7 @@
                     <div class="card" style="position: relative;">
                         <div class="card-header d-flex justify-content-between mobile-hide">
                             <div class="d-flex">
-                                <input type="text" class="search-input w-250" placeholder="Search..."
+                                <input type="text" class="search-input w-250" placeholder="Tìm kiếm..."
                                     id="search-staff-manager-input">
                                 <button type="button" class="btn btn-outline-primary px-3 btn-search"
                                     id="search-staff-manager">
@@ -330,7 +329,7 @@
                                 <button class="btn btn-outline-primary" data-bs-toggle="modal"
                                     data-bs-target="#add-staff-manager">
                                     <i class="fas fa-plus"></i>
-                                    <span>More</span>
+                                    <span>Thêm</span>
                                 </button>
                             </div> -->
                         </div>
@@ -341,9 +340,9 @@
                             <thead class="align-middle bg-secondary text-white font-weight-bold"
                                 style="letter-spacing: 1px;">
                                 <tr>
-                                    <th>Full Name</th>
-                                    <th>Username</th>
-                                    <th>Phone</th>
+                                    <th>Họ tên</th>
+                                    <th>Tên đăng nhập</th>
+                                    <th>Số điện thoại</th>
                                     <th>Email</th>
                                 </tr>
                             </thead>
@@ -397,14 +396,14 @@
         <div class="modal-dialog modal-lg mt-5">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Staff Details</h5>
+                    <h5 class="modal-title">Chi tiết nhân viên</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-0">
                     <div class="row">
                         <div class="col-lg-4 col-12 border-end">
                             <div class="d-flex flex-column align-items-center text-center p-2">
-                                <img class="rounded-circle border" width="120px" src="/"
+                                <img class="rounded-circle border" width="120px" height="120px" src="/"
                                     id="view-staff-manager-modal-image">
                                 <span class="font-weight-bold fz-24" id="view-staff-manager-modal-fullname"></span>
                                 <span class="text-black-50" id="view-staff-manager-modal-email"></span>
@@ -415,14 +414,14 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="pt-3">
-                                        <label>Birthday</label>
+                                        <label>Ngày sinh</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control"
                                                 id="view-staff-manager-modal-birthday" disabled>
                                         </div>
                                     </div>
                                     <div class="pt-3">
-                                        <label>Username</label>
+                                        <label>Tên đăng nhập</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control"
                                                 id="view-staff-manager-modal-username" disabled>
@@ -431,14 +430,14 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="pt-3">
-                                        <label>Date join</label>
+                                        <label>Ngày gia nhập</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="view-staff-manager-modal-join"
                                                 disabled>
                                         </div>
                                     </div>
                                     <div class="pt-3">
-                                        <label>Phone</label>
+                                        <label>Số điện thoại</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="view-staff-manager-modal-phone"
                                                 disabled>
@@ -447,7 +446,7 @@
                                 </div>
                                 <div class="col pb-3">
                                     <div class="pt-3">
-                                        <label>Address</label>
+                                        <label>Địa chỉ</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control"
                                                 id="view-staff-manager-modal-address" disabled>
@@ -469,7 +468,7 @@
                     <div class="card" style="position: relative;">
                         <div class="card-header d-flex justify-content-between mobile-hide">
                             <div class="d-flex">
-                                <input type="text" class="search-input w-250" placeholder="Search..."
+                                <input type="text" class="search-input w-250" placeholder="Tìm kiếm..."
                                     id="search-vacation-manager-input">
                                 <button type="button" class="btn btn-outline-primary px-3 btn-search"
                                     id="search-vacation-manager">
@@ -479,8 +478,8 @@
                             <div>
                                 <div class="input-group w-300">
                                     <select class="form-select" name="status" id="type-vacation-manager">
-                                        <option value="0">All</option>
-                                        <option value="1">Pending</option>
+                                        <option value="6">All</option>
+                                        <option value="0">Pending</option>
                                         <option value="2">Approve</option>
                                         <option value="3">Refused</option>
                                         <option value="4">Seen</option>
@@ -604,7 +603,7 @@
                     <div class="card" style="position: relative;">
                         <div class="card-header d-flex justify-content-between mobile-hide">
                             <div class="d-flex">
-                                <input type="text" class="search-input w-250" placeholder="Search..."
+                                <input type="text" class="search-input w-250" placeholder="Tìm kiếm..."
                                     id="search-vacation-send-input">
                                 <button type="button" class="btn btn-outline-primary px-3 btn-search"
                                     id="search-vacation-send">
@@ -627,7 +626,7 @@
                             <div class="btn-group">
                                 <button class="btn btn-outline-primary" onclick="offRequest()">
                                     <i class="fas fa-plus"></i>
-                                    <span>More</span>
+                                    <span>Thêm</span>
                                 </button>
                             </div>
                         </div>

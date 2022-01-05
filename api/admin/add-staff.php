@@ -10,6 +10,7 @@
         $fname = $_POST['firstname'];
         $lname = $_POST['lastname'];
         $office = $_POST['office'];
+        $birthday = $_POST['birthday'];
 
         $sql = "insert into `Accounts` (`username`, `password`) values (?, ?)";
         $stmt = $conn->prepare($sql);
@@ -19,9 +20,9 @@
         $stmt->execute();
 
         if ($stmt->affected_rows > 0) {
-            $sql = "insert into `Profiles` (`username`,`fname`, `lname`, `office_code`) values (?, ?, ?, ?)";
+            $sql = "insert into `Profiles` (`username`,`fname`, `lname`, `office_code`, `birthdate`) values (?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('ssss', $username, $fname, $lname, $office);
+            $stmt->bind_param('sssss', $username, $fname, $lname, $office, $birthday);
             $stmt->execute();
 
             if ($stmt->affected_rows > 0) {

@@ -12,11 +12,14 @@
     <div class="offcanvas-body p-0">
         <nav class="navbar-dark custom-navbar">
             <div class="avatar-space" onclick="viewProfile()">
-                <img src="/images/default.webp" alt="avt" class="avatar">
+                <img src="/images/default.webp" alt="avt" class="avatar" id="avatar">
             </div>
             <ul class="navbar-nav">
+                <div class="d-none">
+
                     <hr class="dropdown-divider" />
-                <li class="p-3 position-relative accordion-button" data-bs-toggle="collapse" href="#dashboard" role="button"
+                </div>
+                <li class="p-3 position-relative accordion-button d-none" data-bs-toggle="collapse" href="#dashboard" role="button"
                     aria-expanded="false" aria-controls="dashboard">
                     <a class="text-white fw-bold text-uppercase px-3 text-decoration-none">
                         Dashboard
@@ -49,7 +52,7 @@
                         data-bs-toggle="collapse" href="#feature" role="button" aria-expanded="false"
                         aria-controls="feature">
                     <a class="text-white fw-bold text-uppercase px-3 text-decoration-none">
-                        Management
+                        Quản lý
                     </a>
                 </li>
                 <div class="collapse show" id="feature">
@@ -79,7 +82,7 @@
             </ul>
             <div id="logout">
                 <i class="fas fa-sign-out-alt"></i>
-                <span class="p-1 d-inline-block text-white">Sign Out</span>
+                <span class="p-1 d-inline-block text-white">Đăng xuất</span>
             </div>
         </nav>
     </div>

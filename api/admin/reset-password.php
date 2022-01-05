@@ -8,9 +8,10 @@
             $conn = get_connection();
             $username = $_POST['username'];
             $password = password_hash($username, PASSWORD_BCRYPT);
-            $sql = "update `accounts` set `password` = ? where `username` = ?";
+            $sql = "update `accounts` set `password` = ?, `active` = ? where `username` = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('ss', $password, $username);
+            $active = 0;
+            $stmt->bind_param('sis', $password, $active, $username);
             $stmt->execute();
     
             if($stmt->affected_rows > 0){

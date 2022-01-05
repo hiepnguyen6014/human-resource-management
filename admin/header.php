@@ -12,13 +12,14 @@
         <div class="offcanvas-body p-0">
             <nav class="navbar-dark custom-navbar">
                 <div class="avatar-space" onclick="viewProfile()">
-                    <img src="/images/default.webp" alt="avt" class="avatar">
+                    <img alt="avt" class="avatar" id="avatar">
                 </div>
                 <ul class="navbar-nav">
-                 
-                        <hr class="dropdown-divider" />
+                    <div class="d-none">
+                         <hr class="dropdown-divider" />
+                    </div>
                    
-                    <li class="p-3 accordion-button" data-bs-toggle="collapse" href="#dashboard" role="button"
+                    <li class="p-3 accordion-button d-none" data-bs-toggle="collapse" href="#dashboard" role="button"
                         aria-expanded="false" aria-controls="dashboard">
                         <a class="text-white fw-bold text-uppercase px-3 text-decoration-none">
                             Tổng quan

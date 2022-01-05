@@ -220,8 +220,8 @@
                             <div>
                                 <div class="input-group w-300">
                                     <select class="form-select" name="status" id="type-vacation-send">
-                                        <option value="0">All</option>
-                                        <option value="1">Pending</option>
+                                        <option value="6">All</option>
+                                        <option value="0">Pending</option>
                                         <option value="2">Approve</option>
                                         <option value="3">Refused</option>
                                         <option value="4">Seen</option>
