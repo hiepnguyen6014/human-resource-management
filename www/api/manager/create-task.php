@@ -38,6 +38,9 @@
                 
             }
             if ($count == $length_files) {
+                //create a folder for the task
+                $taskFolder = "../../tasks/";
+                mkdir($taskFolder, 0777, true);
                 $target_dir = "../../tasks/";
                 $folderName = $taskId;
                 $target_dir = $target_dir . $folderName . "/";
