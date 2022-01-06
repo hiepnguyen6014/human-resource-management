@@ -70,13 +70,14 @@
                                 <div class="input-group w-300">
                                     <select class="form-select" name="status" id="type-task-manager">
                                         <option value="-1">Tất cả</option>
-                                        <option value="0">Mới</option>
+                                        <option value="0">Mới tạo</option>
                                         <option value="1">Đang làm</option>
                                         <option value="2">Chờ duyệt</option>
                                         <option value="3">Trả về</option>
                                         <option value="4">Trung Bình</option>
                                         <option value="5">Khá</option>
                                         <option value="6">Tốt</option>
+                                        <option value="7">Huỷ</option>
                                     </select>
                                 </div>
                             </div>
@@ -99,6 +100,7 @@
                                     <th>Tên nhiệm vụ</th>
                                     <th>Người phụ trách</th>
                                     <th>Ngày giao</th>
+                                    <th>Hạn chót</th>
                                     <th>Trạng thái</th>
                                 </tr>
                             </thead>
@@ -228,36 +230,10 @@
                     <h5 class="modal-title">Chi tiết nhiệm vụ</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body py-0">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="mt-2">
-                                <label for="title-task-view" class="form-label">Tiêu đề</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="title-task-view" disabled>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="mt-2">
-                                <label for="staff-view-task-manager" class="form-label">Người nhận</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="staff-view-task-manager" disabled>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="mt-2">
-                                <label for="deadline-task-view" class="form-label">Hạn chót</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="deadline-task-view" disabled>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="view-task-message my-3">
+                <div class="modal-body py-0" style="min-height: 400px;">
+                    <div class="view-task-message my-3" id="message-task-manager">
 
-                        <div>
+                        <!-- <div>
                             <div class="d-flex flex-row justify-content-start mb-2">
                                 <div class="p-3 receiver-message">
                                     <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, fuga
@@ -266,20 +242,27 @@
                                     <a href="/"><i class="fas fa-download btn-action"></i></a>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div>
-                            <div class="d-flex flex-row justify-content-end mb-2">
+                        <!-- <div>
+                            <div class="d-flex flex-column align-items-end mb-2">
+                                <span class="time-message"></span>
                                 <div class="p-3 border sender-message">
                                     <span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Animi voluptatem,
                                         similique adipisci natus, nesciunt quasi necessitatibus qui debitis voluptate
                                         beatae saepe. Nulla quia sint vero eum laudantium veritatis velit porro.</span>
-                                    <a href="/"><i class="fas fa-download btn-action"></i></a>
+                                </div>
+                                <div class="mt-1">
+                                <a href="/"><i class="fas fa-download btn-action"></i></a>
+                                <a href="/"><i class="fas fa-download btn-action"></i></a>
+                                <a href="/"><i class="fas fa-download btn-action"></i></a>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <form class="p-3 border" style="box-shadow: 0 0 3px black;">
+                        
+                    </div>
+                    <form class="p-3 border d-none" id="message-manager" style="box-shadow: 0 0 3px black;">
                             <div class="mb-2">
                                 <textarea class="form-control" name="message" id="message-view-task"></textarea>
                             </div>
@@ -297,9 +280,16 @@
 
                             </div>
                         </form>
-                    </div>
+
+                        <form onsubmit="return cancelTask(event)" method="post" id="form-task-0-manager">
+                            <input type="hidden" name="task_id" id="task-id-manager" value="0">
+                        </form>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer d-none controller-task-manager" id="status-0-manager">
+                    <button type="button" class="btn btn-outline-secondary w-90" data-bs-dismiss="modal">Thoát</button>
+                    <button class="btn btn-outline-secondary w-90" form="form-task-0-manager">Huỷ</button>
+                </div>
+                <div class="modal-footer d-none controller-task-manager" id="status-1-manager">
                     <button type="button" class="btn btn-outline-secondary w-90" data-bs-dismiss="modal">Thoát</button>
                     <button class="btn btn-outline-secondary w-90" form="form-task-create" id="btn-send-vacation"
                         onclick="reply()">Tạo</button>

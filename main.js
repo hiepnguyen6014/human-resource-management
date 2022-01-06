@@ -21,7 +21,7 @@ const API = {
 
     //Manager
     'ACCEPT_TASK': '/api/manager/accept-task.php',
-    'CANCEL_TASK_MANAGER': '/api/manager/cancel-task-manager.php',
+    'CANCEL_TASK': '/api/manager/cancel-task-manager.php',
     'CREATE_TASK': '/api/manager/create-task.php',
     'FILTER_TASKS_MANAGER': '/api/manager/filter-tasks-manager.php',
     'FILTER_VACATIONS_MANAGER': '/api/manager/filter-vacations-manager.php',
@@ -67,7 +67,7 @@ const API = {
 }
 
 window.onload = () => {
-    switchPage('task-staff');
+    switchPage('task-manager');
 };
 
 //check current href
@@ -395,6 +395,30 @@ function loadDataForStaffTable(page, paginationId, tableList) {
     });
 }
 
+function convertDateTime(date) {
+    // convert to HH:mm DD/MM/YYYY
+    const d = new Date(date);
+    //add 0 if < 10
+    const day = d.getDate() < 10 ? '0' + d.getDate() : d.getDate();
+    //add 0 if < 10
+    const month = d.getMonth() + 1 < 10 ? '0' + (d.getMonth() + 1) : d.getMonth() + 1;
+    //add 0 if hour < 10
+    const hours = d.getHours() < 10 ? '0' + d.getHours() : d.getHours();
+    //add 0 if minutes < 10
+    const minutes = d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes();
+    return time = `${hours}:${minutes} ${day}-${month}`;
+}
+
+function convertDateT(date) {
+    // convert to DD/MM/YYYY
+    const d = new Date(date);
+    //add 0 if day < 10
+    const day = d.getDate() < 10 ? '0' + d.getDate() : d.getDate();
+    //add 0 if month < 10
+    const month = d.getMonth() + 1 < 10 ? '0' + (d.getMonth() + 1) : d.getMonth() + 1;
+    return time = `${day}-${month}`;
+}
+
 function loadDataForTaskTableManager(page, paginationId, tableList) {
     const table = document.getElementById(tableList);
     paginationColor(paginationId, page);
@@ -402,20 +426,47 @@ function loadDataForTaskTableManager(page, paginationId, tableList) {
     dataPagination[page - 1].forEach(e => {
 
         const tr = document.createElement('tr');
-        tr.setAttribute('onclick', `showDetailTaskManager('${e.id}')`);
+        if (e.status != 7) {
+            tr.setAttribute('onclick', `showDetailTaskManager('${e.id}')`);
+        }
+        if (e.status == 7) {
+            tr.style.cursor = 'default';
+        }
         if (e.position == 1) {
             tr.classList.add('bg-info');
             tr.classList.add('bg-gradient');
         }
         tr.dataset.id = e.id;
+
         tr.innerHTML = `
                 <td>${e.task_name}</td>
                 <td>${e.username}</td>
-                <td>${e.deadline}</td>
-                <td>${e.status}</td>
+                <td>${convertDateTime(e.date_begin)}</td>
+                <td>${convertDateTime(e.deadline)}</td>
+                <td>${convertStatusTask(e.status)}</td>
                 `;
         table.appendChild(tr);
     });
+}
+
+function convertStatusTask(number) {
+    if (number == 0) {
+        return 'Mới tạo';
+    } else if (number == 1) {
+        return 'Đang làm';
+    } else if (number == 2) {
+        return 'Chờ duyệt';
+    } else if (number == 3) {
+        return 'Trả về';
+    } else if (number == 4) {
+        return 'Trung bình';
+    } else if (number == 5) {
+        return 'Khá';
+    } else if (number == 6) {
+        return 'Tốt';
+    } else if (number == 7) {
+        return 'Đã huỷ';
+    }
 }
 
 function loadDataForTaskTableStaff(page, paginationId, tableList) {
@@ -432,10 +483,10 @@ function loadDataForTaskTableStaff(page, paginationId, tableList) {
         }
         tr.dataset.id = e.id;
         tr.innerHTML = `
-                <td>${e.start_date}</td>
+                <td>${convertDateTime(e.start_date)}</td>
                 <td>${e.task_name}</td>
-                <td>${e.deadline}</td>
-                <td>${e.status}</td>
+                <td>${convertDateTime(e.deadline)}</td>
+                <td>${convertStatusTask(e.status)}</td>
                 `;
         table.appendChild(tr);
     });
@@ -1418,8 +1469,7 @@ function changePassword(e) {
 
 function createTask(e) {
     e.preventDefault();
-    const form = document.getElementById('form-task-create');
-    const formData = new FormData(form);
+
     const xhr = new XMLHttpRequest();
     xhr.open('POST', API.CREATE_TASK);
     xhr.onload = function() {
@@ -1428,7 +1478,8 @@ function createTask(e) {
 
             if (response.status === 'success') {
                 showSuccessMessage(response.message);
-                form.reset();
+                switchPage('task-manager');
+                e.target.reset();
                 document.getElementById('icon-check-date').children[0].classList.add('d-none');
                 document.getElementById('icon-check-date').children[1].classList.remove('d-none');
             } else {
@@ -1436,14 +1487,93 @@ function createTask(e) {
             }
         }
     }
-    xhr.send(formData);
+    xhr.send(new FormData(e.target));
 
 }
 
+function showFooterModalTaskManager(number) {
+    const controller = document.getElementsByClassName('controller-task-manager');
+
+    Array.from(controller).forEach(function(item) {
+        if (item.id.includes(number)) {
+            item.classList.remove('d-none');
+        } else {
+            item.classList.add('d-none');
+        }
+    })
+}
+
+function createTaskDirectMessage1(data, id) {
+    const taskDirectMessage = document.getElementById(id);
+    let div = document.createElement('div');
+    div.className = 'border-bottom p-2';
+    div.innerHTML = '';
+    let html =
+        `<div class="d-flex flex-column align-items-end mb-1">
+            <span class="time-message">${data.time}</span>
+            <div class="p-3 border sender-message">
+                <span>${data.message}</span>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">` + downloadFiles(data.file, data.task_id) +
+        "</div>";
+
+    div.innerHTML = html;
+    taskDirectMessage.appendChild(div);
+}
+
+function createTaskDirectMessage2(data, id) {
+    const taskDirectMessage = document.getElementById(id);
+    let div = document.createElement('div');
+    div.className = 'border-bottom p-2';
+    div.innerHTML = '';
+    let html =
+        `<div class="d-flex flex-column align-items-start mb-1">
+            <span class="time-message">${data.time}</span>
+            <div class="p-3 receiver-message">
+                <span>${data.message}</span>
+            </div>
+        </div>
+        <div>` + downloadFiles(data.file, data.task_id) +
+        "</div>";
+    div.innerHTML = html;
+    taskDirectMessage.appendChild(div);
+}
+
+
+
 function showDetailTaskManager(id) {
     const modal = new bootstrap.Modal(document.getElementById('view-task-manager'));
-    modal.show();
 
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', API.VIEW_DETAIL_TASK_MANAGER + '?id=' + id);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            const response = JSON.parse(this.responseText);
+
+            if (response.status == 'success') {
+                showFooterModalTaskManager(response.data[0].status);
+                modal.show();
+
+                //set data
+                document.getElementById('task-id-manager').value = response.data[0].task_id;
+
+                const taskDirectMessage = 'message-task-manager';
+                document.getElementById(taskDirectMessage).innerHTML = '';
+
+                response.data.forEach(function(item, index) {
+                    if (index % 2 === 0) {
+                        createTaskDirectMessage1(item, taskDirectMessage);
+                    } else {
+                        createTaskDirectMessage2(item, taskDirectMessage);
+                    }
+                })
+
+            }
+        }
+    }
+    xhr.send();
 }
 
 function logout() {
@@ -1452,6 +1582,26 @@ function logout() {
         //redirect to login page
         window.location.href = '/logout.php';
     })
+}
+
+function cancelTask(e) {
+    e.preventDefault();
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', API.CANCEL_TASK);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            const response = JSON.parse(this.responseText);
+
+            if (response.status == 'success') {
+                showSuccessMessage(response.message);
+                switchPage('task-manager');
+            } else {
+                showErrorMessage(response.message);
+            }
+        }
+    }
+    xhr.send(new FormData(e.target));
 }
 
 function addOffice(e) {
@@ -1978,7 +2128,7 @@ if (currentHref.includes('admin/')) {
 
             const MAX_SIZE_FILE = 100000000; // 100MB
             //check size
-            if (sumSize > MAX_SIZE_FILE || check == 0) {
+            if (sumSize > MAX_SIZE_FILE) {
                 this.value = null;
                 showErrorMessage('Vui lòng chọn gói tệp tin nhỏ hơn 100MB');
                 return;
@@ -2346,7 +2496,7 @@ if (currentHref.includes('admin/')) {
                             loadDataForTaskTableManager(1, vacationPaginationId, vacationList);
                         } else {
                             const table = document.getElementById(vacationList);
-                            table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
+                            table.innerHTML = '<tr><td colspan="5">Không có dữ liệu</td></tr>';
                         }
 
                     }
@@ -2377,7 +2527,7 @@ if (currentHref.includes('admin/')) {
                                 loadDataForTaskTableManager(1, vacationPaginationId, vacationList);
                             } else {
                                 const table = document.getElementById(vacationList);
-                                table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
+                                table.innerHTML = '<tr><td colspan="5">Không có dữ liệu</td></tr>';
                             }
                         }
                     }
@@ -2418,7 +2568,7 @@ if (currentHref.includes('admin/')) {
                                 loadDataForTaskTableManager(1, vacationPaginationId, vacationList);
                             } else {
                                 const table = document.getElementById(vacationList);
-                                table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
+                                table.innerHTML = '<tr><td colspan="5">Không có dữ liệu</td></tr>';
                             }
                         }
                     }

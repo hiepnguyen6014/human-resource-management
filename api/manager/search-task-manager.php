@@ -15,12 +15,12 @@
         
         $search = "%$search%";
         if ($status == -1) {
-            $sql = "SELECT `task_id` as `id`, `username`, `title` as `task_name`, `date_begin` as `deadline`, `status` FROM `task` WHERE";
+            $sql = "SELECT `task_id` as `id`, `username`, `title` as `task_name`, `date_begin`, `deadline`, `status` FROM `task` WHERE";
             $sql .= "`title` LIKE ? ORDER BY `date_begin` DESC";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param('s', $search);
         }else {
-            $sql = "SELECT `task_id` as `id`, `username`, `title` as `task_name`, `date_begin` as `deadline`, `status` FROM `task` WHERE `status` = ?";
+            $sql = "SELECT `task_id` as `id`, `username`, `title` as `task_name`, `date_begin`, `deadline`, `status` FROM `task` WHERE `status` = ?";
             $sql .= " AND `title` LIKE ? ORDER BY `date_begin` DESC";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param('ss', $status, $search);

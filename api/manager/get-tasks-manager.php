@@ -6,7 +6,7 @@
         require_once '../../conn.php';
         $conn = get_connection();
 
-        $sql = "SELECT `task_id` as `id`, `username`, `title` as `task_name`, `date_begin` as `deadline`, `status` FROM `task` ORDER BY `date_begin` DESC";
+        $sql = "SELECT `task_id` as `id`, `username`, `title` as `task_name`,`deadline`, `date_begin`, `status` FROM `task` ORDER BY `date_begin` DESC";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $result = $stmt->get_result();

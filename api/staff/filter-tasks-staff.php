@@ -18,7 +18,7 @@
         $conn = get_connection();
         if ($type == -1) {
             $sql = "SELECT `task_id` as `id`, `title` as `task_name`, `deadline`, `status`, `date_begin` as `start_date` FROM `task`";
-            $sql .= "WHERE `username` = ? ORDER BY `date_begin` DESC";
+            $sql .= "WHERE `username` = ? AND `status` != 7 ORDER BY `date_begin` DESC";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param('s', $username);
         }else {

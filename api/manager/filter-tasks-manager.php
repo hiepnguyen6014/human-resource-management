@@ -15,10 +15,10 @@
         $conn = get_connection();
 
         if ($type == -1) {
-            $sql = "SELECT `task_id` as `id`, `username`, `title` as `task_name`, `date_begin` as `deadline`, `status` FROM `task` ORDER BY `date_begin` DESC";
+            $sql = "SELECT `task_id` as `id`, `username`, `title` as `task_name`, `date_begin`, `deadline`, `status` FROM `task` ORDER BY `date_begin` DESC";
             $stmt = $conn->prepare($sql);
         }else {
-            $sql = "SELECT `task_id` as `id`, `username`, `title` as `task_name`, `date_begin` as `deadline`, `status` FROM `task` WHERE `status` = ? ORDER BY `date_begin` DESC";
+            $sql = "SELECT `task_id` as `id`, `username`, `title` as `task_name`, `date_begin`, `deadline`, `status` FROM `task` WHERE `status` = ? ORDER BY `date_begin` DESC";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param('s', $type);
         }
