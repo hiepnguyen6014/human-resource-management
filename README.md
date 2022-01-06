@@ -1,1 +1,1 @@
-# 51900683-web
+docker-compose up -d

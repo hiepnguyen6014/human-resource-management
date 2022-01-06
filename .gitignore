@@ -1,3 +1,7 @@
-tasks/
+mysql/data/
 
-vacations/
+www/vacations/
+
+www/tasks/
+
+www/images/
