@@ -1550,6 +1550,7 @@ function showDetailTaskManager(id) {
     xhr.open('GET', API.VIEW_DETAIL_TASK_MANAGER + '?id=' + id);
     xhr.onload = function() {
         if (this.status == 200) {
+            console.log(this.responseText);
             const response = JSON.parse(this.responseText);
 
             if (response.status == 'success') {
