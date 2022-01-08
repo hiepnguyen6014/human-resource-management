@@ -12,7 +12,7 @@
         $sql = "SELECT `task_feedback`.`task_id` as `task_id`, `message`, `time`, `file`, `sender_user`, `receiver_user`, `status`";
         $sql .= " FROM `task_feedback`, `task`";
         $sql .= " WHERE `task`.`task_id` = `task_feedback`.`task_id`";
-        $sql .= " AND `task`.`task_id` = ? ORDER BY `time` DESC";
+        $sql .= " AND `task`.`task_id` = ? ORDER BY `time` ASC";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('i', $id);
         $stmt->execute();

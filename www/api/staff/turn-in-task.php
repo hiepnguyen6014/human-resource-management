@@ -2,9 +2,7 @@
     session_start();
     header('Content-Type: application/json; charset=utf-8');
 
-
-
-    if (isset($_SESSION['type']) && $_SESSION['type'] == 1) {
+    if (isset($_SESSION['type']) && $_SESSION['type'] == 2) {
         function saveTaskFile($files, $taskId) {
             //create a folder for the task
             
@@ -68,48 +66,45 @@
                 return '';
             }
         }
-        if (count($_POST) == 4) {
 
-            $files = $_FILES['files'];
+        $files = $_FILES['files'];
 
-            $username = $_POST['staff'];
-            $title = $_POST['title'];
-            $deadline = $_POST['deadline'];
-            $message = $_POST['description'];
 
-            $sender = $_SESSION['username'];
+        require_once '../../conn.php';
+        $conn = get_connection();
 
-            require_once '../../conn.php';
-            $conn = get_connection();
-            $sql = "INSERT INTO `task` (`title`, `deadline`, `username`) VALUES (?, ?, ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param('sss', $title, $deadline, $username);
-            $stmt->execute();
+        $task_id = $_POST['id'];
+        $message = $_POST['message'];
 
-            $task_id = $stmt->insert_id;
+        $files_name = saveTaskFile($files, $task_id);
 
-            $files_name = saveTaskFile($files, $task_id);
-
-            if ($files_name != '') {
-                $sql = "INSERT INTO `task_feedback`(`task_id`, `message`, `file`, `sender_user`, `receiver_user`) VALUES";
-                $sql .= "(?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO `task_feedback`(`task_id`, `message`, `file`) VALUES";
+                $sql .= "(?, ?, ?)";
                 $stmt = $conn->prepare($sql);
-                $stmt->bind_param('issss', $task_id, $message, $files_name, $sender, $username);
+                $stmt->bind_param('iss', $task_id, $message, $files_name);
                 $stmt->execute();
 
-                echo json_encode(array("status" => "success", "message" => 'Thêm công việc thành công'));
-            } else {
-                // delete task
-                $sql = "DELETE FROM `task` WHERE `task`.`id` = ?";
+                $sql = "UPDATE `task` SET `status`= 2 WHERE `task_id`=?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param('i', $task_id);
                 $stmt->execute();
 
-                echo json_encode(array("status" => "error", "message" => 'Thêm công việc thất bại'));
-            }
+                // check affected rows
+                if ($stmt->affected_rows > 0) {
+                    $data = array(
+                        "message" => "Gửi thành công",
+                        "task" => array(
+                            "task_id" => $task_id,
+                            "message" => $message,
+                            "file" => $files_name,
+                            "time" => date("Y-m-d H:i:s")
+                        )
+                    );
 
-            
-        }
+                    die(json_encode(array("status" => "success", "data" => $data)));
+                } else {
+                    die(json_encode(array("status" => "error", "message" => "Gửi thất bại")));
+                }
     }
     else {
         echo json_encode(array('status' => 'error', 'message' => 'Bạn không có quyền truy cập trang này'));

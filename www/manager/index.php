@@ -73,11 +73,10 @@
                                         <option value="0">Mới tạo</option>
                                         <option value="1">Đang làm</option>
                                         <option value="2">Chờ duyệt</option>
-                                        <option value="3">Trả về</option>
-                                        <option value="4">Trung Bình</option>
-                                        <option value="5">Khá</option>
-                                        <option value="6">Tốt</option>
-                                        <option value="7">Huỷ</option>
+                                        <option value="3">Trung Bình</option>
+                                        <option value="4">Khá</option>
+                                        <option value="5">Tốt</option>
+                                        <option value="6">Huỷ</option>
                                     </select>
                                 </div>
                             </div>
@@ -128,12 +127,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form onsubmit="return createTask(event)" method="post" id="form-task-create" class="row" enctype="multipart/form-data">
+                    <form onsubmit="return createTask(event)" method="post" id="form-task-create" class="row"
+                        enctype="multipart/form-data">
                         <div class="col-lg-6">
                             <div class="mt-2">
                                 <label for="title-task-create" class="form-label">Tiêu đề</label>
                                 <div class="input-group">
-                                    <input type="text" name="title" class="form-control" id="title-task-create" required>
+                                    <input type="text" name="title" class="form-control" id="title-task-create"
+                                        required>
                                 </div>
                             </div>
                         </div>
@@ -141,7 +142,8 @@
                             <div class="mt-2">
                                 <label for="deadline-task-create" class="form-label">Hạn chót</label>
                                 <div class="input-group">
-                                    <input type="datetime-local" id="deadline-task-create" name="deadline" class="form-control" required>
+                                    <input type="datetime-local" id="deadline-task-create" name="deadline"
+                                        class="form-control" required>
                                     <span class="input-group-text" id="icon-check-date">
                                         <i class="far fa-check-circle d-none text-success fz-24"></i>
                                         <i class="far fa-times-circle text-danger fz-24"></i>
@@ -170,8 +172,8 @@
                         <div class="mt-2">
                             <label for="description-task-create" class="form-label">Mô tả</label>
                             <div class="input-group">
-                                <textarea id="description-task-create" name="description"
-                                    class="form-control" required></textarea>
+                                <textarea id="description-task-create" name="description" class="form-control"
+                                    required></textarea>
                             </div>
                         </div>
                         <!-- <input type="hidden" id="id-add-vacation-send">
@@ -181,7 +183,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary w-90" data-bs-dismiss="modal">Thoát</button>
-                    <button class="btn btn-outline-secondary w-90" form="form-task-create" id="btn-send-vacation">Tạo</button>
+                    <button class="btn btn-outline-secondary w-90" form="form-task-create"
+                        id="btn-send-vacation">Tạo</button>
                 </div>
             </div>
         </div>
@@ -232,67 +235,51 @@
                 </div>
                 <div class="modal-body py-0" style="min-height: 400px;">
                     <div class="view-task-message my-3" id="message-task-manager">
-
-                        <!-- <div>
-                            <div class="d-flex flex-row justify-content-start mb-2">
-                                <div class="p-3 receiver-message">
-                                    <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, fuga
-                                        asperiores? Id, earum nemo dolores nam adipisci, labore, dolor atque vero
-                                        numquam a et maxime. Dolor repellendus quo totam iure?</span>
-                                    <a href="/"><i class="fas fa-download btn-action"></i></a>
-                                </div>
-                            </div>
-                        </div> -->
-
-                        <!-- <div>
-                            <div class="d-flex flex-column align-items-end mb-2">
-                                <span class="time-message"></span>
-                                <div class="p-3 border sender-message">
-                                    <span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Animi voluptatem,
-                                        similique adipisci natus, nesciunt quasi necessitatibus qui debitis voluptate
-                                        beatae saepe. Nulla quia sint vero eum laudantium veritatis velit porro.</span>
-                                </div>
-                                <div class="mt-1">
-                                <a href="/"><i class="fas fa-download btn-action"></i></a>
-                                <a href="/"><i class="fas fa-download btn-action"></i></a>
-                                <a href="/"><i class="fas fa-download btn-action"></i></a>
-                                </div>
-                            </div>
-                        </div> -->
-
-                        
+                        <!-- Direct -->
                     </div>
-                    <form class="p-3 border d-none" id="message-manager" style="box-shadow: 0 0 3px black;">
-                            <div class="mb-2">
-                                <textarea class="form-control" name="message" id="message-view-task"></textarea>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-2">
-                                    <button type="button" class="btn btn-outline-secondary w-90"
-                                        data-bs-dismiss="modal">Gửi</button>
-                                </div>
-                                <div class="col-lg-5">
-                                    <input type="date" name="deadline" class="form-control">
-                                </div>
-                                <div class="col-lg-5">
-                                    <input type="file" name="files" id="files-view-task" class="form-control">
-                                </div>
 
-                            </div>
-                        </form>
 
-                        <form onsubmit="return cancelTask(event)" method="post" id="form-task-0-manager">
-                            <input type="hidden" name="task_id" id="task-id-manager" value="0">
-                        </form>
+                    <form onsubmit="return cancelTask(event)" method="post" id="form-task-0-manager">
+                        <input type="hidden" name="task_id" id="task-id-manager">
+                    </form>
                 </div>
-                <div class="modal-footer d-none controller-task-manager" id="status-0-manager">
+                <div class="modal-footer d-none controller-task" id="status-0-manager">
                     <button type="button" class="btn btn-outline-secondary w-90" data-bs-dismiss="modal">Thoát</button>
                     <button class="btn btn-outline-secondary w-90" form="form-task-0-manager">Huỷ</button>
                 </div>
-                <div class="modal-footer d-none controller-task-manager" id="status-1-manager">
+                <div class="modal-footer d-none controller-task" id="status-1-manager">
                     <button type="button" class="btn btn-outline-secondary w-90" data-bs-dismiss="modal">Thoát</button>
-                    <button class="btn btn-outline-secondary w-90" form="form-task-create" id="btn-send-vacation"
-                        onclick="reply()">Tạo</button>
+                </div>
+                <div class="modal-footer d-none controller-task" id="status-2-manager">
+                    <div class="row w-100">
+                        <form onsubmit="return rejectTask(event)" class="p-1 w-100 border" id="reject-task-manager"
+                            enctype="multipart/form-data">
+                            <div class="row g-0">
+                                <textarea class="form-control" name="message" id="message-reject-task" required>
+                                </textarea>
+                            </div>
+                            <div class="row g-1">
+                                <div class="col-lg-5">
+
+                                    <label for="new-deadline-task">Hạn mới</label>
+                                    <input type="datetime-local" id="new-deadline-task" name="time"
+                                        class="form-control">
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="files-reject-task">File đính kèm</label>
+                                    <input type="file" name="files[]" id="files-reject-task" class="form-control"
+                                        multiple required>
+                                </div>
+                                <div class="col-lg-1 d-flex">
+                                    <button class="btn btn-outline-primary">Giao</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="row w-100 d-flex justify-content-center">
+                        <button class="btn btn-success w-90">Duyệt</button>
+                    </div>
                 </div>
             </div>
         </div>

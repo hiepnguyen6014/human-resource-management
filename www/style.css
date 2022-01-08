@@ -12,6 +12,7 @@ button {
 }
 
 body {
+    scroll-behavior: smooth;
     margin: 0;
     box-sizing: inherit;
     font-family: var(--main-font);
@@ -680,10 +681,12 @@ main {
 
 .btn-action {
     cursor: pointer;
-    padding: 6px 13px;
-    background-color: gray;
+    padding: 6px;
+    background-color: #535353;
     color: white;
-    border-radius: 4px;
+    font-size: 0.8rem;
+    border-radius: 29px;
+    border: 1px solid;
 }
 
 .view-task-message {
@@ -780,3 +783,10 @@ input[type=radio]+label>img {
 
 
 /* end */
+
+#send-task-staff {
+    box-shadow: 0 0 2px black;
+}
+
+
+/* input files text */

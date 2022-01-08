@@ -135,50 +135,33 @@
                 </div>
                 <div class="modal-body py-0" style="min-height: 400px;">
                     <div class="view-task-message my-3" id="task-dm-staff">
-                        <!-- <div>
-                            <div class="d-flex flex-row justify-content-start mb-2">
-                                <div class="p-3 receiver-message">
-                                    <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, fuga
-                                        asperiores? Id, earum nemo dolores nam adipisci, labore, dolor atque vero
-                                        numquam a et maxime. Dolor repellendus quo totam iure?</span>
-                                    <a href="/"><i class="fas fa-download btn-action"></i></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="d-flex flex-row justify-content-end mb-2">
-                                <div class="p-3 border sender-message">
-                                    <span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Animi voluptatem,
-                                        similique adipisci natus, nesciunt quasi necessitatibus qui debitis voluptate
-                                        beatae saepe. Nulla quia sint vero eum laudantium veritatis velit porro.</span>
-                                    <a href="/"><i class="fas fa-download btn-action"></i></a>
-                                </div>
-                            </div>
-                        </div> -->
 
                     </div>
-                    <form class="p-3 border d-none" style="box-shadow: 0 0 3px black;" id="form-reply-task-staff">
-                        <div class="mb-2">
-                            <textarea class="form-control" name="message" id="message-view-task"></textarea>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-1">
-                                <button type="button" class="btn btn-outline-secondary"
-                                    data-bs-dismiss="modal">Gửi</button>
-                            </div>
-                            <div class="col-lg-11">
-                                <input type="file" name="files" id="files-view-task" class="form-control">
-                            </div>
 
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <form onsubmit="return startTask(event)" class="d-none" method="post" id="start-task-form">
+                    <form onsubmit="return startTask(event)" method="post" id="start-task-form">
                         <input type="hidden" name="task_id" id="task_id-start-task">
                     </form>
-                    <button class="btn btn-outline-secondary w-90" form="start-task-form" id="btn-send-vacation">Bắt đầu</button>
+                </div>
+
+
+                <div class="modal-footer d-none controller-task" id="status-0-staff">
+                    
+                    <button class="btn btn-outline-secondary w-90" form="start-task-form" id="btn-send-vacation">Bắt
+                        đầu</button>
+                </div>
+                <div class="modal-footer d-none controller-task" id="status-1-staff" style="position: relative;">
+                    <form onsubmit="return turnInTask(event)" class="p-1 w-100 border" id="send-task-staff"
+                        enctype="multipart/form-data">
+                        <div class="row g-0">
+                            <div class="col-lg-8">
+                                <textarea class="form-control" name="message" id="message-view-task" required></textarea>
+                            </div>
+                            <div class="ps-2 col-lg-4">
+                                <input type="file" name="files[]" id="files-reply-task" class="form-control" multiple required>
+                            </div>
+                        </div>
+                    </form>
+                    <button class="btn btn-outline-secondary w-90" form="send-task-staff">Gửi</button>
                 </div>
             </div>
         </div>

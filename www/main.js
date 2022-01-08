@@ -44,6 +44,7 @@ const API = {
     'SUBMIT_TASK': '/api/staff/submit-task.php',
     'VIEW_DETAIL_TASK_STAFF': '/api/staff/view-detail-task-staff.php',
     'VIEW_TASK_STAFF': '/api/staff/view-task-staff.php',
+    'TURN_IN_TASK': '/api/staff/turn-in-task.php',
 
     //Other
     'AGREE_VACATION_ALL': '/api/agree-vacation.php',
@@ -68,6 +69,17 @@ const API = {
 
 window.onload = () => {
     switchPage('task-manager');
+
+    //easy way to live pageS
+    /* setInterval(() => {
+        const mains = document.getElementsByTagName('main');
+        Array.from(mains).forEach(main => {
+            if (!main.classList.contains('d-none')) {
+                switchPage(main.id);
+                console.log('refresh');
+            }
+        });
+    }, 1000); */
 };
 
 //check current href
@@ -427,7 +439,7 @@ function loadDataForTaskTableManager(page, paginationId, tableList) {
 
         const tr = document.createElement('tr');
         if (e.status != 7) {
-            tr.setAttribute('onclick', `showDetailTaskManager('${e.id}')`);
+            tr.setAttribute('onclick', `showDetailTaskManager(event, '${e.id}')`);
         }
         if (e.status == 7) {
             tr.style.cursor = 'default';
@@ -501,6 +513,7 @@ function downloadFiles(files, id) {
     filesSplit.forEach(e => {
         const buttonDownload = document.createElement('a');
         buttonDownload.className = 'mx-1';
+        buttonDownload.title = e;
         buttonDownload.href = '/tasks/' + id + '/' + e;
         buttonDownload.target = '_blank';
         buttonDownload.innerHTML = iconDownload;
@@ -511,43 +524,38 @@ function downloadFiles(files, id) {
     return html;
 }
 
-function showDetailTaskStaff(id) {
-    const detailModal = document.getElementById('view-task-staff');
-    const modal = new bootstrap.Modal(detailModal)
-
-    document.getElementById('task_id-start-task').value = id;
+function rejectTask(e) {
+    e.preventDefault();
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API.VIEW_TASK_STAFF + '?id=' + id);
+    xhr.open('POST', API.REJECT_TASK);
     xhr.onload = function() {
-        if (this.status == 200) {
-            const response = JSON.parse(this.responseText);
-            console.log(response);
-            if (response.status == 'success') {
-                modal.show();
-                const taskDirectMessage = document.getElementById('task-dm-staff');
-                if (response.data.length > 1) {;
-                } else {
-                    const data = response.data[0];
-                    taskDirectMessage.innerHTML = '';
-                    let div = document.createElement('div');
-                    div.innerHTML = '';
-                    let html =
-                        `
-                        <div class="d-flex flex-row justify-content-start mb-2">
-                            <div class="p-3 receiver-message">
-                                <span>${data.message}</span>` +
-                        downloadFiles(data.file, data.task_id) + "</div></div>";
+        const data = JSON.parse(xhr.responseText);
+        if (data.status == 'success') {
+            showSuccessMessage(data.data.message);
 
-                    div.innerHTML = html;
-                    taskDirectMessage.appendChild(div);
-                }
-            }
+            // reload page
+            switchPage('task-manager');
+
+            e.target.reset();
+
+            const id = 'message-task-manager'
+            createTaskDirectMessage1(data.data.task, id);
+
+            scrollBottom(id);
+
+            //show footer modal
+            showFooterModalTask(1);
+
+        } else {
+            showErrorMessage(data.message);
         }
-    }
-    xhr.send();
-}
+    };
+    const data = new FormData(e.target);
+    data.append('id', document.getElementById('task-id-manager').value);
+    xhr.send(data);
 
+}
 
 function startTask(e) {
     e.preventDefault();
@@ -556,10 +564,12 @@ function startTask(e) {
     xhr.open('POST', API.START_TASK);
     xhr.onload = function() {
         if (this.status == 200) {
+            console.log(this.responseText);
             const response = JSON.parse(this.responseText);
             if (response.status == 'success') {
                 showSuccessMessage(response.message);
                 switchPage('task-staff');
+                showFooterModalTask(1);
             }
         }
     }
@@ -567,6 +577,49 @@ function startTask(e) {
     xhr.send(new FormData(e.target));
 }
 
+function turnInTask(e) {
+    e.preventDefault();
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', API.TURN_IN_TASK);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            const response = JSON.parse(this.responseText);
+
+            if (response.status == 'success') {
+                showSuccessMessage(response.data.message);
+
+                //reload page
+                switchPage('task-staff');
+
+                const id = 'task-dm-staff'
+                createTaskDirectMessage1(response.data.task, id);
+
+                scrollBottom(id);
+
+                //reset form
+                e.target.reset();
+
+                //show footer modal
+                showFooterModalTask(2);
+            } else {
+                showErrorMessage(response.message);
+            }
+
+        }
+    }
+    const data = new FormData(e.target)
+
+    data.append('id', document.getElementById('task_id-start-task').value);
+    xhr.send(data);
+}
+
+function scrollBottom(id) {
+    setTimeout(() => {
+        const element = document.getElementById(id);
+        element.scrollTop = element.scrollHeight;
+    }, 200);
+}
 
 function prePag(pagination, list) {
     let currentPage;
@@ -1474,6 +1527,7 @@ function createTask(e) {
     xhr.open('POST', API.CREATE_TASK);
     xhr.onload = function() {
         if (this.status == 200) {
+            console.log(this.responseText);
             const response = JSON.parse(this.responseText);
 
             if (response.status === 'success') {
@@ -1491,8 +1545,8 @@ function createTask(e) {
 
 }
 
-function showFooterModalTaskManager(number) {
-    const controller = document.getElementsByClassName('controller-task-manager');
+function showFooterModalTask(number) {
+    const controller = document.getElementsByClassName('controller-task');
 
     Array.from(controller).forEach(function(item) {
         if (item.id.includes(number)) {
@@ -1542,7 +1596,8 @@ function createTaskDirectMessage2(data, id) {
 
 
 
-function showDetailTaskManager(id) {
+function showDetailTaskManager(event, id) {
+
     const modal = new bootstrap.Modal(document.getElementById('view-task-manager'));
 
 
@@ -1550,17 +1605,19 @@ function showDetailTaskManager(id) {
     xhr.open('GET', API.VIEW_DETAIL_TASK_MANAGER + '?id=' + id);
     xhr.onload = function() {
         if (this.status == 200) {
-            console.log(this.responseText);
             const response = JSON.parse(this.responseText);
+            console.log(response);
 
             if (response.status == 'success') {
-                showFooterModalTaskManager(response.data[0].status);
+                showFooterModalTask(response.data[0].status);
                 modal.show();
 
                 //set data
+
                 document.getElementById('task-id-manager').value = response.data[0].task_id;
 
                 const taskDirectMessage = 'message-task-manager';
+                scrollBottom(taskDirectMessage);
                 document.getElementById(taskDirectMessage).innerHTML = '';
 
                 response.data.forEach(function(item, index) {
@@ -1571,6 +1628,42 @@ function showDetailTaskManager(id) {
                     }
                 })
 
+            }
+        }
+    }
+    xhr.send();
+}
+
+function showDetailTaskStaff(id) {
+    const detailModal = document.getElementById('view-task-staff');
+    const modal = new bootstrap.Modal(detailModal)
+
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', API.VIEW_TASK_STAFF + '?id=' + id);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            const response = JSON.parse(this.responseText);
+            console.log(response);
+            if (response.status == 'success') {
+                showFooterModalTask(response.data[0].status);
+                console.log(response.data[0].status);
+                modal.show();
+
+                document.getElementById('task_id-start-task').value = id;
+
+                const taskDirectMessage = 'task-dm-staff';
+                document.getElementById(taskDirectMessage).innerHTML = '';
+
+                response.data.forEach(function(item, index) {
+                    if (index % 2 === 1) {
+                        createTaskDirectMessage1(item, taskDirectMessage);
+                    } else {
+                        createTaskDirectMessage2(item, taskDirectMessage);
+                    }
+                })
+
+                scrollBottom(taskDirectMessage);
             }
         }
     }
