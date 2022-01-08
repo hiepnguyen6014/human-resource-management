@@ -788,5 +788,9 @@ input[type=radio]+label>img {
     box-shadow: 0 0 2px black;
 }
 
+#rate-task {
+    z-index: 9999999999;
+}
+
 
 /* input files text */

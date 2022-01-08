@@ -190,36 +190,38 @@
         </div>
     </div>
 
-    <div class="modal fade mt-5" id="rate-task">
-        <div class="modal-dialog mt-5">
+    <div class="modal fade" id="rate-task">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="flex justify-content-center">
-                    <div class="row">
+                    <div class="row mt-3">
                         <div class="col text-center">
-                            <h5 class="font-weight-bold">How'd stream go?</h5>
-                            <p class="text-muted ">Tell us about stream watching experience</p>
+                            <h5 class="font-weight-bold">Đánh giá</h5>
                         </div>
                     </div>
-                    <div class="row justify-content-center">
-                        <div class="col-auto example-block text-center">
-                            <label class="radio-inline">
-                                <input type="radio" name="emotion" id="sad" class="input-hidden" />
-                                <img src="https://img.icons8.com/color/100/000000/boring.png" width="84" height="84">
-                            </label>
+                    <form>
+                        <div class="row justify-content-center">
+                            <div class="col-auto example-block text-center">
+                                <label class="radio-inline">
+                                    <input type="radio" name="emotion" id="rate1" class="input-hidden" />
+                                    <img src="https://img.icons8.com/color/100/000000/angry.png" width="84" height="84">
+                                </label>
+                            </div>
+                            <div class="col-auto example-block text-center">
+                                <label class="radio-inline">
+                                    <input type="radio" name="emotion" id="rate2" class="input-hidden" />
+                                    <img src="https://img.icons8.com/color/100/000000/boring.png" width="84"
+                                        height="84">
+                                </label>
+                            </div>
+                            <div class="col-auto example-block text-center">
+                                <label class="radio-inline">
+                                    <input type="radio" name="emotion" id="rate3" class="input-hidden" />
+                                    <img src="https://img.icons8.com/color/100/000000/happy.png" width="84" height="84">
+                                </label>
+                            </div>
                         </div>
-                        <div class="col-auto example-block text-center">
-                            <label class="radio-inline"> <input type="radio" name="emotion" id="happy"
-                                    class="input-hidden" />
-                                <img src="https://img.icons8.com/color/100/000000/bored.png" width="84" height="84">
-                            </label>
-                        </div>
-                        <div class="col-auto example-block text-center">
-                            <label class="radio-inline"> <input type="radio" name="emotion" id="exicetd"
-                                    class="input-hidden" />
-                                <img src="https://img.icons8.com/color/100/000000/smiling.png " width="84" height="84">
-                            </label>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -255,6 +257,7 @@
                         <form onsubmit="return rejectTask(event)" class="p-1 w-100 border" id="reject-task-manager"
                             enctype="multipart/form-data">
                             <div class="row g-0">
+                                <label for="message-reject-task">Tin nhắn</label>
                                 <textarea class="form-control" name="message" id="message-reject-task" required>
                                 </textarea>
                             </div>
@@ -270,17 +273,23 @@
                                     <input type="file" name="files[]" id="files-reject-task" class="form-control"
                                         multiple required>
                                 </div>
-                                <div class="col-lg-1 d-flex">
-                                    <button class="btn btn-outline-primary">Giao</button>
+                                <div class="col-lg-1 d-flex justify-content-center">
+                                    <button class="btn btn-outline-primary w-100 h-100">Gửi lại</button>
                                 </div>
                             </div>
                         </form>
-
                     </div>
-                    <div class="row w-100 d-flex justify-content-center">
-                        <button class="btn btn-success w-90">Duyệt</button>
+                    <div class="d-flex justify-content-center w-100">
+                        <button class="btn btn-success" onclick="return acceptTask()">
+                            Hoàn thành
+                        </button>
                     </div>
+                    
                 </div>
+                <div class="modal-footer d-none controller-task" id="status-footer">
+                        <button type="button" class="btn btn-outline-secondary w-90"
+                            data-bs-dismiss="modal">Thoát</button>
+                    </div>
             </div>
         </div>
     </div>

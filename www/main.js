@@ -469,12 +469,10 @@ function convertStatusTask(number) {
     } else if (number == 2) {
         return 'Chờ duyệt';
     } else if (number == 3) {
-        return 'Trả về';
-    } else if (number == 4) {
         return 'Trung bình';
-    } else if (number == 5) {
+    } else if (number == 4) {
         return 'Khá';
-    } else if (number == 6) {
+    } else if (number == 5) {
         return 'Tốt';
     } else if (number == 7) {
         return 'Đã huỷ';
@@ -555,6 +553,42 @@ function rejectTask(e) {
     data.append('id', document.getElementById('task-id-manager').value);
     xhr.send(data);
 
+}
+
+function acceptTask(e) {
+    const modal = new bootstrap.Modal(document.getElementById('rate-task'));
+    modal.show();
+
+
+    (function() {
+        // select input have name "emotion"
+        const emotion = document.querySelectorAll('input[name="emotion"]');
+        // check if emotion is checked
+        emotion.forEach(e => {
+            e.addEventListener('change', function() {
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', API.ACCEPT_TASK);
+                xhr.onload = function() {
+                    if (xhr.status == 200) {
+                        console.log(xhr.responseText);
+                        const data = JSON.parse(xhr.responseText);
+                        modal.hide();
+                        if (data.status == 'success') {
+                            showSuccessMessage(data.message);
+
+                            showFooterModalTask(3);
+                        } else {
+                            showErrorMessage(data.message);
+                        }
+                    }
+                }
+                const data = new FormData();
+                data.append('id', document.getElementById('task-id-manager').value);
+                data.append('rate', e.id);
+                xhr.send(data);
+            });
+        });
+    })();
 }
 
 function startTask(e) {
@@ -1548,13 +1582,19 @@ function createTask(e) {
 function showFooterModalTask(number) {
     const controller = document.getElementsByClassName('controller-task');
 
+    let i = 0;
     Array.from(controller).forEach(function(item) {
         if (item.id.includes(number)) {
             item.classList.remove('d-none');
+            i++;
         } else {
             item.classList.add('d-none');
         }
     })
+
+    if (i === 0) {
+        document.getElementById('status-footer').classList.remove('d-none');
+    }
 }
 
 function createTaskDirectMessage1(data, id) {
