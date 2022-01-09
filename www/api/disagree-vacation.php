@@ -20,6 +20,20 @@
         $stmt->bind_param('si',$reason_disagree,$vacation_id);
         $stmt->execute();
 
+        if ($stmt->affected_rows > 0) {
+            $result = array(
+                'status' => 'success',
+                'message' => 'Đã từ chối yêu cầu nghỉ phép'
+            );
+        } else {
+            $result = array(
+                'status' => 'error',
+                'message' => 'Đã từ chối yêu cầu nghỉ phép'
+            );
+        }
+
+        echo json_encode($result);
+
     }
     else {
         echo json_encode(array('status' => 'error', 'message' => 'You are not authorized to access this page'));

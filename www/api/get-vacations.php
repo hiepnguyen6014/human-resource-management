@@ -7,7 +7,7 @@
         $conn = get_connection();
         
         $pos = '1';
-        $sql = "select vacation_id,`start_date`,vacation.username,`name`,`seen`,`status` from `vacation`,`profiles`,`offices`
+        $sql = "select vacation_id,`start_date`,`start_date_real`,vacation.username,`name`,`seen`,`status` from `vacation`,`profiles`,`offices`
         where vacation.username = profiles.username and profiles.office_code = offices.code and profiles.position = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('i',$pos);
@@ -24,7 +24,7 @@
                     'send_at' => $rows['start_date'],
                     'username' => $rows['username'],
                     'office' => $rows['name'],
-                    'date_off' => $rows['start_date'],
+                    'date_off' => $rows['start_date_real'],
                     'status' => $rows['status']
                 );
             }

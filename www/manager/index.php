@@ -83,7 +83,7 @@
 
                             <div class="btn-group">
                                 <button class="btn btn-outline-primary" data-bs-toggle="modal"
-                                    data-bs-target="#create-task">
+                                    data-bs-target="#add-vacation-send">
                                     <i class="fas fa-plus"></i>
                                     <span>Thêm</span>
                                 </button>
@@ -599,7 +599,7 @@
                             </div>
 
                             <div class="btn-group">
-                                <button class="btn btn-outline-primary" onclick="offRequest()">
+                                <button class="btn btn-outline-primary" onclick="addVacationManager()">
                                     <i class="fas fa-plus"></i>
                                     <span>Thêm</span>
                                 </button>
@@ -722,13 +722,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
+                    <form class="row" id="add-vacation-send-form" onsubmit="return createOffRequest(event)">
                         <div class="col-lg-4">
                             <div class="mt-2">
                                 <label for="date-add-vacation-send" class="form-label">Ngày bắt đầu</label>
                                 <div class="input-group">
-                                    <input type="date" id="date-add-vacation-send" class="form-control">
-                                    <span class="input-group-text" id="icon-check-date">
+                                    <input type="date" id="date-add-vacation-send" name="date" class="form-control" required>
+                                    <span class="input-group-text" id="icon-check-date1">
                                         <i class="far fa-check-circle d-none text-success fz-24"></i>
                                         <i class="far fa-times-circle text-danger fz-24"></i>
                                     </span>
@@ -759,17 +759,17 @@
                         <div class="mt-2">
                             <label for="reason-add-vacation-send" class="form-label">Lý do</label>
                             <div class="input-group">
-                                <textarea id="reason-add-vacation-send" class="form-control"></textarea>
+                                <textarea id="reason-add-vacation-send" name="reason" class="form-control" required></textarea>
                             </div>
                         </div>
                         <input type="hidden" id="id-add-vacation-send">
                         <input type="hidden" id="lastest-add-vacation-send">
                         <input type="hidden" id="available-add-vacation-send">
-                    </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-outline-secondary w-90">Thoát</button>
-                    <button class="btn btn-outline-secondary w-90" id="btn-send-vacation">Gửi</button>
+                <button type="button" class="btn btn-outline-secondary w-90" data-bs-dismiss="modal">Thoát</button>
+                    <button class="btn btn-outline-secondary w-90" form="add-vacation-send-form">Gửi</button>
                 </div>
             </div>
         </div>

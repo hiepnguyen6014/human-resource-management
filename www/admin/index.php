@@ -556,7 +556,7 @@
                 <div class="col-md-12 mb-3">
                     <div class="card" style="position: relative;">
                         <div class="card-header d-flex justify-content-between mobile-hide">
-                            <div class="d-flex">
+                            <div class="d-flex justify-content-end">
                                 <input type="text" class="search-input w-250" placeholder="Tìm kiếm..."
                                     id="search-vacation-input">
                                 <button type="button" class="btn btn-outline-primary px-3 btn-search"
@@ -667,7 +667,7 @@
                                 <textarea id="reason-view-vacation" class="form-control" rows="3" disabled></textarea>
                             </div>
                         </div>
-                        <div class="mt-2">
+                        <div class="my-2" id="file-view-vacation1">
                             <label for="file-view-vacation" class="form-label">Tệp đính kèm</label>
                             <div class="input-group">
                                 <a href="/" target="_blank" class="btn btn-outline-primary"
@@ -677,9 +677,13 @@
                         <input type="hidden" id="id-view-vacation">
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer controller-task" id="vacation-footer-0">
                     <button onclick="disagreeVacation()" class="btn btn-outline-secondary w-90">Từ chối</button>
                     <button onclick="agreeVacation()" class="btn btn-outline-secondary w-90">Đồng ý</button>
+                </div>
+                <div class="modal-footer controller-task" id="vacation-footer-1">
+                    <!-- btn esc -->
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Thoát</button>
                 </div>
             </div>
         </div>
