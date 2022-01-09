@@ -134,17 +134,24 @@ CREATE TABLE `task` (
   `title` varchar(255) DEFAULT NULL,
   `deadline` datetime DEFAULT NULL,
   `status` int(11) DEFAULT '0',
-  `rate` int(11) DEFAULT NULL,
-  `date_begin` datetime DEFAULT CURRENT_TIMESTAMP
+  `date_begin` datetime DEFAULT CURRENT_TIMESTAMP,
+  `assign_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `task`
 --
 
-INSERT INTO `task` (`task_id`, `username`, `title`, `deadline`, `status`, `rate`, `date_begin`) VALUES
-(4, 'trangiahuy', 'UCfbtymJqi1C-6hFtuCR4NJg', '2022-01-13 00:00:00', 7, NULL, '2022-01-06 17:21:40'),
-(5, 'trangiahuy', '234234', '2022-01-14 00:29:00', 0, NULL, '2022-01-06 17:29:49');
+INSERT INTO `task` (`task_id`, `username`, `title`, `deadline`, `status`, `date_begin`, `assign_date`) VALUES
+(5, 'trangiahuy', '234234', '2022-01-14 00:29:00', 7, '2022-01-06 17:29:49', '2022-01-08 06:24:54'),
+(7, 'trangiahuy', '12312312', '2022-01-13 09:23:00', 7, '2022-01-08 02:24:11', '2022-01-08 06:24:05'),
+(8, 'trangiahuy', '12312312', '2022-01-24 09:23:00', 7, '2022-01-08 02:24:37', '2022-01-08 04:00:05'),
+(9, 'trangiahuy', '123123', '2022-01-20 15:22:00', 3, '2022-01-08 02:25:29', '2022-01-08 06:32:07'),
+(10, 'trangiahuy', 'Moiws', '1970-01-01 00:00:00', 4, '2022-01-08 02:26:28', '2022-01-08 06:34:48'),
+(11, 'trangiahuy', 'Test 1', '2022-01-19 15:24:00', 2, '2022-01-08 06:37:59', '2022-01-08 06:38:09'),
+(12, 'trangiahuy', '123423123', '2022-01-27 14:52:00', 4, '2022-01-08 07:52:49', '2022-01-08 08:33:36'),
+(13, 'trangiahuy', 'test lvie', '2022-01-28 14:53:00', 5, '2022-01-08 07:53:25', '2022-01-08 08:33:27'),
+(14, 'trangiahuy', '123123123', '2022-02-04 15:25:00', 5, '2022-01-08 07:54:09', '2022-01-08 08:25:35');
 
 -- --------------------------------------------------------
 
@@ -167,7 +174,49 @@ CREATE TABLE `task_feedback` (
 --
 
 INSERT INTO `task_feedback` (`feedback_id`, `task_id`, `message`, `time`, `file`, `sender_user`, `receiver_user`) VALUES
-(2, 5, '234234', '2022-01-06 17:29:49', 'phpoTIyZ7.zip', 'hongocthanh', 'trangiahuy');
+(6, 9, '12312312', '2022-01-08 02:25:29', 'php0vvn7E.rar', 'hongocthanh', 'trangiahuy'),
+(7, 10, '123123', '2022-01-08 02:26:28', 'phpsQbPWx.zip', 'hongocthanh', 'trangiahuy'),
+(8, 9, '123123', '2022-01-08 05:52:56', 'phpn0ZrIU.doc', NULL, NULL),
+(9, 9, 'qweqweqw', '2022-01-08 05:54:23', 'phpHinpdL.sql', NULL, NULL),
+(10, 9, '12312312312313', '2022-01-08 05:56:18', 'phpj4hzIC.rar', NULL, NULL),
+(11, 9, 'eq23e123123', '2022-01-08 06:14:32', 'phpDGk2fJ.zip', NULL, NULL),
+(12, 9, '13123123', '2022-01-08 06:18:04', 'phpJUPczR.rar', NULL, NULL),
+(13, 9, '123123123', '2022-01-08 06:18:35', 'phpn9tYKF.docx', NULL, NULL),
+(14, 10, '123123123', '2022-01-08 06:19:50', 'php5sowaJ.sql', NULL, NULL),
+(18, 9, '132123123123', '2022-01-08 06:32:16', 'php7iO4mz.rar,phpVExz1A.doc,phpYbgeuz.pdf', NULL, NULL),
+(19, 10, 'sasdasdasdsadasdasd', '2022-01-08 06:34:54', 'phpAmsb6x.pdf', NULL, NULL),
+(20, 11, '123123', '2022-01-08 06:37:59', 'phpJwcUZA.zip,phpJfFRXw.zip,phpBbO48A.zip,phpUz4aYx.rar,php9wLiIx.doc,phpgzHiwy.pdf,phpMGOctA.jpg,phpVHYXPA.png', 'hongocthanh', 'trangiahuy'),
+(21, 11, 'cc', '2022-01-08 06:38:15', 'phpFbWPmG.png', NULL, NULL),
+(22, 12, '123123123', '2022-01-08 07:52:49', 'php7gzojR.jpg', 'hongocthanh', 'trangiahuy'),
+(23, 13, '12312323', '2022-01-08 07:53:25', 'phpgLjNph.rar', 'hongocthanh', 'trangiahuy'),
+(24, 14, '123123123', '2022-01-08 07:54:09', 'phpQwMMjV.rar', 'hongocthanh', 'trangiahuy'),
+(25, 11, '                                ', '2022-01-08 08:09:32', 'phpAkz0oH.png', NULL, NULL),
+(26, 11, '123123123', '2022-01-08 08:10:36', 'phpk9sPYD.png', NULL, NULL),
+(27, 10, '                                234234234', '2022-01-08 08:11:02', 'php7zLEyV.pdf', NULL, NULL),
+(28, 10, '                                234234234', '2022-01-08 08:12:10', 'phpENEwZ7.pdf', NULL, NULL),
+(29, 9, '                                ', '2022-01-08 08:12:43', 'phpvbUxhv.docx', NULL, NULL),
+(30, 9, '                                23123', '2022-01-08 08:13:07', 'phpALN209.docx', NULL, NULL),
+(31, 10, '12312321', '2022-01-08 08:13:41', 'php3CPGFC.jpg', NULL, NULL),
+(32, 10, '                                123123123', '2022-01-08 08:13:58', 'phpWsJG5e.drawio', NULL, NULL),
+(33, 11, '12312312', '2022-01-08 08:14:38', 'phpcXREB4.pdf', NULL, NULL),
+(34, 11, '<script>alert(\'a\');</script>', '2022-01-08 08:15:17', 'phpgoCK4E.docx', NULL, NULL),
+(35, 9, '123123123', '2022-01-08 08:15:54', 'phpD0qFV8.pdf', NULL, NULL),
+(36, 9, '                                <script>alert(\'a\');</script>', '2022-01-08 08:16:23', 'phpnrdQm6.drawio', NULL, NULL),
+(37, 11, '123123', '2022-01-08 08:16:42', 'phpucxxbN.pdf', NULL, NULL),
+(38, 10, '<script>alert(\'a\');</script>', '2022-01-08 08:16:51', 'phpiw06QU.doc', NULL, NULL),
+(39, 9, 'asdasdasd', '2022-01-08 08:17:00', 'phpynwGt5.jpg', NULL, NULL),
+(40, 11, '                                123123123', '2022-01-08 08:17:57', 'phphLtFxM.rar', NULL, NULL),
+(41, 10, '                                <script>alert(\'a\');</script>', '2022-01-08 08:18:14', 'php9x6RYZ.docx', NULL, NULL),
+(42, 9, '                                mmmmm', '2022-01-08 08:19:27', 'phpYVcnpb.png', NULL, NULL),
+(43, 11, '`12`12`12', '2022-01-08 08:23:50', 'phppzfP0Z.jpg', NULL, NULL),
+(44, 11, '                                123123123', '2022-01-08 08:24:03', 'phpwoqAjb.png', NULL, NULL),
+(45, 11, '123123123123', '2022-01-08 08:24:38', 'phpPkvh9x.jpg', NULL, NULL),
+(46, 11, '                                123123123', '2022-01-08 08:24:53', 'phpLTnGIE.rar', NULL, NULL),
+(47, 14, '123123123', '2022-01-08 08:25:41', 'phpZyTlOy.pdf', NULL, NULL),
+(48, 14, '                                123123123', '2022-01-08 08:25:54', 'phpmwbdjY.png', NULL, NULL),
+(49, 13, '13123123123', '2022-01-08 08:33:32', 'phpMTByxb.doc', NULL, NULL),
+(50, 12, '123123123', '2022-01-08 08:33:41', 'phpzTFnjK.sql', NULL, NULL),
+(51, 11, '123123', '2022-01-08 09:55:39', 'php4Zq5kZ.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -276,13 +325,13 @@ ALTER TABLE `Profiles`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `task_feedback`
 --
 ALTER TABLE `task_feedback`
-  MODIFY `feedback_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `feedback_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `vacation`

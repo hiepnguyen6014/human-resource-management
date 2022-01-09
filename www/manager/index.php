@@ -227,7 +227,6 @@
         </div>
     </div>
 
-
     <div class="modal fade mt-5" id="view-task-manager">
         <div class="modal-dialog modal-lg mt-5">
             <div class="modal-content">
@@ -239,8 +238,6 @@
                     <div class="view-task-message my-3" id="message-task-manager">
                         <!-- Direct -->
                     </div>
-
-
                     <form onsubmit="return cancelTask(event)" method="post" id="form-task-0-manager">
                         <input type="hidden" name="task_id" id="task-id-manager">
                     </form>
@@ -284,12 +281,11 @@
                             Hoàn thành
                         </button>
                     </div>
-                    
+
                 </div>
                 <div class="modal-footer d-none controller-task" id="status-footer">
-                        <button type="button" class="btn btn-outline-secondary w-90"
-                            data-bs-dismiss="modal">Thoát</button>
-                    </div>
+                    <button type="button" class="btn btn-outline-secondary w-90" data-bs-dismiss="modal">Thoát</button>
+                </div>
             </div>
         </div>
     </div>
@@ -309,15 +305,6 @@
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
-
-                            <!-- 
-                            <div class="btn-group">
-                                <button class="btn btn-outline-primary" data-bs-toggle="modal"
-                                    data-bs-target="#add-staff-manager">
-                                    <i class="fas fa-plus"></i>
-                                    <span>Thêm</span>
-                                </button>
-                            </div> -->
                         </div>
                     </div>
 
@@ -333,43 +320,45 @@
                                 </tr>
                             </thead>
                             <tbody id="staff-manager-list" class="align-middle">
-
-                                <!-- <tr data-toggle="modal" data-id="1" data-target="#view-staff-manager">
+                                <!--
+                                    <tr data-toggle="modal" data-id="1" data-target="#view-staff-manager">
                                         <td>s</td>
                                         <td>System Architect</td>
                                         <td>Edinburgh</td>
                                         <td>61</td>
-                                    
-                                    </tr> -->
+                                    </tr>
+                                -->
                             </tbody>
                         </table>
                     </div>
 
                     <div class="card-header d-flex justify-content-center pagination-ind">
                         <ul class="pagination" id="staff-manager-pagination">
-                            <!-- <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">1</a>
-                                </li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="#">2
-                                        <span class="sr-only">(current)</span>
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">3</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </li> -->
+                            <!--
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">2
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">3</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        -->
                         </ul>
                     </div>
                 </div>
