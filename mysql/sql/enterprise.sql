@@ -1,17 +1,32 @@
-SET time_zone = "+07:00";
-SET @@session.time_zone = "+07:00";
 
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+07:00";
+
+
+--
+-- Database: `enterprise`
+--
 CREATE DATABASE IF NOT EXISTS `enterprise` DEFAULT CHARACTER SET utf8 COLLATE utf8_vietnamese_ci;
 USE `enterprise`;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `accounts`
+--
+
 CREATE TABLE `accounts` (
   `user_id` int(11) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `account_type` int(11) DEFAULT '2',
-  `active` int(11) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8_vietnamese_ci;
+  `username` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `account_type` int(11) DEFAULT 2,
+  `active` int(11) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
+--
+-- Dumping data for table `accounts`
+--
 
 INSERT INTO `accounts` (`user_id`, `username`, `password`, `account_type`, `active`) VALUES
 (21, 'mvmanh', '$2y$10$ePtD1XzTUoui1wrqcRhFLe2M2Rqe4VxVUIUJLc29oSi6HV0lagP2e', 0, 1),
@@ -68,12 +83,20 @@ INSERT INTO `accounts` (`user_id`, `username`, `password`, `account_type`, `acti
 (73, 'manhmai', '$2y$10$SlaKXBs35Aul5.8T2vQmDO4oRTfPoYSqoAC1q8bsTo1kUomWuGzVK', 2, 1),
 (74, 'bachmai', '$2y$10$DhpUB1Q11k0Mn8zb/Mb2MuJ/3QFY60pikL7p51rfg5F9vn8Kf.68W', 2, 1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `available_vacation_day`
+--
 
 CREATE TABLE `available_vacation_day` (
-  `username` varchar(255) NOT NULL,
-  `remain_day` int(11) DEFAULT '12'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8_vietnamese_ci;
+  `username` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `remain_day` int(11) DEFAULT 12
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
+--
+-- Dumping data for table `available_vacation_day`
+--
 
 INSERT INTO `available_vacation_day` (`username`, `remain_day`) VALUES
 ('ananvu', 12),
@@ -137,13 +160,13 @@ INSERT INTO `available_vacation_day` (`username`, `remain_day`) VALUES
 
 CREATE TABLE `offices` (
   `office_id` int(11) NOT NULL,
-  `code` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci DEFAULT NULL,
-  `room_number` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci DEFAULT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `date_begin` datetime DEFAULT CURRENT_TIMESTAMP,
-  `description` text CHARACTER SET utf8 COLLATE utf8_vietnamese_ci
-) ENGINE=InnoDB DEFAULT CHARSET=utf8_vietnamese_ci;
+  `code` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `name` varchar(255) COLLATE utf8_vietnamese_ci DEFAULT NULL,
+  `room_number` varchar(255) COLLATE utf8_vietnamese_ci DEFAULT NULL,
+  `phone` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `date_begin` datetime DEFAULT current_timestamp(),
+  `description` text COLLATE utf8_vietnamese_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 --
 -- Dumping data for table `offices`
@@ -160,30 +183,30 @@ INSERT INTO `offices` (`office_id`, `code`, `name`, `room_number`, `phone`, `dat
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Profiles`
+-- Table structure for table `profiles`
 --
 
-CREATE TABLE `Profiles` (
+CREATE TABLE `profiles` (
   `user_id` int(11) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `fname` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci DEFAULT NULL,
-  `lname` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci DEFAULT NULL,
+  `username` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `fname` varchar(255) COLLATE utf8_vietnamese_ci DEFAULT NULL,
+  `lname` varchar(255) COLLATE utf8_vietnamese_ci DEFAULT NULL,
   `birthdate` date DEFAULT NULL,
-  `date_begin` datetime DEFAULT CURRENT_TIMESTAMP,
-  `gmail` varchar(255) DEFAULT NULL,
-  `phone_number` varchar(255) DEFAULT NULL,
+  `date_begin` datetime DEFAULT current_timestamp(),
+  `gmail` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `phone_number` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
   `salary` int(11) DEFAULT NULL,
-  `position` int(11) DEFAULT '2',
-  `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci DEFAULT NULL,
-  `avatar` varchar(255) DEFAULT 'default.webp',
-  `office_code` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8_vietnamese_ci;
+  `position` int(11) DEFAULT 2,
+  `address` varchar(255) COLLATE utf8_vietnamese_ci DEFAULT NULL,
+  `avatar` varchar(255) CHARACTER SET utf8mb4 DEFAULT 'default.webp',
+  `office_code` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 --
--- Dumping data for table `Profiles`
+-- Dumping data for table `profiles`
 --
 
-INSERT INTO `Profiles` (`user_id`, `username`, `fname`, `lname`, `birthdate`, `date_begin`, `gmail`, `phone_number`, `salary`, `position`, `address`, `avatar`, `office_code`) VALUES
+INSERT INTO `profiles` (`user_id`, `username`, `fname`, `lname`, `birthdate`, `date_begin`, `gmail`, `phone_number`, `salary`, `position`, `address`, `avatar`, `office_code`) VALUES
 (19, 'mvmanh', 'Mạnh', 'Mai Văn', '1993-02-10', '2022-01-10 02:36:56', 'mvmanh@gmail.com', '0923456789', 3200, 0, '19 Nguyễn Hữu Thọ, P. Tân Phong, Quận 7, Hồ Chí Minh', 'mvmanh.jpg', NULL),
 (20, 'tranhoanglong', 'Long', 'Trần Hoàng', '2022-01-12', '2022-01-10 02:50:04', NULL, NULL, NULL, 2, NULL, 'default.webp', 'PĐT'),
 (21, 'nguyenducmanh', 'Mạnh', 'Nguyễn Đức', '2002-06-30', '2022-01-10 02:50:46', NULL, NULL, NULL, 1, NULL, 'nguyenducmanh.jpg', 'PĐT'),
@@ -246,13 +269,13 @@ INSERT INTO `Profiles` (`user_id`, `username`, `fname`, `lname`, `birthdate`, `d
 
 CREATE TABLE `task` (
   `task_id` int(11) NOT NULL,
-  `username` varchar(255) DEFAULT NULL,
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci DEFAULT NULL,
+  `username` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
   `deadline` datetime DEFAULT NULL,
-  `status` int(11) DEFAULT '0',
-  `date_begin` datetime DEFAULT CURRENT_TIMESTAMP,
+  `status` int(11) DEFAULT 0,
+  `date_begin` datetime DEFAULT current_timestamp(),
   `assign_date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8_vietnamese_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 --
 -- Dumping data for table `task`
@@ -304,12 +327,12 @@ INSERT INTO `task` (`task_id`, `username`, `title`, `deadline`, `status`, `date_
 CREATE TABLE `task_feedback` (
   `feedback_id` int(11) NOT NULL,
   `task_id` int(11) DEFAULT NULL,
-  `message` text CHARACTER SET utf8 COLLATE utf8_vietnamese_ci,
-  `time` datetime DEFAULT CURRENT_TIMESTAMP,
-  `file` varchar(255) DEFAULT NULL,
-  `sender_user` varchar(255) DEFAULT NULL,
-  `receiver_user` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8_vietnamese_ci;
+  `message` text COLLATE utf8_vietnamese_ci DEFAULT NULL,
+  `time` datetime DEFAULT current_timestamp(),
+  `file` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `sender_user` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `receiver_user` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 --
 -- Dumping data for table `task_feedback`
@@ -381,16 +404,16 @@ INSERT INTO `task_feedback` (`feedback_id`, `task_id`, `message`, `time`, `file`
 
 CREATE TABLE `vacation` (
   `vacation_id` int(11) NOT NULL,
-  `username` varchar(255) DEFAULT NULL,
-  `start_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `username` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `start_date` datetime DEFAULT current_timestamp(),
   `number_day_off` int(11) DEFAULT NULL,
-  `reason` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci DEFAULT NULL,
-  `file` varchar(255) DEFAULT NULL,
-  `feedback` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
-  `seen` int(11) NOT NULL DEFAULT '1',
+  `reason` varchar(255) COLLATE utf8_vietnamese_ci DEFAULT NULL,
+  `file` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `feedback` varchar(255) COLLATE utf8_vietnamese_ci DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 0,
+  `seen` int(11) NOT NULL DEFAULT 1,
   `start_date_real` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8_vietnamese_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 --
 -- Dumping data for table `vacation`
@@ -433,9 +456,9 @@ ALTER TABLE `offices`
   ADD UNIQUE KEY `phone` (`phone`);
 
 --
--- Indexes for table `Profiles`
+-- Indexes for table `profiles`
 --
-ALTER TABLE `Profiles`
+ALTER TABLE `profiles`
   ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `username` (`username`),
   ADD KEY `fk_officecode_offices_profiles` (`office_code`);
@@ -480,9 +503,9 @@ ALTER TABLE `offices`
   MODIFY `office_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `Profiles`
+-- AUTO_INCREMENT for table `profiles`
 --
-ALTER TABLE `Profiles`
+ALTER TABLE `profiles`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
@@ -514,9 +537,9 @@ ALTER TABLE `available_vacation_day`
   ADD CONSTRAINT `fk_username_profiles_available_vacation_day` FOREIGN KEY (`username`) REFERENCES `profiles` (`username`);
 
 --
--- Constraints for table `Profiles`
+-- Constraints for table `profiles`
 --
-ALTER TABLE `Profiles`
+ALTER TABLE `profiles`
   ADD CONSTRAINT `fk_officecode_offices_profiles` FOREIGN KEY (`office_code`) REFERENCES `offices` (`code`),
   ADD CONSTRAINT `fk_username_accounts_profiles` FOREIGN KEY (`username`) REFERENCES `accounts` (`username`);
 
