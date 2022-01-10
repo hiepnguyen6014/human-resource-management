@@ -453,12 +453,12 @@
                             <div>
                                 <div class="input-group w-300">
                                     <select class="form-select" name="status" id="type-vacation-manager">
-                                        <option value="6">All</option>
-                                        <option value="0">Pending</option>
-                                        <option value="2">Approve</option>
-                                        <option value="3">Refused</option>
-                                        <option value="4">Seen</option>
-                                        <option value="5">Non Seen</option>
+                                        <option value="6">Tất cả</option>
+                                        <option value="0">Đang duyệt</option>
+                                        <option value="2">Đã duyệt</option>
+                                        <option value="3">Từ chối</option>
+                                        <option value="4">Đã xem</option>
+                                        <option value="5">Chưa xem</option>
                                     </select>
                                 </div>
                             </div>
@@ -470,10 +470,10 @@
                             <thead class="align-middle bg-secondary text-white font-weight-bold"
                                 style="letter-spacing: 1px;">
                                 <tr>
-                                    <th>Send At</th>
-                                    <th>Username</th>
-                                    <th>Date Off</th>
-                                    <th>Status</th>
+                                    <th>Ngày gửi</th>
+                                    <th>Tên tài khoản</th>
+                                    <th>Ngày nghỉ</th>
+                                    <th>Trạng thái</th>
                                 </tr>
                             </thead>
                             <tbody id="vacation-manager-list" class="align-middle">
@@ -524,31 +524,31 @@
         <div class="modal-dialog modal-lg mt-5">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Vacation Details (<span id="seen-at-view-vacation-manager"></span>)</h5>
+                    <h5 class="modal-title">Chi tiết đơn xin nghỉ (<span id="seen-at-view-vacation-manager"></span>)</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-0">
                     <div class="row">
                         <div class="mt-2 col-lg-4">
-                            <label for="name-view-vacation-manager" class="form-label">Name</label>
+                            <label for="name-view-vacation-manager" class="form-label">Tên tài khoản</label>
                             <div class="input-group">
                                 <input type="text" id="name-view-vacation-manager" class="form-control" disabled>
                             </div>
                         </div>
                         <div class="mt-2 col-lg-4">
-                            <label for="date-view-vacation-manager" class="form-label">Date Start</label>
+                            <label for="date-view-vacation-manager" class="form-label">Ngày nghỉ</label>
                             <div class="input-group">
                                 <input type="text" id="date-view-vacation-manager" class="form-control" disabled>
                             </div>
                         </div>
                         <div class="mt-2 col-lg-4">
-                            <label for="number-view-vacation-manager" class="form-label">Number day of</label>
+                            <label for="number-view-vacation-manager" class="form-label">Thời hạn</label>
                             <div class="input-group">
                                 <input type="text" id="number-view-vacation-manager" class="form-control" disabled>
                             </div>
                         </div>
                         <div class="mt-2">
-                            <label for="reason-view-vacation-manager" class="form-label">Reason</label>
+                            <label for="reason-view-vacation-manager" class="form-label">Lý do</label>
                             <div class="input-group">
                                 <textarea id="reason-view-vacation-manager" class="form-control" disabled></textarea>
                             </div>
@@ -556,7 +556,7 @@
                         <div class="mt-2" id="file-view-vacation1">
                             <div class="input-group d-inline-block">
                                 <a href="/" target="_blank" class="btn btn-outline-info btn-sm"
-                                    id="file-view-vacation-manager">View File</a>
+                                    id="file-view-vacation-manager">Xem File</a>
                             </div>
                         </div>
                         <input type="hidden" id="id-view-vacation-manager">
@@ -592,12 +592,12 @@
                             <div>
                                 <div class="input-group w-300">
                                     <select class="form-select" name="status" id="type-vacation-send">
-                                        <option value="0">All</option>
-                                        <option value="1">Pending</option>
-                                        <option value="2">Approve</option>
-                                        <option value="3">Refused</option>
-                                        <option value="4">Seen</option>
-                                        <option value="5">Non Seen</option>
+                                        <option value="6">Tất cả</option>
+                                        <option value="0">Đang duyệt</option>
+                                        <option value="2">Đã duyệt</option>
+                                        <option value="3">Từ chối</option>
+                                        <option value="4">Đã xem</option>
+                                        <option value="5">Chưa xem</option>
                                     </select>
                                 </div>
                             </div>
@@ -616,10 +616,10 @@
                             <thead class="align-middle bg-secondary text-white font-weight-bold"
                                 style="letter-spacing: 1px;">
                                 <tr>
-                                    <th>Send At</th>
-                                    <th>Date Off</th>
-                                    <th>Number day</th>
-                                    <th>Status</th>
+                                    <th>Ngày gửi</th>
+                                    <th>Ngày nghỉ</th>
+                                    <th>Thời hạn</th>
+                                    <th>Trạng thái</th>
                                 </tr>
                             </thead>
                             <tbody id="vacation-send-list" class="align-middle">
@@ -670,20 +670,20 @@
         <div class="modal-dialog modal-lg mt-5">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Detail Off Request (<span id="send-view-vacation-send"></span>)</h5>
+                    <h5 class="modal-title">Chi tiết đơn xin nghỉ (<span id="send-view-vacation-send"></span>)</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="mt-2">
-                                <label for="date-view-vacation-send" class="form-label">Date Start</label>
+                                <label for="date-view-vacation-send" class="form-label">Ngày nghỉ</label>
                                 <div class="input-group">
                                     <input type="text" id="date-view-vacation-send" class="form-control" disabled>
                                 </div>
                             </div>
                             <div class="mt-2">
-                                <label for="reason-view-vacation-send" class="form-label">Reason</label>
+                                <label for="reason-view-vacation-send" class="form-label">Lý do</label>
                                 <div class="input-group">
                                     <textarea id="reason-view-vacation-send" class="form-control" disabled></textarea>
                                 </div>
@@ -691,13 +691,13 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="mt-2">
-                                <label for="number-view-vacation-send" class="form-label">Number day of</label>
+                                <label for="number-view-vacation-send" class="form-label">Thời hạn</label>
                                 <div class="input-group">
                                     <input type="text" id="number-view-vacation-send" class="form-control" disabled>
                                 </div>
                             </div>
                             <div class="mt-2">
-                                <label for="feedback-view-vacation-send" class="form-label">Feedback</label>
+                                <label for="feedback-view-vacation-send" class="form-label">Phản hồi</label>
                                 <div class="input-group">
                                     <textarea id="feedback-view-vacation-send" class="form-control" disabled></textarea>
                                 </div>
@@ -708,7 +708,7 @@
                         <div class="mt-2">
                             <div class="input-group d-inline-block">
                                 <a href="/" target="_blank" class="btn btn-outline-info btn-sm"
-                                    id="file-view-vacation-send">View File</a>
+                                    id="file-view-vacation-send">Xem File</a>
                             </div>
                         </div>
                         <input type="hidden" id="id-view-vacation-send">
