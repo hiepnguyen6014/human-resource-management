@@ -79,9 +79,9 @@ window.onload = () => {
     let currentHref = window.location.href;
     //contain admin
     if (currentHref.includes('/admin')) {
-        switchPage('vacation');
+        switchPage('staff');
     } else if (currentHref.includes('/manager')) {
-        switchPage('vacation-request');
+        switchPage('task-manager');
     } else if (currentHref.includes('/staff')) {
         switchPage('task-staff');
     }
@@ -1528,7 +1528,7 @@ function addVacationManager() {
                     const icon = document.getElementById('icon-check-date1');
 
                     if (days1 > 6 && days2 > 1) {
-
+                        document.getElementById('error-off-manager').classList.add('d-none');
                         //get first child of icon
                         icon.children[0].classList.remove('d-none');
                         icon.children[1].classList.add('d-none');
@@ -1541,7 +1541,8 @@ function addVacationManager() {
                     } else {
                         icon.children[1].classList.remove('d-none');
                         icon.children[0].classList.add('d-none');
-
+                        date.value = '';
+                        document.getElementById('error-off-manager').classList.remove('d-none');
                         //disable button
                         document.getElementById('btn-send-vacation').disabled = true;
                         localStorage.setItem('status-button', 0);
@@ -1605,6 +1606,7 @@ function addVacationStaff() {
                         //get first child of icon
                         icon.children[0].classList.remove('d-none');
                         icon.children[1].classList.add('d-none');
+                        document.getElementById('error-off-staff').classList.add('d-none');
 
                         //enable button
                         document.getElementById('btn-send-vacation').disabled = false;
@@ -1612,9 +1614,10 @@ function addVacationStaff() {
                         //add 1 to localStorage
                         localStorage.setItem('status-button', 1);
                     } else {
+                        document.getElementById('error-off-staff').classList.remove('d-none');
                         icon.children[1].classList.remove('d-none');
                         icon.children[0].classList.add('d-none');
-
+                        date.value = '';
                         //disable button
                         document.getElementById('btn-send-vacation').disabled = true;
                         localStorage.setItem('status-button', 0);

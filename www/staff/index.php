@@ -334,6 +334,7 @@
                                         <i class="far fa-times-circle text-danger fz-24"></i>
                                     </span>
                                 </div>
+                                <span class="small text-danger d-none" id="error-off-staff">Đã gửi yêu cầu gần đây</span>
                             </div>
 
                         </div>
