@@ -1284,6 +1284,7 @@ function showDetailVacationManager(id) {
                 document.getElementById('id-view-vacation-manager').value = vacation.data.id;
                 document.getElementById('file-view-vacation-manager').href = '/files/' + vacation.data.id + '/' + vacation.data.file;
                 modal.show()
+                showFooterModalTask(vacation.data.status);
             }
         }
     }
