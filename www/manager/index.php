@@ -214,7 +214,7 @@
                                         height="84">
                                 </label>
                             </div>
-                            <div class="col-auto example-block text-center">
+                            <div class="col-auto example-block text-center" id="late-deadline">
                                 <label class="radio-inline">
                                     <input type="radio" name="emotion" id="rate3" class="input-hidden" />
                                     <img src="https://img.icons8.com/color/100/000000/happy.png" width="84" height="84">

@@ -21,6 +21,7 @@ const API = {
     'AGREE_VACATION': '/api/admin/agree-vacation.php',
     'DISAGREE_VACATION': '/api/admin/disagree-vacation.php',
 
+
     //Manager
     'ACCEPT_TASK': '/api/manager/accept-task.php',
     'CANCEL_TASK': '/api/manager/cancel-task-manager.php',
@@ -41,6 +42,7 @@ const API = {
     'ADD_VACATION': '/api/manager/add-vacation.php',
     'AGREE_VACATION_MANAGER': '/api/manager/agree-vacation-manager.php',
     'DISAGREE_VACATION_MANAGER': '/api/manager/disagree-vacation-manager.php',
+    'CHECK_DEADLINE': '/api/manager/check-deadline.php',
 
     //Staff
     'FILTER_TASKS_STAFF': '/api/staff/filter-tasks-staff.php',
@@ -581,8 +583,30 @@ function rejectTask(e) {
 
 }
 
-function acceptTask(e) {
+function acceptTask() {
     const modal = new bootstrap.Modal(document.getElementById('rate-task'));
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', API.CHECK_DEADLINE);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            console.log(this.responseText);
+            const data = JSON.parse(this.responseText);
+            if (data.status == 'success') {
+                if (data.message) {
+                    document.getElementById('late-deadline').style.display = 'none';
+                } else {
+                    document.getElementById('late-deadline').style.display = 'block';
+                }
+            }
+            modal.show();
+        }
+    }
+    const data = new FormData();
+    data.append('id_task', document.getElementById('task-id-manager').value);
+    xhr.send(data);
+
+
     modal.show();
 
 
@@ -601,7 +625,7 @@ function acceptTask(e) {
                         modal.hide();
                         if (data.status == 'success') {
                             showSuccessMessage(data.message);
-
+                            switchPage('task-manager');
                             showFooterModalTask(3);
                         } else {
                             showErrorMessage(data.message);
@@ -2008,6 +2032,8 @@ function cancelTask(e) {
             if (response.status == 'success') {
                 showSuccessMessage(response.message);
                 switchPage('task-manager');
+
+                showFooterModalTask(7);
             } else {
                 showErrorMessage(response.message);
             }
