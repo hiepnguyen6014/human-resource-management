@@ -75,7 +75,7 @@
                                 </span>
                                 <span>Nghỉ phép</span>
                             </a>
-                            <span class="number-icon" id="vacation-number">5</span>
+                            <span class="number-icon" id="vacation-number">0</span>
                         </li>
                     </div>
 

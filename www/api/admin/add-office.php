@@ -25,7 +25,7 @@
                 echo json_encode(array('status' => 'success', 'message' => 'Đã thêm phòng ban thành công'));
             }
             else {
-                echo json_encode(array('status' => 'error', 'message' => 'Mã phòng ban đã tồn tại'));
+                echo json_encode(array('status' => 'error', 'message' => 'Thông tin phòng ban đã tồn tại'));
             }
         }
         else {

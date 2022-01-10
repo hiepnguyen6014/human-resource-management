@@ -21,12 +21,10 @@
         } else {
             die(json_encode(array("status" => "error", "message" => "Không có gì thay đổi")));
         }
-    
 
     }
     else {
         echo json_encode(array('status' => 'error', 'message' => 'Bạn không có quyền truy cập trang này'));
     }
-    
 
 ?>

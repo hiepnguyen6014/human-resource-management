@@ -163,6 +163,10 @@
                     </form>
                     <button class="btn btn-outline-secondary w-90" form="send-task-staff">Gửi</button>
                 </div>
+                <div class="modal-footer d-none controller-task" id="status-footer">
+                    <!-- esc btn -->
+                    <button type="button" class="btn btn-outline-secondary w-90" data-bs-dismiss="modal">Đóng</button>
+                </div>
             </div>
         </div>
     </div>

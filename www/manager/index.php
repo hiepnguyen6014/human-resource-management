@@ -553,7 +553,7 @@
                                 <textarea id="reason-view-vacation-manager" class="form-control" disabled></textarea>
                             </div>
                         </div>
-                        <div class="mt-2">
+                        <div class="mt-2" id="file-view-vacation1">
                             <div class="input-group d-inline-block">
                                 <a href="/" target="_blank" class="btn btn-outline-info btn-sm"
                                     id="file-view-vacation-manager">View File</a>

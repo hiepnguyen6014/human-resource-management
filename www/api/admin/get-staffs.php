@@ -10,11 +10,11 @@
             if (!isset($_GET['search'])) {
                 $office = $_GET['office'];
                 if($office == 'ALL'){
-                    $sql = "select `user_id` as id, `fname`, `lname`, `position`, `username`,`office_code` from `Profiles` where `position` != 0";
+                    $sql = "select `user_id` as id, `fname`, `lname`, `position`, `username`,`office_code` from `Profiles` where `position` != 0 order by `office_code` asc";
                     $stmt = $conn->prepare($sql);
                 }
                 else{
-                    $sql = "select `user_id` as id, `fname`, `lname`, `position`, `username`,`office_code` from `Profiles` where `office_code` = ?";
+                    $sql = "select `user_id` as id, `fname`, `lname`, `position`, `username`,`office_code` from `Profiles` where `office_code` = ? order by `office_code` asc";
                     $stmt = $conn->prepare($sql);
                     $stmt->bind_param('s', $office);
                 } 

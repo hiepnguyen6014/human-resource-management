@@ -73,10 +73,19 @@ const API = {
 }
 
 window.onload = () => {
-    switchPage('task-manager');
+    //check current href
+    let currentHref = window.location.href;
+    //contain admin
+    if (currentHref.includes('/admin')) {
+        switchPage('staff');
+    } else if (currentHref.includes('/manager')) {
+        switchPage('task-manager');
+    } else if (currentHref.includes('/staff')) {
+        switchPage('task-staff');
+    }
 
     //easy way to live pageS
-    /* setInterval(() => {
+    setInterval(() => {
         const mains = document.getElementsByTagName('main');
         Array.from(mains).forEach(main => {
             if (!main.classList.contains('d-none')) {
@@ -84,7 +93,7 @@ window.onload = () => {
                 console.log('refresh');
             }
         });
-    }, 1000); */
+    }, 3000);
 };
 
 //check current href
@@ -505,6 +514,18 @@ function loadDataForTaskTableStaff(page, paginationId, tableList) {
                 `;
         table.appendChild(tr);
     });
+
+}
+
+function updateNumberVacationStaff(data) {
+    const number = document.getElementById('vacation-send-number');
+    let count = 0;
+    data.forEach(e => {
+        if (e.status == 0) {
+            count++;
+        }
+    });
+    number.innerHTML = count;
 }
 
 function downloadFiles(files, id) {
@@ -1282,7 +1303,12 @@ function showDetailVacationManager(id) {
                 document.getElementById('number-view-vacation-manager').value = vacation.data.number_off;
                 document.getElementById('reason-view-vacation-manager').value = vacation.data.description;
                 document.getElementById('id-view-vacation-manager').value = vacation.data.id;
-                document.getElementById('file-view-vacation-manager').href = '/files/' + vacation.data.id + '/' + vacation.data.file;
+                if (vacation.data.file != null) {
+                    document.getElementById('file-view-vacation-manager').href = '/vacations/' + vacation.data.file;
+                    document.getElementById('file-view-vacation1').style.display = 'inline-block';
+                } else {
+                    document.getElementById('file-view-vacation1').style.display = 'none'
+                }
                 modal.show()
                 showFooterModalTask(vacation.data.status);
             }
@@ -1356,7 +1382,7 @@ function disagreeVacationManager() {
                     showSuccessMessage(vacation.message);
                 } else {
                     showErrorMessage(vacation.message);
-                } 
+                }
             }
         }
         const formData = new FormData();
@@ -1471,7 +1497,7 @@ function addVacationManager() {
                     // convert diff to days
                     const days1 = Math.floor(diff / (1000 * 60 * 60 * 24));
                     //get time in Asia/Ho Chi Minh
-                    
+
                     const diff2 = date_off.getTime() - today.getTime();
                     // convert diff to days
                     const days2 = Math.floor(diff2 / (1000 * 60 * 60 * 24));
@@ -1505,7 +1531,7 @@ function addVacationManager() {
 
 }
 
-function addVacationStaff(){
+function addVacationStaff() {
     const modal = new bootstrap.Modal(document.getElementById('add-vacation-send-staff'));
     const xhr = new XMLHttpRequest();
     xhr.open('GET', API.CHECK_BEFORE_VACATION_STAFF);
@@ -1544,7 +1570,7 @@ function addVacationStaff(){
                     // convert diff to days
                     const days1 = Math.floor(diff / (1000 * 60 * 60 * 24));
                     //get time in Asia/Ho Chi Minh
-                    
+
                     const diff2 = date_off.getTime() - today.getTime();
                     // convert diff to days
                     const days2 = Math.floor(diff2 / (1000 * 60 * 60 * 24));
@@ -1692,6 +1718,14 @@ function createOffRequestStaff(e) {
     xhr.send();
 } */
 
+function convertPosition(position) {
+    if (position == '2') {
+        return 'Nhân viên';
+    } else if (position == '1') {
+        return 'Quản lý';
+    } else return 'Giám đốc';
+}
+
 function viewProfile() {
     const modal = new bootstrap.Modal(document.getElementById('view-profile'));
     const xhr = new XMLHttpRequest();
@@ -1707,7 +1741,7 @@ function viewProfile() {
                 document.getElementById('view-profile-modal-email').value = profile.data.email;
                 document.getElementById('view-profile-modal-firstname').value = profile.data.first_name;
                 document.getElementById('view-profile-modal-lastname').value = profile.data.last_name;
-                document.getElementById('view-profile-modal-position').value = (profile.data.position == 1) ? 'Captain' : 'Employee';
+                document.getElementById('view-profile-modal-position').value = convertPosition(profile.data.position);
                 document.getElementById('view-profile-modal-salary').value = profile.data.salary;
                 document.getElementById('view-profile-modal-phone').value = profile.data.phone;
                 document.getElementById('view-profile-modal-address').value = profile.data.address;
@@ -2178,6 +2212,7 @@ if (currentHref.includes('change')) {
 
 // js admin
 if (currentHref.includes('admin/')) {
+
     // STAFF
     logout()
         //load staffs
@@ -2194,7 +2229,7 @@ if (currentHref.includes('admin/')) {
             xhr.open('GET', API.GET_STAFFS + '?office=ALL');
             xhr.onload = function() {
                 if (this.status == 200) {
-                    console.log(this.responseText);
+
                     const staffs = JSON.parse(this.responseText);
                     if (staffs.status === 'success') {
 
@@ -2388,7 +2423,7 @@ if (currentHref.includes('admin/')) {
                             loadDataForVacationTable(1, vacationPaginationId, vacationList);
                         } else {
                             const table = document.getElementById(vacationList);
-                            table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
+                            table.innerHTML = '<tr><td colspan="5">Không có dữ liệu</td></tr>';
                         }
 
                     }
@@ -2420,7 +2455,7 @@ if (currentHref.includes('admin/')) {
                                 loadDataForVacationTable(1, vacationPaginationId, vacationList);
                             } else {
                                 const table = document.getElementById(vacationList);
-                                table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
+                                table.innerHTML = '<tr><td colspan="5">Không có dữ liệu</td></tr>';
                             }
 
                         }
@@ -2957,6 +2992,7 @@ if (currentHref.includes('admin/')) {
         }
     }
 } else if (currentHref.includes('staff/')) {
+
     logout()
 
     function loadData(page) {
@@ -2983,6 +3019,7 @@ if (currentHref.includes('admin/')) {
 
                             //load tasks to table
                             loadDataForTaskTableStaff(1, taskPaginationId, taskList);
+                            updateNumberVacationStaff(dataPagination);
                         } else {
                             const table = document.getElementById(taskList);
                             table.innerHTML = '<tr><td colspan="4">Không có dữ liệu</td></tr>';
