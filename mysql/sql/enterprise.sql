@@ -2,7 +2,7 @@ SET GLOBAL time_zone = "Asia/Ho_Chi_Minh";
 SET time_zone = "+07:00";
 SET @@session.time_zone = "+07:00";
 
-CREATE DATABASE IF NOT EXISTS `enterprise` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+CREATE DATABASE IF NOT EXISTS `enterprise` DEFAULT CHARACTER SET utf8 COLLATE utf8_vietnamese_ci;
 USE `enterprise`;
 
 CREATE TABLE `accounts` (
@@ -11,7 +11,7 @@ CREATE TABLE `accounts` (
   `password` varchar(255) DEFAULT NULL,
   `account_type` int(11) DEFAULT '2',
   `active` int(11) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8_vietnamese_ci;
 
 
 INSERT INTO `accounts` (`user_id`, `username`, `password`, `account_type`, `active`) VALUES
@@ -73,7 +73,7 @@ INSERT INTO `accounts` (`user_id`, `username`, `password`, `account_type`, `acti
 CREATE TABLE `available_vacation_day` (
   `username` varchar(255) NOT NULL,
   `remain_day` int(11) DEFAULT '12'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8_vietnamese_ci;
 
 
 INSERT INTO `available_vacation_day` (`username`, `remain_day`) VALUES
