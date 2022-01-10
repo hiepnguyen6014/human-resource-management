@@ -84,7 +84,7 @@
                                 <i class="icon fas fa-calendar-times"></i>
                             </span>
                             <span>Nghỉ phép</span>
-                            <span class="number-icon" id="vacation-send-number">5</span>
+                            <span class="number-icon d-none" id="vacation-send-number">5</span>
                         </a>
 
                     </li>

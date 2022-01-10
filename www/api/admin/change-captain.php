@@ -29,6 +29,7 @@
             $old = $result->fetch_assoc();
 
 
+
             $sql = "UPDATE `profiles` SET `position` = 2 WHERE `office_code` = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param('s', $office);
@@ -42,6 +43,7 @@
 
             $sql = "Update `accounts` set `account_type` = 2 where `username` = ?";
             $stmt2 = $conn->prepare($sql);
+            $old = $old['username'];
             $stmt2->bind_param('s', $old);
             $stmt2->execute();
 
@@ -50,7 +52,7 @@
             $stmt3->bind_param('s', $new);
             $stmt3->execute();
             
-
+            //delete warning
             echo json_encode(array('status' => 'success', 'message' => 'Thay đổi thành công'));
 
         }

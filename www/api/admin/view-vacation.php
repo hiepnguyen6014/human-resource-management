@@ -14,7 +14,7 @@
 
         $vacation_id = $_GET['id'];
 
-        $sql = "SELECT `vacation_id`,vacation.username,`start_date`,`number_day_off`,`reason`,`file`,`seen`,`status`,`name`
+        $sql = "SELECT `vacation_id`,vacation.username,`start_date`, `start_date_real`,`number_day_off`,`reason`,`file`,`seen`,`status`,`name`
          from `vacation`,`profiles`,`offices`
         WHERE vacation.username = profiles.username and profiles.office_code = offices.code and vacation_id = ?";
 
@@ -35,6 +35,7 @@
                     'office' => $rows['name'],
                     'username' => $rows['username'],
                     'date_off' => $rows['start_date'],
+                    'date_off_real' => $rows['start_date_real'],
                     'number_off' => $rows['number_day_off'],
                     'file' => $rows['file'],
                     'status' => $rows['status']

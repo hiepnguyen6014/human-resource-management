@@ -685,6 +685,9 @@
                     <!-- btn esc -->
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Thoát</button>
                 </div>
+                <div class="modal-footer d-none controller-task" id="status-footer">
+                    <button type="button" class="btn btn-outline-secondary w-90" data-bs-dismiss="modal">Thoát</button>
+                </div>
             </div>
         </div>
     </div>
