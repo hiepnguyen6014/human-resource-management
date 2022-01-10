@@ -2,15 +2,8 @@ SET GLOBAL time_zone = "Asia/Ho_Chi_Minh";
 SET time_zone = "+07:00";
 SET @@session.time_zone = "+07:00";
 
---
 CREATE DATABASE IF NOT EXISTS `enterprise` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE `enterprise`;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `accounts`
---
 
 CREATE TABLE `accounts` (
   `user_id` int(11) NOT NULL,
@@ -20,11 +13,8 @@ CREATE TABLE `accounts` (
   `active` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `accounts`
---
 
-INSERT INTO `accounts` VALUES
+INSERT INTO `accounts` (`user_id`, `username`, `password`, `account_type`, `active`) VALUES
 (21, 'mvmanh', '$2y$10$ePtD1XzTUoui1wrqcRhFLe2M2Rqe4VxVUIUJLc29oSi6HV0lagP2e', 0, 1),
 (22, 'tranhoanglong', '$2y$10$7c4SbPuzd/meCwruzXotFui0wzu3AKP/S2GBZ0/ufsWPeP8J9bo0.', 2, 1),
 (23, 'nguyenducmanh', '$2y$10$U5TeGXlQynP1KPQAAF.fbOdimDVbJFRfQBl8uscbst9YBu5SPuHb6', 1, 1),
@@ -79,22 +69,14 @@ INSERT INTO `accounts` VALUES
 (73, 'manhmai', '$2y$10$SlaKXBs35Aul5.8T2vQmDO4oRTfPoYSqoAC1q8bsTo1kUomWuGzVK', 2, 1),
 (74, 'bachmai', '$2y$10$DhpUB1Q11k0Mn8zb/Mb2MuJ/3QFY60pikL7p51rfg5F9vn8Kf.68W', 2, 1);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `available_vacation_day`
---
 
 CREATE TABLE `available_vacation_day` (
   `username` varchar(255) NOT NULL,
   `remain_day` int(11) DEFAULT '12'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `available_vacation_day`
---
 
-INSERT INTO `available_vacation_day` VALUES
+INSERT INTO `available_vacation_day` (`username`, `remain_day`) VALUES
 ('ananvu', 12),
 ('bachmai', 6),
 ('caohongbich', 12),
@@ -156,19 +138,19 @@ INSERT INTO `available_vacation_day` VALUES
 
 CREATE TABLE `offices` (
   `office_id` int(11) NOT NULL,
-  `code` varchar(255) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `room_number` varchar(255) DEFAULT NULL,
+  `code` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci DEFAULT NULL,
+  `room_number` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
   `date_begin` datetime DEFAULT CURRENT_TIMESTAMP,
-  `description` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `description` text CHARACTER SET utf8 COLLATE utf8_vietnamese_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8_vietnamese_ci;
 
 --
 -- Dumping data for table `offices`
 --
 
-INSERT INTO `offices` VALUES
+INSERT INTO `offices` (`office_id`, `code`, `name`, `room_number`, `phone`, `date_begin`, `description`) VALUES
 (9, 'PĐT', 'Phòng Điện Toán', 'A1212', '0633860171', '2022-01-10 02:45:48', 'Bổ sung sau'),
 (12, 'CTHSSV', 'Phòng Công tác Học sinh - Sinh viên', 'A123', '0633860172', '2022-01-10 02:47:39', 'Bổ sung sau'),
 (13, 'PĐH', 'Phòng Đại học', 'R0037', '0633860173', '2022-01-10 02:48:11', 'Bổ sung sau'),
@@ -185,24 +167,24 @@ INSERT INTO `offices` VALUES
 CREATE TABLE `Profiles` (
   `user_id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
-  `fname` varchar(255) DEFAULT NULL,
-  `lname` varchar(255) DEFAULT NULL,
+  `fname` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci DEFAULT NULL,
+  `lname` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci DEFAULT NULL,
   `birthdate` date DEFAULT NULL,
   `date_begin` datetime DEFAULT CURRENT_TIMESTAMP,
   `gmail` varchar(255) DEFAULT NULL,
   `phone_number` varchar(255) DEFAULT NULL,
   `salary` int(11) DEFAULT NULL,
   `position` int(11) DEFAULT '2',
-  `address` varchar(255) DEFAULT NULL,
+  `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci DEFAULT NULL,
   `avatar` varchar(255) DEFAULT 'default.webp',
   `office_code` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8_vietnamese_ci;
 
 --
 -- Dumping data for table `Profiles`
 --
 
-INSERT INTO `Profiles` VALUES
+INSERT INTO `Profiles` (`user_id`, `username`, `fname`, `lname`, `birthdate`, `date_begin`, `gmail`, `phone_number`, `salary`, `position`, `address`, `avatar`, `office_code`) VALUES
 (19, 'mvmanh', 'Mạnh', 'Mai Văn', '1993-02-10', '2022-01-10 02:36:56', 'mvmanh@gmail.com', '0923456789', 3200, 0, '19 Nguyễn Hữu Thọ, P. Tân Phong, Quận 7, Hồ Chí Minh', 'mvmanh.jpg', NULL),
 (20, 'tranhoanglong', 'Long', 'Trần Hoàng', '2022-01-12', '2022-01-10 02:50:04', NULL, NULL, NULL, 2, NULL, 'default.webp', 'PĐT'),
 (21, 'nguyenducmanh', 'Mạnh', 'Nguyễn Đức', '2002-06-30', '2022-01-10 02:50:46', NULL, NULL, NULL, 1, NULL, 'nguyenducmanh.jpg', 'PĐT'),
@@ -266,18 +248,18 @@ INSERT INTO `Profiles` VALUES
 CREATE TABLE `task` (
   `task_id` int(11) NOT NULL,
   `username` varchar(255) DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci DEFAULT NULL,
   `deadline` datetime DEFAULT NULL,
   `status` int(11) DEFAULT '0',
   `date_begin` datetime DEFAULT CURRENT_TIMESTAMP,
   `assign_date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8_vietnamese_ci;
 
 --
 -- Dumping data for table `task`
 --
 
-INSERT INTO `task` VALUES
+INSERT INTO `task` (`task_id`, `username`, `title`, `deadline`, `status`, `date_begin`, `assign_date`) VALUES
 (20, 'bachmai', 'Thiết kế database', '2022-01-27 13:06:00', 1, '2022-01-10 13:00:48', '2022-01-10 13:03:27'),
 (21, 'bachmai', 'Thiết kế giao diện thêm nhân viên', '2022-01-10 13:03:00', 3, '2022-01-10 13:01:48', '2022-01-10 13:03:01'),
 (22, 'bachmai', 'Thiết kế giao diện người dùng', '2022-01-13 13:02:00', 4, '2022-01-10 13:02:37', '2022-01-10 13:04:06'),
@@ -323,18 +305,18 @@ INSERT INTO `task` VALUES
 CREATE TABLE `task_feedback` (
   `feedback_id` int(11) NOT NULL,
   `task_id` int(11) DEFAULT NULL,
-  `message` text,
+  `message` text CHARACTER SET utf8 COLLATE utf8_vietnamese_ci,
   `time` datetime DEFAULT CURRENT_TIMESTAMP,
   `file` varchar(255) DEFAULT NULL,
   `sender_user` varchar(255) DEFAULT NULL,
   `receiver_user` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8_vietnamese_ci;
 
 --
 -- Dumping data for table `task_feedback`
 --
 
-INSERT INTO `task_feedback` VALUES
+INSERT INTO `task_feedback` (`feedback_id`, `task_id`, `message`, `time`, `file`, `sender_user`, `receiver_user`) VALUES
 (62, 20, 'Thiết kế database theo yêu cầu trong tập tin đính kèm', '2022-01-10 13:00:48', 'phpPmpfmT.png,phpJKrj7U.png,phpAxuZkV.png', 'vanmanh', 'bachmai'),
 (63, 21, 'Thiết kế giao diện thêm nhân viên theo yêu cầu ở tệp tin đính kèm', '2022-01-10 13:01:48', 'phpnUqUxx.pdf', 'vanmanh', 'bachmai'),
 (64, 22, 'Thiết kế theo yêu cầu trong file đính kèm', '2022-01-10 13:02:37', 'phpNdYer2.jpg,phpTJvzG0.png', 'vanmanh', 'bachmai'),
@@ -403,19 +385,19 @@ CREATE TABLE `vacation` (
   `username` varchar(255) DEFAULT NULL,
   `start_date` datetime DEFAULT CURRENT_TIMESTAMP,
   `number_day_off` int(11) DEFAULT NULL,
-  `reason` varchar(255) DEFAULT NULL,
+  `reason` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci DEFAULT NULL,
   `file` varchar(255) DEFAULT NULL,
-  `feedback` varchar(255) DEFAULT NULL,
+  `feedback` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT '0',
   `seen` int(11) NOT NULL DEFAULT '1',
   `start_date_real` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8_vietnamese_ci;
 
 --
 -- Dumping data for table `vacation`
 --
 
-INSERT INTO `vacation` VALUES
+INSERT INTO `vacation` (`vacation_id`, `username`, `start_date`, `number_day_off`, `reason`, `file`, `feedback`, `status`, `seen`, `start_date_real`) VALUES
 (12, 'vunguyen', '2022-01-10 12:32:04', 5, 'Xin nghỉ để cưới vợ', '61dbc4d48fa3b9.12673755.pdf', 'OK', 2, 0, '2022-01-22'),
 (13, 'nguyenduyhoai', '2022-01-10 12:40:33', 6, 'Xin nghỉ để đi ăn du lịch', '61dbc6d1af1911.95692681.pdf', 'Lý do không chính đáng', 3, 0, '2022-02-13'),
 (14, 'nguyenducmanh', '2022-01-10 12:41:35', 4, 'Xin phép nghỉ để đi khám bệnh.', '61dbc70fb7bd90.36150125.pdf', NULL, 0, 1, '2022-03-03'),
