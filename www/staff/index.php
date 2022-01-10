@@ -196,7 +196,7 @@
                             </div>
 
                             <div class="btn-group">
-                                <button class="btn btn-outline-primary" onclick="offRequest()">
+                                <button class="btn btn-outline-primary" onclick="addVacationStaff()">
                                     <i class="fas fa-plus"></i>
                                     <span>More</span>
                                 </button>
@@ -311,7 +311,7 @@
         </div>
     </div>
 
-    <div class="modal fade mt-5" id="add-vacation-send">
+    <div class="modal fade mt-5" id="add-vacation-send-staff">
         <div class="modal-dialog modal-lg mt-5">
             <div class="modal-content">
                 <div class="modal-header">
@@ -319,13 +319,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
+                    <form class="row" id="add-vacation-send-staff-form" onsubmit="return createOffRequestStaff(event)">
                         <div class="col-lg-4">
                             <div class="mt-2">
-                                <label for="date-add-vacation-send" class="form-label">Ngày bắt đầu</label>
+                                <label for="date-add-vacation-send-staff" class="form-label">Ngày bắt đầu</label>
                                 <div class="input-group">
-                                    <input type="date" id="date-add-vacation-send" class="form-control">
-                                    <span class="input-group-text" id="icon-check-date">
+                                    <input type="date" id="date-add-vacation-send-staff" name="date" class="form-control" required>
+                                    <span class="input-group-text" id="icon-check-date2">
                                         <i class="far fa-check-circle d-none text-success fz-24"></i>
                                         <i class="far fa-times-circle text-danger fz-24"></i>
                                     </span>
@@ -335,9 +335,9 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="mt-2">
-                                <label for="number-dayoff-vacation-send" class="form-label">Số ngày nghỉ</label>
+                                <label for="number-dayoff-vacation-send-staff" class="form-label">Số ngày nghỉ</label>
                                 <div class="input-group">
-                                    <select name="number" id="number-dayoff-vacation-send" class="form-select">
+                                    <select name="number" id="number-dayoff-vacation-send-staff" class="form-select">
 
                                     </select>
                                 </div>
@@ -354,19 +354,19 @@
 
                         </div>
                         <div class="mt-2">
-                            <label for="reason-add-vacation-send" class="form-label">Lý do</label>
+                            <label for="reason-add-vacation-send-staff" class="form-label">Lý do</label>
                             <div class="input-group">
-                                <textarea id="reason-add-vacation-send" class="form-control"></textarea>
+                                <textarea id="reason-add-vacation-send-staff" name="reason" class="form-control" required></textarea>
                             </div>
                         </div>
-                        <input type="hidden" id="id-add-vacation-send">
-                        <input type="hidden" id="lastest-add-vacation-send">
-                        <input type="hidden" id="available-add-vacation-send">
-                    </div>
+                        <input type="hidden" id="id-add-vacation-send-staff">
+                        <input type="hidden" id="lastest-add-vacation-send-staff">
+                        <input type="hidden" id="available-add-vacation-send-staff">
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-outline-secondary w-90">Thoát</button>
-                    <button class="btn btn-outline-secondary w-90" id="btn-send-vacation">Gửi</button>
+                <button type="button" class="btn btn-outline-secondary w-90" data-bs-dismiss="modal">Thoát</button>
+                    <button class="btn btn-outline-secondary w-90" form="add-vacation-send-staff-form">Gửi</button>
                 </div>
             </div>
         </div>

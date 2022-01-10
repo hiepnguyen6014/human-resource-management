@@ -8,8 +8,8 @@
         )));
     }
 
-    if (isset($_SESSION['type'])) {
-        require_once '../conn.php';
+    if (isset($_SESSION['type']) && $_SESSION['type'] == 0) {
+        require_once '../../conn.php';
         $conn = get_connection();
 
         $vacation_id = $_POST['id'];
@@ -36,6 +36,6 @@
 
     }
     else {
-        echo json_encode(array('status' => 'error', 'message' => 'You are not authorized to access this page'));
+        echo json_encode(array('status' => 'error', 'message' => 'Bạn không có quyền truy cập trang này'));
     }
 ?>

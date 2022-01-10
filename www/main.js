@@ -18,6 +18,8 @@ const API = {
     'CHANGE_SALARY': '/api/admin/change-salary.php',
     'DELETE_STAFF': '/api/admin/delete-staff.php',
     'VIEW_VACATION': '/api/admin/view-vacation.php',
+    'AGREE_VACATION': '/api/admin/agree-vacation.php',
+    'DISAGREE_VACATION': '/api/admin/disagree-vacation.php',
 
     //Manager
     'ACCEPT_TASK': '/api/manager/accept-task.php',
@@ -35,8 +37,10 @@ const API = {
     'SEARCH_VACATION_MANAGER': '/api/manager/search-vacation-manager.php',
     'VIEW_DETAIL_TASK_MANAGER': '/api/manager/view-detail-task-manager.php',
     'VIEW_VACATION_MANAGER': '/api/manager/view-vacation-manager.php',
-    'CHECK_BEFORE_VACATION': '/api/manager/check-before-vacation.php',
+    'CHECK_BEFORE_VACATION_MANAGER': '/api/manager/check-before-vacation.php',
     'ADD_VACATION': '/api/manager/add-vacation.php',
+    'AGREE_VACATION_MANAGER': '/api/manager/agree-vacation-manager.php',
+    'DISAGREE_VACATION_MANAGER': '/api/manager/disagree-vacation-manager.php',
 
     //Staff
     'FILTER_TASKS_STAFF': '/api/staff/filter-tasks-staff.php',
@@ -47,11 +51,10 @@ const API = {
     'VIEW_DETAIL_TASK_STAFF': '/api/staff/view-detail-task-staff.php',
     'VIEW_TASK_STAFF': '/api/staff/view-task-staff.php',
     'TURN_IN_TASK': '/api/staff/turn-in-task.php',
+    'CHECK_BEFORE_VACATION_STAFF': '/api/staff/check-before-vacation-staff.php',
+    'ADD_VACATION_STAFF': '/api/staff/add-vacation-staff.php',
 
     //Other
-    'AGREE_VACATION_ALL': '/api/agree-vacation.php',
-
-    'DISAGREE_VACATION_ALL': '/api/disagree-vacation.php',
     'FILTER_VACATIONS_SEND_ALL': '/api/filter-vacations-send.php',
     'GET_STAFFS_MANAGER_ALL': '/api/get-staffs-manager.php',
     'GET_TASKS_STAFF_ALL': '/api/get-tasks-staff.php',
@@ -1292,7 +1295,7 @@ function disagreeVacation() {
     if (reason.length > 0) {
         const id = document.getElementById('id-view-vacation').value;
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', API.DISAGREE_VACATION_ALL);
+        xhr.open('POST', API.DISAGREE_VACATION);
         xhr.onload = function() {
             if (this.status == 200) {
                 const vacation = JSON.parse(this.responseText);
@@ -1316,9 +1319,10 @@ function disagreeVacation() {
 function agreeVacation() {
     const id = document.getElementById('id-view-vacation').value;
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', API.AGREE_VACATION_ALL);
+    xhr.open('POST', API.AGREE_VACATION);
     xhr.onload = function() {
         if (this.status == 200) {
+            console.log(this.responseText);
             const vacation = JSON.parse(this.responseText);
             if (vacation.status === 'success') {
                 switchPage('vacation');
@@ -1340,11 +1344,18 @@ function disagreeVacationManager() {
     if (reason.length > 0) {
         const id = document.getElementById('id-view-vacation-manager').value;
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', API.DISAGREE_VACATION_ALL);
+        xhr.open('POST', API.DISAGREE_VACATION_MANAGER);
         xhr.onload = function() {
             if (this.status == 200) {
-                console.log(this.responseText);
-                switchPage('vacation-request');
+                const vacation = JSON.parse(this.responseText);
+                if (vacation.status === 'success') {
+                    switchPage('vacation-request');
+                    showFooterModalTask(3);
+
+                    showSuccessMessage(vacation.message);
+                } else {
+                    showErrorMessage(vacation.message);
+                } 
             }
         }
         const formData = new FormData();
@@ -1357,11 +1368,18 @@ function disagreeVacationManager() {
 function agreeVacationManager() {
     const id = document.getElementById('id-view-vacation-manager').value;
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', API.AGREE_VACATION_ALL);
+    xhr.open('POST', API.AGREE_VACATION_MANAGER);
     xhr.onload = function() {
         if (this.status == 200) {
-            console.log(this.responseText);
-            switchPage('vacation-request');
+            const vacation = JSON.parse(this.responseText);
+            if (vacation.status === 'success') {
+                switchPage('vacation-request');
+                showFooterModalTask(2);
+
+                showSuccessMessage(vacation.message);
+            } else {
+                showErrorMessage(vacation.message);
+            }
         }
     }
     const formData = new FormData();
@@ -1416,7 +1434,7 @@ function addVacationManager() {
     const modal = new bootstrap.Modal(document.getElementById('add-vacation-send'));
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API.CHECK_BEFORE_VACATION);
+    xhr.open('GET', API.CHECK_BEFORE_VACATION_MANAGER);
     xhr.onload = function() {
         if (this.status == 200) {
             console.log(this.responseText);
@@ -1446,17 +1464,16 @@ function addVacationManager() {
                     //compare date
                     const date_off = new Date(date.value);
                     const lastest_off_date = new Date(response.data.latest_date_off);
+                    const today = new Date(new Date());
 
-                    const diff = date_off.getTime() - lastest_off_date.getTime();
-                    console.log(diff);
+                    const diff = today.getTime() - lastest_off_date.getTime();
                     // convert diff to days
                     const days1 = Math.floor(diff / (1000 * 60 * 60 * 24));
                     //get time in Asia/Ho Chi Minh
-                    const today = new Date(new Date().toLocaleDateString('vn-VN', { timeZone: 'Asia/Ho_Chi_Minh' }));
+                    
                     const diff2 = date_off.getTime() - today.getTime();
                     // convert diff to days
                     const days2 = Math.floor(diff2 / (1000 * 60 * 60 * 24));
-
                     const icon = document.getElementById('icon-check-date1');
 
                     if (days1 > 6 && days2 > 1) {
@@ -1471,7 +1488,6 @@ function addVacationManager() {
                         //add 1 to localStorage
                         localStorage.setItem('status-button', 1);
                     } else {
-                        date.value = '';
                         icon.children[1].classList.remove('d-none');
                         icon.children[0].classList.add('d-none');
 
@@ -1486,6 +1502,77 @@ function addVacationManager() {
 
     xhr.send();
 
+}
+
+function addVacationStaff(){
+    const modal = new bootstrap.Modal(document.getElementById('add-vacation-send-staff'));
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', API.CHECK_BEFORE_VACATION_STAFF);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            console.log(this.responseText);
+            const response = JSON.parse(this.responseText);
+            if (response.status === 'success') {
+                if (localStorage.getItem('status-button') === 0 || localStorage.getItem('status-button') === null) {
+                    document.getElementById('btn-send-vacation').disabled = true;
+                } else {
+                    document.getElementById('btn-send-vacation').disabled = false;
+                }
+
+                document.getElementById('lastest-add-vacation-send-staff').value = response.data.latest_date_off;
+                document.getElementById('available-add-vacation-send-staff').value = response.data.remain_day;
+                modal.show();
+
+                let select = document.getElementById('number-dayoff-vacation-send-staff');
+                select.innerHTML = '';
+                for (let i = 1; i <= response.data.remain_day; i++) {
+                    let option = document.createElement('option');
+                    option.value = i;
+                    option.innerHTML = i;
+                    select.appendChild(option);
+                }
+
+                const date = document.getElementById('date-add-vacation-send-staff');
+                date.addEventListener('change', function() {
+                    //compare date
+                    const date_off = new Date(date.value);
+                    const lastest_off_date = new Date(response.data.latest_date_off);
+                    const today = new Date(new Date());
+
+                    const diff = today.getTime() - lastest_off_date.getTime();
+                    // convert diff to days
+                    const days1 = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    //get time in Asia/Ho Chi Minh
+                    
+                    const diff2 = date_off.getTime() - today.getTime();
+                    // convert diff to days
+                    const days2 = Math.floor(diff2 / (1000 * 60 * 60 * 24));
+                    const icon = document.getElementById('icon-check-date2');
+
+                    if (days1 > 6 && days2 > 1) {
+
+                        //get first child of icon
+                        icon.children[0].classList.remove('d-none');
+                        icon.children[1].classList.add('d-none');
+
+                        //enable button
+                        document.getElementById('btn-send-vacation').disabled = false;
+
+                        //add 1 to localStorage
+                        localStorage.setItem('status-button', 1);
+                    } else {
+                        icon.children[1].classList.remove('d-none');
+                        icon.children[0].classList.add('d-none');
+
+                        //disable button
+                        document.getElementById('btn-send-vacation').disabled = true;
+                        localStorage.setItem('status-button', 0);
+                    }
+                });
+            }
+        }
+    }
+    xhr.send();
 }
 
 function createOffRequest(e) {
@@ -1510,6 +1597,29 @@ function createOffRequest(e) {
     }
     xhr.send(new FormData(e.target));
 }
+
+function createOffRequestStaff(e) {
+    e.preventDefault();
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', API.ADD_VACATION_STAFF);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            const response = JSON.parse(this.responseText);
+            if (response.status === 'success') {
+                showSuccessMessage(response.message);
+                switchPage('vacation-staff');
+
+                // reset form
+                document.getElementById('add-vacation-send-staff-form').reset();
+
+            } else {
+                showErrorMessage(response.message);
+            }
+        }
+    }
+    xhr.send(new FormData(e.target));
+}
+
 /* function offRequest() {
     const modal = new bootstrap.Modal(document.getElementById('add-vacation-send'));
 

@@ -562,9 +562,13 @@
                         <input type="hidden" id="id-view-vacation-manager">
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button onclick="disagreeVacationManager()" class="btn btn-outline-secondary w-90">Refused</button>
-                    <button onclick="agreeVacationManager()" class="btn btn-outline-secondary w-90">Approve</button>
+                <div class="modal-footer controller-task" id="vacation-footer-0">
+                    <button onclick="disagreeVacationManager()" class="btn btn-outline-secondary w-90">Từ chối</button>
+                    <button onclick="agreeVacationManager()" class="btn btn-outline-secondary w-90">Đồng ý</button>
+                </div>
+                <div class="modal-footer controller-task" id="vacation-footer-1">
+                    <!-- btn esc -->
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Thoát</button>
                 </div>
             </div>
         </div>
