@@ -2923,7 +2923,7 @@ if (currentHref.includes('admin/')) {
             xhr.open('GET', API.GET_TASKS_MANAGER);
             xhr.onload = function() {
                 if (this.status == 200) {
-
+                    console.log(this.responseText);
                     const tasks = JSON.parse(this.responseText);
                     if (tasks.status === 'success') {
 
