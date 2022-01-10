@@ -1,4 +1,3 @@
-SET GLOBAL time_zone = "Asia/Ho_Chi_Minh";
 SET time_zone = "+07:00";
 SET @@session.time_zone = "+07:00";
 
