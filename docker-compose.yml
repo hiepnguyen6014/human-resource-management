@@ -17,7 +17,7 @@ services:
         build: ./www
         restart: always
         ports:
-            - 8080:80
+            - 443:80
         volumes:
             - ./www:/var/www/html/
         depends_on:
